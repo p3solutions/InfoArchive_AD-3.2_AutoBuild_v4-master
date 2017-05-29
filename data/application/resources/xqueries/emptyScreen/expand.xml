@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xquery xmlns="http://www.emc.com/documentum/xml/dds"><expression><![CDATA[
+       
+      
+           declare variable $message external;
+          
+           let $results :=
+             <results> {
+                 <result   
+			            message = '{$message}'
+                />
+            } </results>
+        return $results
+         
+    ]]></expression></xquery>

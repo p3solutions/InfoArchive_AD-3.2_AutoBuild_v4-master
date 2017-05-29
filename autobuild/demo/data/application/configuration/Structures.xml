@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><structures>
+<datasetref>
+<alias>changeme</alias>
+<storeAlias>main</storeAlias>
+<id>changeme</id>
+</datasetref>
+<datasetref>
+<alias>metadata</alias>
+<storeAlias>main</storeAlias>
+<id>metadata</id>
+</datasetref>
+</structures>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<LEASE_OPTION>
+    <LEASE_OPTION-ROW>
+        <prop_id>00000001</prop_id>
+        <p_id>1011-01</p_id>
+        <p_name>SHAW'S SOUTHERN REGION OFFICE</p_name>
+        <LeaseStartDt>1990-02-09</LeaseStartDt>
+        <LeaseEndDt>2005-01-31</LeaseEndDt>
+        <lp_id>CO46271903</lp_id>
+        <lp_ex_date>1999-04-26</lp_ex_date>
+        <lp_ex_end>1999-07-01</lp_ex_end>
+        <lp_ex_strt>1999-06-01</lp_ex_strt>
+        <lp_op_end>2005-01-31</lp_op_end>
+        <lp_op_strt>2000-02-01</lp_op_strt>
+        <lp_memo/>
+        <lp_exrcisd>2</lp_exrcisd>
+        <lp_kickamt>0.00</lp_kickamt>
+        <lp_kickrts>0</lp_kickrts>
+        <lp_type>1</lp_type>
+    </LEASE_OPTION-ROW>
+    <LEASE_OPTION-ROW>
+        <prop_id>00000002</prop_id>
+        <p_id>1011-02</p_id>
+        <p_name>SHAW'S WESTERN REGION OFFICE</p_name>
+        <LeaseStartDt>1990-02-09</LeaseStartDt>
+        <LeaseEndDt>2005-01-31</LeaseEndDt>
+        <lp_id>CO46271903</lp_id>
+        <lp_ex_date>1999-04-26</lp_ex_date>
+        <lp_ex_end>1999-07-01</lp_ex_end>
+        <lp_ex_strt>1999-06-01</lp_ex_strt>
+        <lp_op_end>2005-01-31</lp_op_end>
+        <lp_op_strt>2000-02-01</lp_op_strt>
+        <lp_memo/>
+        <lp_exrcisd>2</lp_exrcisd>
+        <lp_kickamt>0.00</lp_kickamt>
+        <lp_kickrts>0</lp_kickrts>
+        <lp_type>2</lp_type>
+    </LEASE_OPTION-ROW>    
+</LEASE_OPTION>

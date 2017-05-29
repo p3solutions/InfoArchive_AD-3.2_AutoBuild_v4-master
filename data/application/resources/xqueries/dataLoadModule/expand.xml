@@ -1,0 +1,38 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+	declare variable $table as xs:string external;
+	declare variable $date as xs:string external;
+	declare variable $count as xs:string external;
+	
+	declare variable $path 		:= '/DATA/changeme/Collection/LOAD/';
+	declare variable $audPath 	:= '/DATA/changeme/Collection/Audit/';
+
+	declare function local:getDate($date){
+		concat(substring($date,7),substring($date,1,2),substring($date,4,2))
+	};
+
+	let $set := for $i in doc($path)/LOAD/LOAD_ROW
+				where 
+					$i/@TABLE	= upper-case($table) and 
+					$i/DATE		= local:getDate($date) and 
+					$i/@STATUS 	= 'SUCCESS'
+				return
+					<result
+						FILE 		= '{$i/FILE}'
+						ROW_COUNT 	= '{$i/ROW_COUNT}'
+					/>
+
+	return
+		<results 
+			tablename 	= '{$table}' 
+			date		= '{$date}' 
+			totalcount	= '{$count}'
+			
+		>
+		{
+			($set) 
+		}
+		</results>	
+]]></expression>
+</xquery>

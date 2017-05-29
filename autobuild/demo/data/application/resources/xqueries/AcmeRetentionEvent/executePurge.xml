@@ -1,0 +1,24 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>genPurgeList</name>
+  <dataset>changeme</dataset>
+  <type>AcmeRetentionEvent</type>
+  <expression><![CDATA[
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+
+declare variable $input external;
+declare variable $date := $input/date/text();
+declare variable $path := '/DATA/changeme/Collection/ACME/RETENTION_EVENTS/';
+declare variable $accountPath := '/DATA/changeme/Collection/ACME/SAMPLES/';
+
+for $purgeCandidate in fn:doc($path)/AcmeRetentionEvent/AcmeRetentionEvent-Row
+  [GUID/@RetentionPolicyGUID = $input/selection/result/@RetentionPolicyGUID]
+  /PurgeAccountList/PurgeAccountCandidate
+  [not(AcmeRecordGUID = fn:doc('/DATA/changeme/Collection/ACME/HOLDS')/AcmeHolds/AcmeHold/Records/RecordID)]
+return delete node fn:doc($accountPath)/AcmeRecord/AcmeRecord-Row[RecordID = $purgeCandidate/AcmeRecordGUID]
+  ]]></expression>
+  </xquery>
+

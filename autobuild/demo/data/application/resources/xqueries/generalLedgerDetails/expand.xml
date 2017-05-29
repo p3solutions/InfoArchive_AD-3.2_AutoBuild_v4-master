@@ -1,0 +1,41 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare variable $path := '/DATA/changeme/Collection';
+declare variable $recID external;
+declare variable $reconciler external;
+declare variable $recDescription external;
+declare variable $status external;
+declare variable $reconcilerDept external;
+declare variable $gaapCheckTotal external;
+declare variable $fyear external;
+declare variable $fperiod external;
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+<results>
+  {
+  (: unit test setup  
+  let $recID := xs:int('1')
+  let $reconciler := "george"
+  let $recDescription := "a description"
+  let $status := "completed"
+  :)
+  (: do a nested query for speed purposes :)
+  let $acct_recons := doc(fn:concat($path, '/RECONCILIATION_ACCOUNT'))/RECONCILIATION_ACCOUNT/RECONCILIATION_ACCOUNT-ROW[REC_ID = xs:integer($recID)]
+  let $accts :=
+    for $acct_recons in $acct_recons
+  return
+    (
+    <reconciler_info>
+      <reconciler_summary recid='{ xs:integer($recID) }' reconciler='{ $reconciler }' description='{$recDescription }' status='{ $status }' reconcilerDept='{$reconcilerDept}' gaapCheckTotal='{$gaapCheckTotal}' fyear='{$fyear}' fperiod='{$fperiod}'/>
+      { doc(fn:concat($path, '/ACCOUNT'))/ACCOUNT/ACCOUNT-ROW[POSTING_ACCT_ID = $acct_recons/POSTING_ACCT_ID] }
+    </reconciler_info>
+    )
+  return $accts
+  }
+</results>
+]]></expression>
+</xquery>
+

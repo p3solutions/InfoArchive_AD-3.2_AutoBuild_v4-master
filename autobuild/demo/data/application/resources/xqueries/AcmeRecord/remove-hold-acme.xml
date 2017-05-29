@@ -1,0 +1,22 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+	<name>add-hold-acme</name>
+	<dataset>changeme</dataset>
+	<type>srchAcmeHoldRecords</type>
+	<expression><![CDATA[
+    declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+declare variable $input external;
+declare variable $currentuser  external;
+declare variable $path :='/DATA/changeme/Collection/ACME/HOLDS';
+
+(: Unit tests
+let $name='Test Hold 1'
+let $input := <data><selection><result RecordID="00000008-30d0-4ec9-8000-000c29f00009" RecordClass="LNS1060" RecordType="Type 2" SystemOfRecord="System 1" AccountCTL="40816" EffectiveDate="1966-12-27T00:00:00" Market="Germany" docCount="1" type="AcmeRecordsTwo"/></selection><Name>Test Hold 1</Name></data>
+:)
+
+for $result in $input/selection/result
+return delete node fn:doc($path)/AcmeHolds/AcmeHold[Name=$input/Name]/Records/RecordID[. = data($input/selection/result/@RecordID)]
+      		
+
+    
+  ]]></expression>
+</xquery>

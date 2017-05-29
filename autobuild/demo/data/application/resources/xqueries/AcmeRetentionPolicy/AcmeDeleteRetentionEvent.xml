@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+    <name>AcmeDeleteRetentionEvent</name>
+    <dataset>changeme</dataset>
+    <type>AcmeRetentionEvent</type>
+    <expression><![CDATA[
+declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+declare namespace purgeEvents = 'purgeEvents';
+declare variable $input external;
+declare variable $date := $input/date/text();
+declare variable $path := '/DATA/changeme/Collection/ACME/RETENTION_EVENTS/retentionEvents.xml';
+declare variable $accountPath := '/DATA/changeme/Collection/ACME/SAMPLES/';
+
+(: unit test 
+  let $input :=  <data>
+  <selection>
+  <result CustomerRecordClassCode="ACC1000" RecordClassName="
+  Accounting and Financial Internal Reporting" RecordActive="Y" RecordClassName2=""
+  CategoryCode="SAF10" CountryName="Argentina" RegionName="Americas" RetentionEventCode=
+  "" RetentionEventDesc="The retention period begins the date the record is created."
+  TotalRetentionPeriod="10" RetentionPolicyGUID="00000000-73ff-4f49-8000-000c29f00001"
+  title="The retention period begins the date the record is created." type="
+  AcmeRetentionPolicy"/>
+  </selection>
+  <description>Test Purge 3</description>
+  </data>
+ :)
+
+for $event in fn:doc($path)/AcmeRetentionEvent/AcmeRetentionEvent-Row[GUID/@RetentionPolicyGUID =
+  $input/selection/result/@RetentionPolicyGUID]
+return xhive:delete($event)
+]]></expression>
+</xquery>

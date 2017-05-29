@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<role>
+  <id>2</id>
+  <restrictions>
+	<fields>
+		<field>ssNumber</field>
+	</fields>
+    <nodes>
+        <node>auditlog</node>
+    </nodes>
+    <operations>
+    	<operation>employeePayrollDateSearch</operation> <!-- Hide the pay history column -->
+    	<operation>updateRecord</operation> <!-- Hide the update record button -->
+    	<operation>export</operation> <!-- Hide the export to PDF and Excel buttons -->
+    </operations>
+  </restrictions>
+</role>

@@ -1,0 +1,14 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+declare variable $Name as xs:string external;
+declare variable $restrictions as xs:string external;
+declare variable $currentuser as xs:string external;
+
+for $holds in doc('/DATA/changeme/Collection/ACME/HOLDS')/AcmeHolds/AcmeHold[Name = $Name]
+return $holds
+
+
+]]></expression>
+</xquery>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PROPERTY_SEARCH>
+    <PROPERTY_SEARCH-ROW>
+        <prop_id>00000001</prop_id>
+        <p_id>1011-01</p_id>
+        <p_name>SHAW'S SOUTHERN REGION OFFICE</p_name>
+        <LeaseStartDt>1990-02-09</LeaseStartDt>
+        <LeaseEndDt>2005-01-31</LeaseEndDt>
+        <b_address>20 PILGRIM HILL ROAD</b_address>
+        <b_city>PLYMOUTH</b_city>
+        <b_state>MA</b_state>
+        <b_zip>02360</b_zip>
+        <b_early>00</b_early>
+        <b_id>0009526</b_id>
+        <b_name>KMART #7766</b_name>
+        <b_ofstkey>S600000</b_ofstkey>
+        <b_payday>01</b_payday>
+        <b_paymnth>01</b_paymnth>
+        <b_specialt/>
+        <b_status/>
+        <b_tenant>B9526</b_tenant>
+        <sublet_id>0009526</sublet_id>
+        <b_termend>2005-07-09</b_termend>
+        <b_termstrt>1995-06-21</b_termstrt>
+        <b_active>1</b_active>
+        <b_mon2mon>0</b_mon2mon>
+        <b_vacant>0</b_vacant>
+        <b_valid>1</b_valid>
+        <b_memo>09/12/2001 11:17:30 (SHERRIE) KMART PAYS NO RENT ONLY RESPONSIBLE FOR THEIR PRORATA
+            SHARE OF CAM. </b_memo>
+        <b_deposit>0.00</b_deposit>
+        <b_dpsituse>1</b_dpsituse>
+        <b_freq>1</b_freq>
+        <b_glcode>1</b_glcode>
+        <b_meduse>0</b_meduse>
+        <b_option1>0.00</b_option1>
+        <b_option2>0.00</b_option2>
+        <b_prorata>0.0000</b_prorata>
+        <b_ratamthd>1</b_ratamthd>
+        <b_sqrft>0.00</b_sqrft>
+    </PROPERTY_SEARCH-ROW>
+    <PROPERTY_SEARCH-ROW>
+        <prop_id>00000002</prop_id>
+        <p_id>1011-02</p_id>
+        <p_name>SHAW'S WESTERN REGION OFFICE</p_name>
+        <LeaseStartDt>1990-02-10</LeaseStartDt>
+        <LeaseEndDt>2005-01-31</LeaseEndDt>
+        <b_address>20 PILGRIM HILL ROAD</b_address>
+        <b_city>PLYMOUTH</b_city>
+        <b_state>MA</b_state>
+        <b_zip>02360</b_zip>
+        <b_early>00</b_early>
+        <b_id>0009526</b_id>
+        <b_name>KMART #7766</b_name>
+        <b_ofstkey>S600000</b_ofstkey>
+        <b_payday>01</b_payday>
+        <b_paymnth>01</b_paymnth>
+        <b_specialt/>
+        <b_status/>
+        <b_tenant>B9526</b_tenant>
+        <sublet_id>0009526</sublet_id>
+        <b_termend>2005-07-09</b_termend>
+        <b_termstrt>1995-06-21</b_termstrt>
+        <b_active>1</b_active>
+        <b_mon2mon>0</b_mon2mon>
+        <b_vacant>0</b_vacant>
+        <b_valid>1</b_valid>
+        <b_memo>09/12/2001 11:17:30 (SHERRIE) KMART PAYS NO RENT ONLY RESPONSIBLE FOR THEIR PRORATA
+            SHARE OF CAM. </b_memo>
+        <b_deposit>0.00</b_deposit>
+        <b_dpsituse>1</b_dpsituse>
+        <b_freq>1</b_freq>
+        <b_glcode>1</b_glcode>
+        <b_meduse>0</b_meduse>
+        <b_option1>0.00</b_option1>
+        <b_option2>0.00</b_option2>
+        <b_prorata>0.0000</b_prorata>
+        <b_ratamthd>1</b_ratamthd>
+        <b_sqrft>0.00</b_sqrft>
+    </PROPERTY_SEARCH-ROW>
+</PROPERTY_SEARCH>

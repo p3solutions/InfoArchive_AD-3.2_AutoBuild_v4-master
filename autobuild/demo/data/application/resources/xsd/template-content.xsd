@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="content">
+    <xs:complexType>
+      <xs:sequence>
+      	<xs:element name="dataset" maxOccurs="unbounded">
+      		<xs:complexType>
+      			<xs:sequence>
+      				<xs:element name="name"/>
+      			</xs:sequence>
+      		</xs:complexType>
+      	</xs:element>
+        <xs:element name="hierarchy">
+    		  <xs:complexType>
+     			  <xs:sequence>
+              <xs:element name="title" type="xs:string"/>
+              <xs:element name="node" type="nodeType"/>
+     			  </xs:sequence>
+    		  </xs:complexType>
+        </xs:element>
+        <xs:element name="transformationConfigurations">
+      		<xs:complexType>
+			      <xs:sequence>
+				      <xs:element name="transformationConfiguration" type="transformationConfigurationType" minOccurs="0" maxOccurs="unbounded"/>
+			      </xs:sequence>
+		      </xs:complexType>		
+        </xs:element>    
+        <xs:element name="searchConfigurations">
+      		<xs:complexType>
+			      <xs:sequence>
+				      <xs:element name="searchConfiguration" type="searchConfigurationType" minOccurs="0" maxOccurs="unbounded"/>
+			      </xs:sequence>
+		      </xs:complexType>
+        </xs:element>    
+        <xs:element name="operationConfigurations">
+      		<xs:complexType>
+			      <xs:sequence>
+				      <xs:element name="operationConfiguration" type="operationConfigurationType" minOccurs="0" maxOccurs="unbounded"/>
+			      </xs:sequence>
+		      </xs:complexType>
+        </xs:element>    
+      </xs:sequence>    
+		</xs:complexType>		
+  </xs:element>
+
+  <xs:complexType name="nodeType">
+  	<xs:sequence>
+  		<xs:element name="id" type="non-empty-string"/>
+  		<xs:element name="label" type="non-empty-string"/>
+  		<xs:element name="icon" type="non-empty-string"/>
+      <xs:element name="chainOfCustody" type="xs:boolean" minOccurs="0"/>
+	  	<xs:element name="contentViewSettings" minOccurs="0">
+     		<xs:complexType>
+			    <xs:sequence>
+				    <xs:element name="contentViewSetting" type="contentViewSettingType" minOccurs="0" maxOccurs="unbounded"/>
+			    </xs:sequence>
+		    </xs:complexType>
+      </xs:element>
+	  	<xs:element name="searchSettings" minOccurs="0">
+     		<xs:complexType>
+			    <xs:sequence>
+				    <xs:element name="searchSetting" type="searchSettingType" minOccurs="0" maxOccurs="unbounded"/>
+			    </xs:sequence>
+		    </xs:complexType>
+      </xs:element>
+      <xs:element name="node" type="nodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="contentViewSettingType">
+	  <xs:attribute name="refid" use="required" type="xs:IDREF"/>
+	</xs:complexType>
+
+	<xs:complexType name="searchSettingType">
+		<xs:attribute name="refid" use="required" type="xs:IDREF"/>
+    <xs:attribute name="name" use="required" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="transformationConfigurationType">
+		<xs:all>
+			<xs:element name="schemaIDs" type="xs:string"/>
+			<xs:element name="styleURI" type="xs:string"/>
+			<xs:element name="pdfExportStyleURI" type="xs:string" minOccurs="0"/>
+			<xs:element name="pdfExportPipelineURI" type="xs:string" minOccurs="0"/>
+			<xs:element name="exportPDFFromDatabase" type="xs:string" minOccurs="0"/>
+			<xs:element name="exportSRCFromDatabase" type="xs:string" minOccurs="0"/>
+			<xs:element name="pipelineURI" type="xs:string"/>
+			<xs:element name="xquery" type="xs:string" />
+      <xs:element name="contentType" type="xs:string" minOccurs="0"/>
+      <xs:element name="fileName" type="xs:string" minOccurs="0"/>
+			<xs:element name="pdf" type="xs:boolean"/>
+		</xs:all>
+		<xs:attribute name="id" use="required" type="xs:ID"/>
+	</xs:complexType>
+
+	<xs:complexType name="searchConfigurationType">
+		<xs:sequence>
+			<xs:element name="xformName" type="non-empty-string"/>
+			<xs:element name="xquery" type="non-empty-string"/>
+			<xs:element name="searchFields">
+    		<xs:complexType>
+		      <xs:sequence>
+			      <xs:element name="searchFieldRow" maxOccurs="unbounded">
+            	<xs:complexType>
+		            <xs:sequence>
+			            <xs:element name="searchField" type="searchFieldType" maxOccurs="unbounded"/>
+                  <xs:element name="submitButton" minOccurs="0"/>
+		            </xs:sequence>
+	            </xs:complexType>
+            </xs:element>   
+		      </xs:sequence>
+	      </xs:complexType>
+	       </xs:element>   
+				<xs:element name="searchResultItems" maxOccurs="unbounded">
+	    		<xs:complexType>
+			      <xs:sequence>
+				      <xs:element name="searchResultItem" type="searchResultItemType" maxOccurs="unbounded"/>
+			      </xs:sequence>
+		      </xs:complexType>
+	      </xs:element>   
+	      <xs:element name="nestedSearches" minOccurs="0" maxOccurs="unbounded">
+	      	<xs:complexType>
+	          <xs:sequence>
+	            <xs:element name="nestedSearch" type="nestedSearchType" minOccurs="0" maxOccurs="unbounded"/>
+	          </xs:sequence>
+	        </xs:complexType>
+	      </xs:element>      
+	      <xs:element name="reports" minOccurs="0">
+	      	<xs:complexType>
+	          <xs:sequence>
+	            <xs:element name="report" type="reportType" minOccurs="0" maxOccurs="unbounded"/>
+	          </xs:sequence>
+	        </xs:complexType>
+	      </xs:element>      
+	      <xs:element name="operations" minOccurs="0">
+	    		<xs:complexType>
+			      <xs:sequence>
+				      <xs:element name="operation" type="operationType" minOccurs="0" maxOccurs="unbounded"/>
+			      </xs:sequence>
+		      </xs:complexType>
+	      </xs:element>
+		  <xs:element name="crpWidth" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="id" use="required" type="xs:ID"/>
+	</xs:complexType>
+
+	<xs:complexType name="searchFieldType">
+		<xs:sequence>
+			<xs:element name="name" type="non-empty-string"/>
+			<xs:element name="label" type="non-empty-string"/>
+			<xs:element name="type" type="non-empty-string" minOccurs="0"/>
+     	<xs:element name="required" type="xs:boolean" minOccurs="0"/>
+		<xs:choice minOccurs="0">
+				<xs:element name="whereclauseparameter" type="non-empty-string"/>
+				<xs:element name="flexiblecode" type="non-empty-string"/>
+			</xs:choice>
+     	<xs:element name="metadata" type="xs:boolean" minOccurs="0"/>
+     	<xs:element name="fullText" type="xs:boolean" minOccurs="0"/>
+     	<xs:element name="addAsVariable" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="suggestionsindex" type="non-empty-string" minOccurs="0"/>
+      <xs:element name="indexPath" type="non-empty-string" minOccurs="0"/>
+      <xs:element name="operator" type="non-empty-string" minOccurs="0"/>
+      <xs:element name="options" minOccurs="0">
+    		<xs:complexType>
+		      <xs:sequence>
+			      <xs:element name="option" type="optionType" maxOccurs="unbounded"/>
+		      </xs:sequence>
+          <xs:attribute name="type">
+           <xs:simpleType>
+            <xs:restriction base="xs:NCName">
+             <xs:enumeration value="select"/>
+             <xs:enumeration value="radio"/>
+            </xs:restriction>
+           </xs:simpleType>
+          </xs:attribute>
+	      </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="searchResultItemType">
+		<xs:all>
+			<xs:element name="name" type="non-empty-string"/>
+			<xs:element name="label" type="non-empty-string"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="nestedSearchType">
+    <xs:sequence>
+			<xs:element name="name" type="non-empty-string"/>
+      <xs:group ref="nestedSearchGroup"/>
+    </xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="reportType">
+    <xs:sequence>
+      <xs:group ref="nestedSearchGroup"/>
+      <xs:element name="xquery" type="non-empty-string" minOccurs="0"/>
+    </xs:sequence>
+		<xs:attribute name="id" use="required" type="xs:ID"/>
+	</xs:complexType>
+
+  <xs:group name="nestedSearchGroup">
+		<xs:sequence>
+			<xs:element name="label" type="non-empty-string"/>
+			<xs:element name="description" type="xs:string"/>
+      		<xs:element name="configurationId" type="non-empty-string"/>
+			<xs:choice>
+				<xs:sequence>
+				<xs:element name="nodeId" type="non-empty-string"/>
+				<xs:element name="fields" minOccurs="0">
+    			<xs:complexType>
+		      		<xs:sequence>
+			      		<xs:element name="field" type="fieldType" maxOccurs="unbounded"/>
+		      		</xs:sequence>
+	      		</xs:complexType>
+				</xs:element>
+				</xs:sequence>
+      			<xs:element name="transformationConfiguration"/>
+			</xs:choice>
+		</xs:sequence>
+  </xs:group>
+
+	<xs:complexType name="fieldType">
+		<xs:all>
+			<xs:element name="targetSearchFieldName" type="non-empty-string"/>
+			<xs:element name="sourceResultItemName" type="non-empty-string"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="optionType">
+		<xs:all>
+			<xs:element name="name" type="non-empty-string"/>
+			<xs:element name="label" type="non-empty-string"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:complexType name="operationType">
+    <xs:attribute name="refid" use="required" type="xs:IDREF"/>
+	</xs:complexType>
+
+	<xs:complexType name="operationConfigurationType">
+		<xs:sequence>
+      <xs:element name="xqueries" minOccurs="0">
+    		<xs:complexType>
+		      <xs:sequence>
+			      <xs:element name="xquery" type="non-empty-string" maxOccurs="unbounded"/>
+		      </xs:sequence>
+	      </xs:complexType>
+      </xs:element>
+			<xs:element name="buttonLabel" type="non-empty-string"/>
+      <xs:group ref="dialogGroup" minOccurs="0"/>
+      <xs:element name="contentViewSetting" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" use="required" type="xs:ID"/>
+	</xs:complexType>
+
+  <xs:group name="dialogGroup">
+    <xs:sequence>
+			<xs:element name="dialogTitle" type="non-empty-string"/>      
+      <xs:choice>
+        <xs:group ref="xformGroup"/>
+        <xs:element name="message" type="non-empty-string"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+
+
+  <xs:group name="xformGroup">
+    <xs:sequence>
+  		<xs:element name="xformName" type="non-empty-string"/>
+      <xs:element name="operationFields">
+        <xs:complexType>
+	  	    <xs:sequence>
+		  	    <xs:element name="operationField" type="operationFieldType" maxOccurs="unbounded"/>
+		      </xs:sequence>
+	      </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+	<xs:complexType name="operationFieldType">
+		<xs:all>
+			<xs:element name="name" type="non-empty-string"/>
+			<xs:element name="label" type="non-empty-string"/>
+			<xs:element name="type" type="non-empty-string" minOccurs="0"/>
+     	<xs:element name="required" type="xs:boolean" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+
+	<xs:simpleType name="non-empty-string">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

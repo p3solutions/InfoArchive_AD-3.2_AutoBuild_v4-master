@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stores>
+
+	<!-- <WindowsStore> <alias>fs</alias> <virtualRoot>/</virtualRoot> <drive>C:</drive> 
+		</WindowsStore> -->
+	<!-- -> For Centera integration : -> Uncomment either Windows Store or Unix 
+		Store -> Ensure xDB segment files are in the Store -> Change drive letter 
+		for Windows Store to correct one for your server -> Uncomment XAM Store -->
+
+	<!--<WindowsStore> <alias>xdbFSRoot</alias> <virtualRoot/> <drive>C:</drive> 
+		</WindowsStore> -->
+
+	<!--<UnixStore> <alias>xdbFSRoot</alias> <virtualRoot/> </UnixStore> -->
+
+	<!--<XAMStore> <alias>centera</alias> <defaultStoreUser class="CenteraStoreUser"> 
+		<peaFileName>us5profile1_rdqeDcw.pea</peaFileName> </defaultStoreUser> <connectionString>snia-xam://centera_vim!128.221.200.120,128.221.200.121,128.221.200.122,128.221.200.123</connectionString> 
+		<crStoreAlias>main</crStoreAlias> <crName>xam</crName> </XAMStore> -->
+
+</stores>

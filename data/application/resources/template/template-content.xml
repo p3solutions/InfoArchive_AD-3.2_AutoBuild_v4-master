@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/template-content.xsd">
+	<dataset>
+		<name>application_dataset_name</name>
+	</dataset>
+	<dataset>
+		<name>metadata</name>
+	</dataset>
+
+	<hierarchy>
+		<title>DECOMM APPLICATION TITLE</title>
+		<node>
+			<id>parent_node_id</id>
+			<label>PARENT NODE LABEL</label>
+			<icon>allapplications16</icon>
+			<node>
+				<id>ReportMonitering</id>
+				<label>Report Monitoring</label>
+				<icon>businessobject16</icon>
+				<chainOfCustody>false</chainOfCustody>
+				<contentViewSettings>
+					<contentViewSetting refid="ReportTicketDetails"/>
+				</contentViewSettings>
+				<searchSettings>
+					<searchSetting name="Report Status" refid="searchReportStatus"/>
+				</searchSettings>
+			</node>
+			<node>
+				<id>auditlog</id>
+				<label>Audit Logs</label>
+				<icon>businessobject16</icon>
+				<chainOfCustody>false</chainOfCustody>
+				<contentViewSettings>
+					<contentViewSetting refid="auditLogDetails" />
+					 <contentViewSetting refid="emptyScreen" />
+				</contentViewSettings>
+				<searchSettings>
+					<searchSetting name="Audit Logs" refid="searchAuditLogs" />
+				</searchSettings>
+			</node>
+			<node>
+				<id>DataloadInquiry</id>
+				<label>Dataload Inquiry</label>
+				<icon>businessobject16</icon>
+				<chainOfCustody>false</chainOfCustody>
+				<contentViewSettings>
+					<contentViewSetting refid="dataLoadModule"/>
+					<contentViewSetting refid="dataExtractModule"/>
+				</contentViewSettings>
+				<searchSettings>
+					<searchSetting name="Data Extraction Inquiry" refid="dataExtractInquiry"/>
+					<searchSetting name="Dataload Inquiry" refid="dataLoadInquiry"/>
+				</searchSettings>
+			</node>
+		</node>
+	</hierarchy>
+
+	<transformationConfigurations>
+		<transformationConfiguration id="displayDefault">
+			<schemaIDs/>
+			<styleURI>dds://DOMAIN=resource/xslt/xml-verbatim.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="displayURIDefault">
+			<schemaIDs/>
+			<styleURI>dds://DOMAIN=resource/xslt/xml-verbatim.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/display.xpl</pipelineURI>
+			<xquery />
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="emptyScreen">
+			<schemaIDs>emptyScreen</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/emptyScreen.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="empty">
+			<schemaIDs>empty.xsd</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/empty.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/display.xpl</pipelineURI>
+			<xquery />
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="displayChainOfCustodyInfo">
+			<schemaIDs>chainofcustody.xsd</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/chainofcustody.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/display.xpl</pipelineURI>
+			<xquery />
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="noRecordDetails">
+			<schemaIDs>noRecordDetails</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/blankScreen.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="ReportTicketDetails">
+			<schemaIDs>ReportTicketDetails</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/ReportTicketDetails.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<!-- Audit Log -->
+		<transformationConfiguration id="auditLogDetails">
+			<schemaIDs>auditLogDetails</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/auditLogDetails.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<!-- Data Load -->
+		<transformationConfiguration id="dataLoadModule">
+			<schemaIDs>dataLoadModule</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/dataLoad/DataloadInquiry.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="dataExtractModule">
+			<schemaIDs>dataExtractModule</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/dataLoad/DataExtractInquiry.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+	</transformationConfigurations>
+
+	<searchConfigurations>
+	<!-- Report Monitoring -->
+	<searchConfiguration id="searchReportStatus">
+			<xformName>SearchReportStatus</xformName>
+			<xquery>
+				<![CDATA[
+						import module namespace common = 'common' at '/APPLICATIONS/changeme/resources/xqueries/commonModules/common.xqy';
+import module namespace utility = 'utility' at '/APPLICATIONS/changeme/resources/xqueries/commonModules/utility.xqy';
+import module namespace dynamicQueryModule = 'dynamicQueryModule' at '/APPLICATIONS/changeme/resources/xqueries/commonModules/dynamicQueryModule.xqy';
+declare variable $restrictions as xs:string external;
+               declare variable $first as xs:string external;
+               declare variable $last as xs:string external;
+               declare variable $currentuser as xs:string external;
+ 
+let $spaceCheck := utility:spaceChecker(('(: id :)'))
+let $APP		:= 'changeme'
+let $ticketId	:= '(: id :)'
+
+(: Normal Report :)
+let $Rpath 		:= concat("/DATA/",$APP,"/Reports/")
+let $Qpath 		:= concat("/DATA/",$APP,"/Reports/Queue/")
+let $Epath 		:= concat("/DATA/",$APP,"/Reports/Errored/")
+let $Cpath 		:= concat("/DATA/",$APP,"/Reports/Completed/")
+
+let $for		:= concat("for $i in doc('",$Rpath,"')/report ")
+let $where		:= dynamicQueryModule:queryWhereFramer('i',($ticketId),("id"),("="))
+let $where1		:= if($ticketId = '') then " where not(contains(base-uri($i),'Completed'))" else "" 
+let $return		:= concat(" return
+								<result
+									title			= 'Report Ticket Details'
+									type			= 'ReportTicketDetails'
+									report			= 'Report'
+									id				= '{$i/id}'
+									name				= '{$i/name}'
+									id_RJ			= '{$i/id}'
+									username		= '{$i/username}'
+									datetime		= '{$i/datetime}'
+									searchField		= '{$i/searchField}'
+									offset			= 'GMT {$i/offset}'
+									process-message	= '{$i/process-message}'
+									position 		= '{if(contains(base-uri($i),'Errored')) then 'NA'
+														else if(contains(base-uri($i),'Completed')) then 'NA'
+														else if(contains(base-uri($i),'Processing')) then   concat('PQ',substring-before(substring-after(base-uri($i),'Processing'),'/'))
+														else (for $x at $xpos in doc('",$Qpath,"')/* where $x/id=$i/id return $xpos)[1]}'
+									status			= '{if(contains(base-uri($i),'Errored')) then 'Errored'
+														else if(contains(base-uri($i),'Completed')) then 'Completed'
+														else if(contains(base-uri($i),'Processing')) then 'Executing Now (or) Ready for Execution'
+														else if(contains(base-uri($i),'Queue')) then 'Scheduled for Processing' 
+														else 'Queued'
+													  }'
+								/>
+					      ")
+let $mainQuery	:= if($spaceCheck = 'false') then (xhive:evaluate(concat($for,$where,$where1,$return))) else ()
+return 
+	common:getQuerySubsequenceSpaceCheck($mainQuery,$first,$last,$spaceCheck)
+					]]>			</xquery>			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>id</name>
+						<label>Report ID</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>true</fullText>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>id</name>
+					<label>Report ID</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>username</name>
+					<label>Submitted By</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>datetime</name>
+					<label>Submitted Date</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>status</name>
+					<label>Status</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>position</name>
+					<label>Ticket Position</label>
+				</searchResultItem>
+			</searchResultItems>
+			<crpWidth>615</crpWidth>
+		</searchConfiguration> 
+		<!-- Audit Logs -->
+		<searchConfiguration id="searchAuditLogs">
+			<xformName>SearchAuditLogs</xformName>
+			<xquery>
+				<![CDATA[
+	                import module namespace auditlog = 'auditlog' at '/APPLICATIONS/changeme/resources/xqueries/commonModules/auditlog.xqy';
+	                declare variable $restrictions as xs:string external;
+	                declare variable $first as xs:string external;
+	                declare variable $last as xs:string external;
+	                declare variable $currentuser as xs:string external;
+	                
+	                let $userId 		:= '(: userId :)'
+	                let $fromDate 		:= '(: fromDate :)'
+	                let $toDate 		:= '(: toDate :)'
+	                let $filterAudits 	:= '(: filterAudits :)'
+	                return
+	                	auditlog:getAuditLogSearchResults($userId,$fromDate,$toDate,$filterAudits,$restrictions,$first,$last,$currentuser)
+                ]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>userId</name>
+						<label>User ID</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>true</fullText>
+					</searchField>
+					<searchField>
+						<name>fromDate</name>
+						<label>From Date</label>
+						<type>date</type>
+						<flexiblecode>%ARG%</flexiblecode>
+					</searchField>
+					<searchField>
+						<name>toDate</name>
+						<label>To Date</label>
+						<type>date</type>
+						<flexiblecode>%ARG%</flexiblecode>
+					</searchField>
+					<searchField>
+						<name>filterAudits</name>
+						<label>Filter Audit Lookups</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<options type="select">
+							<option>
+								<name>all</name>
+								<label>All</label>
+							</option>
+							<option>
+								<name>archive</name>
+								<label>Archive</label>
+							</option>
+							<option>
+								<name>login</name>
+								<label>Login</label>
+							</option>
+							<option>
+								<name>audit</name>
+								<label>Audit</label>
+							</option>
+						</options>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>user</name>
+					<label>User</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>searchConfiguration</name>
+					<label>Search Configuration</label>
+				</searchResultItem>
+				<searchResultItem>
+					<label>Time</label>
+					<name>eventTime</name>
+				</searchResultItem>
+			</searchResultItems>
+			<nestedSearches>
+			</nestedSearches>
+			<crpWidth>800</crpWidth>
+		</searchConfiguration>
+
+
+		<!-- Data Load -->
+		<searchConfiguration id="dataLoadInquiry">
+			<xformName>DataLoadForm</xformName>
+			<xquery>
+				<![CDATA[ 
+					import module namespace searchLoad = 'searchLoad' at '/APPLICATIONS/changeme/resources/xqueries/templateContentSearches/searchLoad.xqy';
+
+					declare variable $restrictions as xs:string external;
+					declare variable $first as xs:string external;
+					declare variable $last as xs:string external;
+					declare variable $currentuser as xs:string external;
+
+					let $tableName 	:= '(: tableName :)'
+					let $fromDate	:= '(: fromDate :)'
+					let $toDate 	:= '(: toDate :)'
+					return
+						searchLoad:start($tableName,$fromDate,$toDate,$restrictions,$first,$last,$currentuser)
+				]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>tableName</name>
+						<label>Table Name</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>fromDate</name>
+						<label>From Date</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>toDate</name>
+						<label>To Date</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>table</name>
+					<label>Table</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>date</name>
+					<label>Date</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>count</name>
+					<label>Count</label>
+				</searchResultItem>
+			</searchResultItems>
+			<nestedSearches>
+				<nestedSearch>
+					<name>Load Details</name>
+					<label>Load Details</label>
+					<description>Load Details</description>
+					<configurationId>dummy</configurationId>
+					<transformationConfiguration>dataLoadModule</transformationConfiguration>
+				</nestedSearch>
+			</nestedSearches>
+		</searchConfiguration>
+
+		<searchConfiguration id="dataExtractInquiry">
+			<xformName>DataExtractForm</xformName>
+			<xquery>
+				<![CDATA[ 
+					import module namespace searchExtract = 'searchExtract' at '/APPLICATIONS/changeme/resources/xqueries/templateContentSearches/searchExtract.xqy';
+
+					declare variable $restrictions as xs:string external;
+					declare variable $first as xs:string external;
+					declare variable $last as xs:string external;
+					declare variable $currentuser as xs:string external;
+
+					let $tableName 	:= '(: tableName :)'
+					let $fromDate	:= '(: fromDate :)'
+					let $toDate 	:= '(: toDate :)'
+					return
+						searchExtract:start($tableName,$fromDate,$toDate,$restrictions,$first,$last,$currentuser)
+				]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>tableName</name>
+						<label>Table Name</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>fromDate</name>
+						<label>From Date</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>toDate</name>
+						<label>To Date</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>table</name>
+					<label>Table</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>date</name>
+					<label>Date</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>count</name>
+					<label>Count</label>
+				</searchResultItem>
+			</searchResultItems>
+			<nestedSearches>
+				<nestedSearch>
+					<name>Extraction Details</name>
+					<label>Extraction Details</label>
+					<description>Extraction Details</description>
+					<configurationId>dummy</configurationId>
+					<transformationConfiguration>dataExtractModule</transformationConfiguration>
+				</nestedSearch>
+			</nestedSearches>
+		</searchConfiguration>
+	</searchConfigurations>
+
+	<operationConfigurations>
+		<operationConfiguration id="add-hold">
+			<xqueries>
+				<xquery>add-hold.xml</xquery>
+			</xqueries>
+			<buttonLabel>Hold</buttonLabel>
+			<dialogTitle>Add hold to $count item(s)</dialogTitle>
+			<xformName>AddHoldsForm</xformName>
+			<operationFields>
+				<operationField>
+					<name>name</name>
+					<label>Name</label>
+				</operationField>
+				<operationField>
+					<name>description</name>
+					<label>Description</label>
+				</operationField>
+				<operationField>
+					<name>date</name>
+					<label>Date</label>
+					<type>date</type>
+					<required>true</required>
+				</operationField>
+			</operationFields>
+		</operationConfiguration>
+		<operationConfiguration id="set-retention">
+			<xqueries>
+				<xquery>set-retention.xml</xquery>
+			</xqueries>
+			<buttonLabel>Retention</buttonLabel>
+			<dialogTitle>Set retention on $count item(s)</dialogTitle>
+			<xformName>SetRetentionForm</xformName>
+			<operationFields>
+				<operationField>
+					<name>date</name>
+					<label>Date</label>
+					<type>date</type>
+					<required>true</required>
+				</operationField>
+				<operationField>
+					<name>XQuery</name>
+					<label>XQUERYNAME</label>
+				</operationField>
+			</operationFields>
+		</operationConfiguration>
+		<operationConfiguration id="remove-hold">
+			<xqueries>
+				<xquery>remove-hold.xml</xquery>
+			</xqueries>
+			<buttonLabel>Remove Holds</buttonLabel>
+			<dialogTitle>Remove holds</dialogTitle>
+			<message>Are you sure you want to remove the selected $count hold(s)?</message>
+		</operationConfiguration>
+	</operationConfigurations>
+</content>

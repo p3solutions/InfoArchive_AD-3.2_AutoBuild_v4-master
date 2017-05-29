@@ -1,0 +1,2383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AcmeRetention>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00001</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>ARG</CountryCode>
+        <CountryName>Argentina</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00002</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>ARG</CountryCode>
+        <CountryName>Argentina</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00003</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>ARG</CountryCode>
+        <CountryName>Argentina</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00004</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>ARG</CountryCode>
+        <CountryName>Argentina</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00005</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>AST</CountryCode>
+        <CountryName>Austria</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00006</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>AST</CountryCode>
+        <CountryName>Austria</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00007</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>AST</CountryCode>
+        <CountryName>Austria</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00008</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>AST</CountryCode>
+        <CountryName>Austria</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00009</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>AUS</CountryCode>
+        <CountryName>Australia</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00010</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>AUS</CountryCode>
+        <CountryName>Australia</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00011</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>AUS</CountryCode>
+        <CountryName>Australia</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00012</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>AUS</CountryCode>
+        <CountryName>Australia</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00013</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>BEL</CountryCode>
+        <CountryName>Belgium</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00014</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>BEL</CountryCode>
+        <CountryName>Belgium</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00015</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>BEL</CountryCode>
+        <CountryName>Belgium</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00016</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>BEL</CountryCode>
+        <CountryName>Belgium</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00017</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>BRZ</CountryCode>
+        <CountryName>Brazil</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00018</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>BRZ</CountryCode>
+        <CountryName>Brazil</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00019</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>BRZ</CountryCode>
+        <CountryName>Brazil</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00020</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>BRZ</CountryCode>
+        <CountryName>Brazil</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00021</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>CAN</CountryCode>
+        <CountryName>Canada</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00022</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>CAN</CountryCode>
+        <CountryName>Canada</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00023</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>CAN</CountryCode>
+        <CountryName>Canada</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00024</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>CAN</CountryCode>
+        <CountryName>Canada</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00025</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>CHN</CountryCode>
+        <CountryName>China</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Retain these records as long as active and needed.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>Y</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00026</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>CHN</CountryCode>
+        <CountryName>China</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Retain these records as long as active and needed.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>Y</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00027</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>CHN</CountryCode>
+        <CountryName>China</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00028</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>CHN</CountryCode>
+        <CountryName>China</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00029</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>FIN</CountryCode>
+        <CountryName>Finland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>These records should be periodically reviewed and retention decisions
+            should be made on a record class basis after consulting the legal requirements. Record
+            classes with indefinite retention cannot be considered for destruction until the legal
+            requiremen</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>Y</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00030</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>FIN</CountryCode>
+        <CountryName>Finland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>These records should be periodically reviewed and retention decisions
+            should be made on a record class basis after consulting the legal requirements. Record
+            classes with indefinite retention cannot be considered for destruction until the legal
+            requiremen</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>Y</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00031</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>FIN</CountryCode>
+        <CountryName>Finland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the records are
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00032</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>FIN</CountryCode>
+        <CountryName>Finland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the records are
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00033</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>FRA</CountryCode>
+        <CountryName>France</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00034</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>FRA</CountryCode>
+        <CountryName>France</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00035</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>FRA</CountryCode>
+        <CountryName>France</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00036</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>FRA</CountryCode>
+        <CountryName>France</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00037</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>GRM</CountryCode>
+        <CountryName>Germany</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00038</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>GRM</CountryCode>
+        <CountryName>Germany</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00039</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>GRM</CountryCode>
+        <CountryName>Germany</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00040</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>GRM</CountryCode>
+        <CountryName>Germany</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00041</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>HKG</CountryCode>
+        <CountryName>Hong Kong</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00042</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>HKG</CountryCode>
+        <CountryName>Hong Kong</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00043</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>HKG</CountryCode>
+        <CountryName>Hong Kong</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00044</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>HKG</CountryCode>
+        <CountryName>Hong Kong</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00045</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>IDA</CountryCode>
+        <CountryName>India</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00046</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>IDA</CountryCode>
+        <CountryName>India</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00047</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>IDA</CountryCode>
+        <CountryName>India</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00048</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>IDA</CountryCode>
+        <CountryName>India</CountryName>
+        <RegionName>Japan, Asia Pacific, and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00049</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>ITA</CountryCode>
+        <CountryName>Italy</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00050</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>ITA</CountryCode>
+        <CountryName>Italy</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00051</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>ITA</CountryCode>
+        <CountryName>Italy</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00052</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>ITA</CountryCode>
+        <CountryName>Italy</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00053</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>JPN</CountryCode>
+        <CountryName>Japan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00054</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>JPN</CountryCode>
+        <CountryName>Japan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00055</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>JPN</CountryCode>
+        <CountryName>Japan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00056</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>JPN</CountryCode>
+        <CountryName>Japan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00057</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>MEX</CountryCode>
+        <CountryName>Mexico</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00058</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>MEX</CountryCode>
+        <CountryName>Mexico</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00059</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>MEX</CountryCode>
+        <CountryName>Mexico</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00060</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>MEX</CountryCode>
+        <CountryName>Mexico</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00061</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>NTH</CountryCode>
+        <CountryName>Netherlands</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00062</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>NTH</CountryCode>
+        <CountryName>Netherlands</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00063</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>NTH</CountryCode>
+        <CountryName>Netherlands</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00064</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>NTH</CountryCode>
+        <CountryName>Netherlands</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00065</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>NZD</CountryCode>
+        <CountryName>New Zealand</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00066</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>NZD</CountryCode>
+        <CountryName>New Zealand</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00067</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>NZD</CountryCode>
+        <CountryName>New Zealand</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00068</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>NZD</CountryCode>
+        <CountryName>New Zealand</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>7</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00069</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>PHL</CountryCode>
+        <CountryName>Philippines</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00070</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>PHL</CountryCode>
+        <CountryName>Philippines</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00071</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>PHL</CountryCode>
+        <CountryName>Philippines</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00072</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>PHL</CountryCode>
+        <CountryName>Philippines</CountryName>
+        <RegionName>Japan, Middle East and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00073</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>RUS</CountryCode>
+        <CountryName>Russia</CountryName>
+        <RegionName>Europe, Middle, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>5</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00074</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>RUS</CountryCode>
+        <CountryName>Russia</CountryName>
+        <RegionName>Europe, Middle, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>5</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00075</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>RUS</CountryCode>
+        <CountryName>Russia</CountryName>
+        <RegionName>Europe, Middle, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>5</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00076</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>RUS</CountryCode>
+        <CountryName>Russia</CountryName>
+        <RegionName>Europe, Middle, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>5</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00077</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SNG</CountryCode>
+        <CountryName>Singapore</CountryName>
+        <RegionName>Japan, Asia Pacific, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Active while in process. The retention period begins on the date in
+            which the cause of action accrued.</RetentionEventDesc>
+        <TotalRetentionPeriod>6</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>Y</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00078</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SNG</CountryCode>
+        <CountryName>Singapore</CountryName>
+        <RegionName>Japan, Asia Pacific, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Active while in process. The retention period begins on the date in
+            which the cause of action accrued.</RetentionEventDesc>
+        <TotalRetentionPeriod>6</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>Y</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00079</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SNG</CountryCode>
+        <CountryName>Singapore</CountryName>
+        <RegionName>Japan, Asia Pacific, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Active while in process. The retention period begins on the date in
+            which the cause of action accrued.</RetentionEventDesc>
+        <TotalRetentionPeriod>6</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>Y</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00080</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SNG</CountryCode>
+        <CountryName>Singapore</CountryName>
+        <RegionName>Japan, Asia Pacific, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Active while in process. The retention period begins on the date in
+            which the cause of action accrued.</RetentionEventDesc>
+        <TotalRetentionPeriod>6</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>Y</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00081</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SPN</CountryCode>
+        <CountryName>Spain</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00082</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SPN</CountryCode>
+        <CountryName>Spain</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00083</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SPN</CountryCode>
+        <CountryName>Spain</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00084</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SPN</CountryCode>
+        <CountryName>Spain</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00085</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SWE</CountryCode>
+        <CountryName>Sweden</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>11</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00086</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SWE</CountryCode>
+        <CountryName>Sweden</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>11</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00087</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SWE</CountryCode>
+        <CountryName>Sweden</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>11</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00088</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SWE</CountryCode>
+        <CountryName>Sweden</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>11</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00089</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SWZ</CountryCode>
+        <CountryName>Switzerland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00090</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>SWZ</CountryCode>
+        <CountryName>Switzerland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00091</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SWZ</CountryCode>
+        <CountryName>Switzerland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00092</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>SWZ</CountryCode>
+        <CountryName>Switzerland</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00093</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>TAI</CountryCode>
+        <CountryName>Thailand</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00094</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>TAI</CountryCode>
+        <CountryName>Thailand</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00095</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>TAI</CountryCode>
+        <CountryName>Thailand</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00096</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>TAI</CountryCode>
+        <CountryName>Thailand</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>10</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00097</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>TWN</CountryCode>
+        <CountryName>Taiwan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00098</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>TWN</CountryCode>
+        <CountryName>Taiwan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00099</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>TWN</CountryCode>
+        <CountryName>Taiwan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00100</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>TWN</CountryCode>
+        <CountryName>Taiwan</CountryName>
+        <RegionName>Japan, Asia Pacific and Australia</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>15</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00101</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>UNK</CountryCode>
+        <CountryName>United Kingdom</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00102</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>UNK</CountryCode>
+        <CountryName>United Kingdom</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00103</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>UNK</CountryCode>
+        <CountryName>United Kingdom</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000003-73ff-4f49-8000-000c29f00104</GUID>
+        <RecordCreated>2006-10-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>UNK</CountryCode>
+        <CountryName>United Kingdom</CountryName>
+        <RegionName>Europe, Middle East, and Africa</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins on the last day of the fiscal year in which
+            the record is created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>Y</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000004-73ff-4f49-8000-000c29f00105</GUID>
+        <RecordCreated>1985-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>USA</CountryCode>
+        <CountryName>United States</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Retain these records only as long as they are needed, up to a maximum of
+            three years. The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>100</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000000-73ff-4f49-8000-000c29f00106</GUID>
+        <RecordCreated>2012-09-16T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 1</CustomerRecordClassCode>
+        <RecordClassName>Accounting and Financial Internal Reporting</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 1</CategoryCode>
+        <CountryCode>USA</CountryCode>
+        <CountryName>United States</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>Retain these records only as long as they are needed, up to a maximum of
+            three years. The retention period begins when the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>75</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>N</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000001-73ff-4f49-8000-000c29f00107</GUID>
+        <RecordCreated>2002-07-15T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>Y</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>USA</CountryCode>
+        <CountryName>United States</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>50</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+    <AcmeRetention-Row>
+        <GUID>00000002-73ff-4f49-8000-000c29f00108</GUID>
+        <RecordCreated>1994-06-02T00:00:00</RecordCreated>
+        <CustomerRecordClassCode>Class 2</CustomerRecordClassCode>
+        <RecordClassName>Accounts Payable / Receivable / Bad Debts and Collections</RecordClassName>
+        
+        <RecordActive>N</RecordActive>
+        <CategoryCode>Category 2</CategoryCode>
+        <CountryCode>USA</CountryCode>
+        <CountryName>United States</CountryName>
+        <RegionName>Americas</RegionName>
+        <RetentionEventCode/>
+        <RetentionEventDesc>The retention period begins the date the record is
+            created.</RetentionEventDesc>
+        <TotalRetentionPeriod>25</TotalRetentionPeriod>
+        <MinimumRetentionPeriod>Y</MinimumRetentionPeriod>
+        <RetentionUnit>Years</RetentionUnit>
+        <BeginRetentionFiscalYearEnd>N</BeginRetentionFiscalYearEnd>
+        <BeginRetentionWhenInactive>N</BeginRetentionWhenInactive>
+        <HoldIndefinitely>N</HoldIndefinitely>
+        <HoldUntilInactive>N</HoldUntilInactive>
+    </AcmeRetention-Row>
+</AcmeRetention>

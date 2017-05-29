@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+  <name>Baseball</name>
+    <table name="BASEBALL_ALLSTARFULL" validation="100%" />
+    <table name="BASEBALL_APPEARANCES" validation="100%" />
+    <table name="BASEBALL_AWARDSMANAGERS" validation="100%" />
+    <table name="BASEBALL_AWARDSPLAYERS" validation="100%" />
+    <table name="BASEBALL_AWARDSSHAREMANAGERS" validation="100%" />
+    <table name="BASEBALL_AWARDSSHAREPLAYERS" validation="100%" />
+    <table name="BASEBALL_BASIC" validation="100%" />
+    <table name="BASEBALL_BATTING" validation="100%" />
+    <table name="BASEBALL_BATTINGPOST" validation="100%" />
+    <table name="BASEBALL_FIELDING" validation="100%" />
+    <table name="BASEBALL_FIELDINGOF" validation="100%" />
+    <table name="BASEBALL_FIELDINGPOST" validation="100%" />
+    <table name="BASEBALL_HALLOFFAME" validation="100%" />
+    <table name="BASEBALL_MANAGERS" validation="100%" />
+    <table name="BASEBALL_MANAGERSHALF" validation="100%" />
+    <table name="BASEBALL_MASTER" validation="100%" />
+    <table name="BASEBALL_PITCHING" validation="100%" />
+    <table name="BASEBALL_PITCHINGPOST" validation="100%" />
+    <table name="BASEBALL_SALARIES" validation="100%" />
+    <table name="BASEBALL_SCHOOLS" validation="100%" />
+    <table name="BASEBALL_SCHOOLSPLAYERS" validation="100%" />
+    <table name="BASEBALL_SERIESPOST" validation="100%" />
+    <table name="BASEBALL_TEAMS" validation="100%" />
+</dataset>

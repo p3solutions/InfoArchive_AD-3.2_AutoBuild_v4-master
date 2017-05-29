@@ -1,0 +1,99 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $personID external;
+declare variable $empNumber external;
+declare variable $ssNumber external;
+declare variable $lastName external;
+declare variable $firstName external;
+declare variable $middleName external;
+declare variable $location external;
+declare variable $position external;
+declare variable $birthDate external;
+declare variable $maritalStatus external;
+declare variable $gender external;
+declare variable $title external;
+declare variable $payRate external;
+declare variable $lastCheckDate external;
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+	(: unit test setup 
+    let $personID := xs:int('32')
+    let $empNumber := "000004545"
+    let $ssNumber := "123-45-6789"
+    let $lastName := "DECICCO"
+    let $firstName := "VINCENT"
+    let $middleName := "M"
+    let $location := "00000876"
+    let $birthDate := "1939-08-03T00:00:00.000000000"
+    let $maritalStatus := "M"
+    let $gender := "M"
+    let $title := "RECEIVING CLERK"
+    let $payRate := "14.6320"
+    let $lastCheckDate := "1999-07-14T00:00:00.000000000"
+     :)
+     
+	let $addposresults := for $elem in doc(concat($path,'/EMPDETAILADDPOSINFO'))/EMPDETAILADDPOSINFO/EMPDETAILADDPOSINFO-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empservicehist := for $elem in doc(concat($path,'/EMPDETAIL_SERVICEHIST'))/EMPDETAIL_SERVICEHIST/EMPDETAIL_SERVICEHIST-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empfedtaxes := for $elem in doc(concat($path,'/EMPDETAIL_FEDTAXES'))/EMPDETAIL_FEDTAXES/EMPDETAIL_FEDTAXES-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $emphist := for $elem in doc(concat($path,'/EMPDETAILEMPHIST'))/EMPDETAILEMPHIST/EMPDETAILEMPHIST-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empheader := for $elem in doc(concat($path,'/EMPDETAILHDR'))/EMPDETAILHDR/EMPDETAILHDR-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $payhist_header := for $elem in doc(concat($path,'/PAY_HISTHDR'))/PAY_HISTHDR/PAY_HISTHDR-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $person := for $elem in doc(concat($path,'/PERSON'))/PERSON/PERSON-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $pay_hist_details := for $elem in doc(concat($path, '/PAY_HISTDTL'))/PAY_HISTDTL/PAY_HISTDTL-ROW[./PERSON_ID= xs:integer($personID)]
+    	order by $elem/CHARGE_DATE descending
+    	return $elem
+    let $latest_pay_hist_details := $pay_hist_details[1]
+	                      	
+	return
+		(
+		<results>
+			<employee_summary personID='{ xs:integer($personID) }' empNumber='{ $empNumber }' ssNumber='{ $ssNumber }' lastName='{ $lastName }'
+				firstName='{ $firstName }' middleName='{ $middleName }' location='{ $location }' birthDate='{ $birthDate }'
+				maritalStatus='{ $maritalStatus }' gender='{ $gender }' title='{ $title }' payRate='{ $payRate }' lastCheckDate='{ $lastCheckDate }' />
+      		<additional_position_information>
+      		{ $addposresults }
+      		</additional_position_information>
+      		<service_history>
+      		{ $empservicehist }
+      		</service_history>
+      		<employment_history>
+      		{ $emphist }
+      		</employment_history>
+      		<federal_taxes>
+      		{ $empfedtaxes }
+      		</federal_taxes>
+      		<state_taxes>
+      		</state_taxes>
+      		<local_taxes>
+      		</local_taxes>
+      		<employee_header>
+      		{ $empheader }
+      		</employee_header>
+      		<payhist_header>
+      		{ $payhist_header }
+      		</payhist_header>
+      		<person_data>
+      		{ $person }
+      		</person_data>
+      		<mostrecent_payhist>
+            { $latest_pay_hist_details }
+            </mostrecent_payhist>
+      		
+		</results>
+		)
+]]></expression>
+</xquery>

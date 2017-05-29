@@ -1,0 +1,39 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>create-hold-acme</name>
+  <dataset>changeme</dataset>
+  <type>AcmeHold</type>
+  <expression><![CDATA[
+        declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    declare variable $input external;
+    declare variable $currentuser  external;
+    declare variable $now  := fn:current-dateTime();
+    declare variable $path :='/DATA/changeme/Collection/ACME/HOLDS';
+    
+
+
+
+	(: Unit tests
+	  let $name='Test Hold 2'
+let $input := <?xml version="1.0" encoding="UTF-8"?>
+<data><selection><result Name="Test Hold 1" Authority="HoldAuthority" Description="A test Hold" Matters="Awkward Horse Lawsuit,Dennys vs. Amex" Date_Created="7/14/2014 8:24" Date_Start="7/20/2014 16:8" Date_End="8/20/2014 0:0" Status="Active" RecordCount="102" type="AcmeHold"/></selection><Name>Test Hold 50</Name><Description>The Description</Description><Start_Date xsi:type="xforms:date" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">2014-07-30</Start_Date><End_Date xsi:type="xforms:date" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><Matter>Matter 60</Matter><Authority>brkc</Authority></data>
+
+	:)
+		for $elem in doc($path)/AcmeHolds
+		return if (doc($path)/AcmeHolds/AcmeHold[Name=$input/Name/text()]) then <bar>{data ($input/Name)}</bar>
+		else (insert node <AcmeHold>
+				<Name>{$input/Name/text()}</Name>
+				<Authority>{$input/Authority/text()}</Authority>
+				<Description>{$input/Description/text()}</Description>
+				<Matters><Matter>{$input/Matter/text()}</Matter></Matters>
+				<Date_Created>{$now}</Date_Created>
+				<Date_Start>{concat($input/Start_Date/text(), 'T00:00:00')}</Date_Start>
+				<Date_End>{if (empty(data($input/End_Date/text()))) then '' else (concat($input/End_Date/text(), 'T00:00:00'))}</Date_End>
+				<Date_Cancelled/>
+				<Status>Active</Status>
+				<XQuery/>
+				<RecordCount>0</RecordCount>
+				<Records/>
+				</AcmeHold>
+      		as last into $elem)        
+  ]]></expression>
+  </xquery>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+  <name>Employee Management</name>
+  <table name="PAY_HISTHDR" validation="100%" />
+  <table name="PAY_HISTDTL" validation="100%" />
+  <table name="EMPDEATAILHDR" validation="100%" />
+  <table name="EMPDETAILEMPHIST" validation="100%" />
+  <table name="EMPDETAIL_FEDTAXES" validation="100%" />
+  <table name="EMPDETAIL_SERVICEHIST" validation="100%" />
+  <table name="EMPDETAILADDPOSINFO" validation="100%" />
+  <table name="PERSON" validation="100%"/>
+</dataset>

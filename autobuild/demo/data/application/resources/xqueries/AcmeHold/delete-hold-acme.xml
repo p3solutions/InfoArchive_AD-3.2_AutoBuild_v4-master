@@ -1,0 +1,18 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>delete-hold-acme</name>
+  <dataset>changeme</dataset>
+  <type>AcmeHold</type>
+  <expression><![CDATA[
+
+    declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    declare variable $input external;
+    declare variable $currentuser  external;
+    declare variable $now  := fn:current-dateTime();
+    declare variable $path :='/DATA/changeme/Collection/ACME/HOLDS';
+
+    for $holdsToDelete in $input/selection/result/@Name
+		 return delete node fn:doc($path)/AcmeHolds/AcmeHold[Name = $holdsToDelete]
+
+		        
+  ]]></expression>
+  </xquery>

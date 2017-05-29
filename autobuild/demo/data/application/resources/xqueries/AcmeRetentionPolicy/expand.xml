@@ -1,0 +1,70 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+            declare option xhive:index-debug 'true';
+            declare option xhive:queryplan-debug 'true';
+            declare option xhive:pathexpr-debug 'true';
+              (: declare option xhive:optimizer-debug 'true'; :)
+      declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+	  declare variable $CountryName as xs:string external;
+	  declare variable $CustomerRecordClassCode as xs:string external;
+	  declare variable $TotalRetentionPeriod as xs:string external;
+	  declare variable $RetentionPolicyGUID as xs:string external;
+
+	  declare variable $CutoffDate as xs:date external;
+	  declare variable $CutoffDatePlus30 as xs:date external;
+	  declare variable $CutoffDatePlus60 as xs:date external;
+	  declare variable $CutoffDatePlus90 as xs:date external;
+            declare variable $restrictions as xs:string external;
+            declare variable $currentuser as xs:string external;
+ 
+		(:
+		let $CountryName := 'Argentina'
+		let $CustomerRecordClassCode := 'ACC1000'
+		let $TotalRetentionPeriod := '10'
+		let $RetentionPolicyGUID := '00000000-73ff-4f49-8000-000c29f00001'
+		let $RecordActive := 'Y'
+		:)
+
+
+		let $CutoffDate := fn:current-dateTime() - xs:yearMonthDuration(fn:concat('P',$TotalRetentionPeriod,'Y'))
+		let $CutoffDatePlus30 := $CutoffDate + xs:dayTimeDuration('P30D')
+		let $CutoffDatePlus60 := $CutoffDate + xs:dayTimeDuration('P60D')
+		let $CutoffDatePlus90 := $CutoffDate + xs:dayTimeDuration('P90D')
+
+
+
+            (: do not use external variables for parameters as empty values cannot be passed as variable :) 
+	  let $expired   := count(doc('/DATA/changeme/Collection/ACME/SAMPLES')/AcmeRecord/AcmeRecord-Row[RecordClass = $CustomerRecordClassCode][Market=$CountryName][EffectiveDate < $CutoffDate])
+	  let $expired30 := count(doc('/DATA/changeme/Collection/ACME/SAMPLES')/AcmeRecord/AcmeRecord-Row[RecordClass = $CustomerRecordClassCode][Market=$CountryName][EffectiveDate < $CutoffDatePlus30])
+	  let $expired60 := count(doc('/DATA/changeme/Collection/ACME/SAMPLES')/AcmeRecord/AcmeRecord-Row[RecordClass = $CustomerRecordClassCode][Market=$CountryName][EffectiveDate < $CutoffDatePlus60])
+	  let $expired90 := count(doc('/DATA/changeme/Collection/ACME/SAMPLES')/AcmeRecord/AcmeRecord-Row[RecordClass = $CustomerRecordClassCode][Market=$CountryName][EffectiveDate < $CutoffDatePlus90])
+
+	  let $auditlog := for $audit in doc('/DATA/changeme/Collection/ACME/RETENTION_EVENTS/')/AcmeRetentionEvent/AcmeRetentionEvent-Row[GUID/@RetentionPolicyGUID = $RetentionPolicyGUID]
+		return <audit_log>{$audit}</audit_log>
+		
+
+                                  
+
+	 return <result>
+		<cutoff00>{$CutoffDate}</cutoff00>
+		<cutoff30>{$CutoffDatePlus30}</cutoff30>
+		<cutoff60>{$CutoffDatePlus60}</cutoff60>
+		<cutoff90>{$CutoffDatePlus90}</cutoff90>
+		<expired>{$expired}</expired>
+		<expired30>{$expired30}</expired30>
+		<expired60>{$expired60}</expired60>
+		<expired90>{$expired90}</expired90>
+		<audit>{$auditlog}</audit>
+	        </result>
+
+
+
+
+]]></expression>
+</xquery>

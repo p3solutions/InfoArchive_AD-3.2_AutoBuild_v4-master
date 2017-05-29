@@ -1,0 +1,2425 @@
+<project name="changeme" default="run" xmlns:xdb="http://www.emc.com/documentum/xml/xdb" xmlns:dds="http://www.emc.com/documentum/xml/dds">
+
+  <property file="build.properties"/>
+  <import file="../../../bin/build.xml"/>  
+
+  <property file="../../../bin/build.number"/>
+  <property file="build.number"/>
+
+  <property name="retentionDate" value="2020-03-13"/>
+
+  <!-- Makes sure the environment is properly set -->
+  <target name="-init" depends="DDS-dist.-init">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+  </target>
+  
+  <!-- loads all data required before the demo can run -->
+  <!-- create datasets -->
+  <!-- load all application data, except xqueries -->
+  <target name="load-initial-data" depends="-init-anttasks" unless="dontLoad">
+    <property name="dontLoad" value="true"/>
+    <property name="application" value="changeme"/>    
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+    
+    <!-- Upload the application data excluding xqueries -->
+    <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <include name="**/*.xpl"/>
+        <include name="**/*.xsl"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.xfm"/>
+        <include name="**/*.xsd"/>
+        <include name="**/xforms"/>
+        <include name="**/xproc"/>
+        <include name="**/xslt"/>
+        <include name="**/xqueries/customers"/>
+        <include name="**/xqueries/employees"/>
+        <include name="**/xqueries/training"/>
+        <exclude name="*/xqueries/**/*.xml"/>
+        <exclude name="**/template/*.xml"/>
+      </dds:xmlfileset>
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <domconfiguration>
+          <parameter name="validate" value="true"/>
+        </domconfiguration>     
+        <include name="**/template/*.xml"/>
+      </dds:xmlfileset>
+      <dds:blobfileset dir="${application.dir}/data/application">
+        <include name="**/*.txt"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.css"/>
+      </dds:blobfileset>
+    </dds:import-application-data>
+    
+    <!-- create datasets -->
+    <antcall target="-create-new-datasets"/>
+          
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+ 
+  <!-- This target will create a single default dataset for the project (e.g. "changeme/root-library/DATA/changeme") -->
+  <target name="-create-new-datasets" depends="-init-anttasks">
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+	<dds:create-dataset dataset="${app}" localeaware="false" databaseref="database" overwrite="true" force="${force}" quiet="false">
+	  <libraryoptions>
+	    <option name='concurrent-library' value='true'/>
+	  </libraryoptions>
+	</dds:create-dataset>
+    <dds:create-dataset dataset="metadata" localeaware="false" databaseref="database" overwrite="true" force="${force}" quiet="false">
+	  <libraryoptions>
+	    <option name='concurrent-library' value='true'/>
+	  </libraryoptions>
+	</dds:create-dataset>
+  </target>
+ 
+  <!-- required parameters: name -->
+  <target name="create-entity" depends="-init-anttasks" unless="dontLoad">
+    <property name="dontLoad" value="true"/>
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+    <!-- create the entity xqueries location -->
+    <xdb:createlibrary name="${name}"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="/APPLICATIONS/changeme/resources/xqueries"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+
+    <!-- create the chainofcustody location -->    
+    <xdb:createlibrary name="${name}"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="/DATA/metadata/Collection"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+  
+  <target name="load-xqueries" depends="-init-anttasks" unless="dontLoad">
+    <property name="dontLoad" value="true"/>
+    <property name="application" value="changeme"/>    
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+    <!-- Upload the application data -->
+    <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <include name="*/xqueries/**/*.xml"/>
+      </dds:xmlfileset>
+    </dds:import-application-data>
+
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+  
+  <!-- load all repository data -->
+  <!-- pass in a value for xmldatadir if you want to use a non-standard location as the source for xml data files -->
+  <target name="load-data" depends="-init-anttasks" unless="dontLoad">
+	<!-- Set the name of the dataset. For this template, we use the application name as dataset name -->
+	<dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+	
+	<property name="xmldatadir" value="${application.bin.dir}/../data/repository/${app}"/> <!-- if not passed in -->
+		
+	<xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+  	
+    <xdb:createlibrary name="metadata"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="/DATA"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+	
+	<xdb:createlibrary name="Collection"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="/DATA/metadata"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+
+        <!-- ================================================================================================================== -->
+
+		<xdb:createlibrary name="baseball" concurrentlibrary="true">
+			<xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+				<xdb:library path="/DATA/metadata/Collection"/>
+			</xdb:database>
+		</xdb:createlibrary>
+
+		<xdb:upload>
+			<fileset dir="${application.bin.dir}/../data/repository/metadata/Collection/baseball">
+				<include name="*.xml" />
+			</fileset>
+			<xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+				<xdb:library path="/DATA/metadata/Collection/baseball" />
+			</xdb:database>
+		</xdb:upload>
+
+		<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="employee" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	
+	<xdb:upload>
+	  <fileset dir="${application.bin.dir}/../data/repository/metadata/Collection/employee">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection/employee"/>
+	  </xdb:database>
+	</xdb:upload>
+
+        <!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="property" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	
+	<xdb:upload>
+	  <fileset dir="${application.bin.dir}/../data/repository/metadata/Collection/property">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection/property"/>
+	  </xdb:database>
+	</xdb:upload>
+
+        <!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="reconciliation" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	
+	<xdb:upload>
+	  <fileset dir="${application.bin.dir}/../data/repository/metadata/Collection/reconciliation">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/metadata/Collection/reconciliation"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="AuditTrail" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="ACCOUNT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	
+  	<unzip src="${xmldatadir}/Collection/ACCOUNT/ACCOUNT.zip" dest="${xmldatadir}/Collection/ACCOUNT"/>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/ACCOUNT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/ACCOUNT"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="ACCOUNT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/ACCOUNT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/ACCOUNT"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="ARS_USERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<unzip src="${xmldatadir}/Collection/ARS_USERS/ARS_USERS.zip" dest="${xmldatadir}/Collection/ARS_USERS"/>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/ARS_USERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/ARS_USERS"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="ARS_USERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/ARS_USERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/ARS_USERS"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="DEPARTMENT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/DEPARTMENT/DEPARTMENT.zip" dest="${xmldatadir}/Collection/DEPARTMENT"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/DEPARTMENT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/DEPARTMENT"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="DEPARTMENT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/DEPARTMENT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/DEPARTMENT"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="EMPDETAIL_FEDTAXES" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/EMPDETAIL_FEDTAXES/EMPDETAIL_FEDTAXES.zip" dest="${xmldatadir}/Collection/EMPDETAIL_FEDTAXES"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/EMPDETAIL_FEDTAXES">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/EMPDETAIL_FEDTAXES"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="EMPDETAIL_FEDTAXES" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/EMPDETAIL_FEDTAXES">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/EMPDETAIL_FEDTAXES"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="EMPDETAIL_SERVICEHIST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/EMPDETAIL_SERVICEHIST/EMPDETAIL_SERVICEHIST.zip" dest="${xmldatadir}/Collection/EMPDETAIL_SERVICEHIST"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/EMPDETAIL_SERVICEHIST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/EMPDETAIL_SERVICEHIST"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="EMPDETAIL_SERVICEHIST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/EMPDETAIL_SERVICEHIST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/EMPDETAIL_SERVICEHIST"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="EMPDETAILADDPOSINFO" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	</xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/EMPDETAILADDPOSINFO/EMPDETAILADDPOSINFO.zip" dest="${xmldatadir}/Collection/EMPDETAILADDPOSINFO"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/EMPDETAILADDPOSINFO">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/EMPDETAILADDPOSINFO"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="EMPDETAILADDPOSINFO" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/EMPDETAILADDPOSINFO">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/EMPDETAILADDPOSINFO"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="EMPDETAILEMPHIST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/EMPDETAILEMPHIST/EMPDETAILEMPHIST.zip" dest="${xmldatadir}/Collection/EMPDETAILEMPHIST"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/EMPDETAILEMPHIST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/EMPDETAILEMPHIST"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="EMPDETAILEMPHIST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/EMPDETAILEMPHIST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/EMPDETAILEMPHIST"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="EMPDETAILHDR" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/EMPDETAILHDR/EMPDETAILHDR.zip" dest="${xmldatadir}/Collection/EMPDETAILHDR"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/EMPDETAILHDR">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/EMPDETAILHDR"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="EMPDETAILHDR" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/EMPDETAILHDR">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/EMPDETAILHDR"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="LEASE_OPTION" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/LEASE_OPTION/LEASE_OPTION.zip" dest="${xmldatadir}/Collection/LEASE_OPTION"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/LEASE_OPTION">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/LEASE_OPTION"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="LEASE_OPTION" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/LEASE_OPTION">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/LEASE_OPTION"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="PAY_HISTDTL" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/PAY_HISTDTL/PAY_HISTDTL.zip" dest="${xmldatadir}/Collection/PAY_HISTDTL"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/PAY_HISTDTL">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/PAY_HISTDTL"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="PAY_HISTDTL" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/PAY_HISTDTL">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/PAY_HISTDTL"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+  	
+	<xdb:createlibrary name="PAY_HISTHDR" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/PAY_HISTHDR/PAY_HISTHDR.zip" dest="${xmldatadir}/Collection/PAY_HISTHDR"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/PAY_HISTHDR">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/PAY_HISTHDR"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="PAY_HISTHDR" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/PAY_HISTHDR">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/PAY_HISTHDR"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="PERSON" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/PERSON/PERSON.zip" dest="${xmldatadir}/Collection/PERSON"/>
+
+  		<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/PERSON">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/PERSON"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<xdb:createlibrary name="PERSON" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/PERSON">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/PERSON"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="PROPERTY_SEARCH" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/PROPERTY_SEARCH/PROPERTY_SEARCH.zip" dest="${xmldatadir}/Collection/PROPERTY_SEARCH"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/PROPERTY_SEARCH">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/PROPERTY_SEARCH"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="PROPERTY_SEARCH" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/PROPERTY_SEARCH">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/PROPERTY_SEARCH"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="RECONCILIATION" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/RECONCILIATION/RECONCILIATION.zip" dest="${xmldatadir}/Collection/RECONCILIATION"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/RECONCILIATION">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/RECONCILIATION"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<xdb:createlibrary name="RECONCILIATION" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/RECONCILIATION">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/RECONCILIATION"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="RECONCILIATION_ACCOUNT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/RECONCILIATION_ACCOUNT/RECONCILIATION_ACCOUNT.zip" dest="${xmldatadir}/Collection/RECONCILIATION_ACCOUNT"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/RECONCILIATION_ACCOUNT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/RECONCILIATION_ACCOUNT"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="RECONCILIATION_ACCOUNT" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/RECONCILIATION_ACCOUNT">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/RECONCILIATION_ACCOUNT"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="RECONCILIATION_LOG" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/RECONCILIATION_LOG/RECONCILIATION_LOG.zip" dest="${xmldatadir}/Collection/RECONCILIATION_LOG"/>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/RECONCILIATION_LOG">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/RECONCILIATION_LOG"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<xdb:createlibrary name="RECONCILIATION_LOG" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/RECONCILIATION_LOG">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/RECONCILIATION_LOG"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="RENT_STREAM" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+	
+  	<unzip src="${xmldatadir}/Collection/RENT_STREAM/RENT_STREAM.zip" dest="${xmldatadir}/Collection/RENT_STREAM"/>
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/RENT_STREAM">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/RENT_STREAM"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<xdb:createlibrary name="RENT_STREAM" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+  	
+	<xdb:upload>
+	  <fileset dir="${xmldatadir}/CollectionMetadata/RENT_STREAM">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata/RENT_STREAM"/>
+	  </xdb:database>
+	</xdb:upload>
+  	
+	<!-- ================================================================================================================== -->
+
+  	<xdb:createlibrary name="CHECKS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	 
+	 <xdb:createlibrary name="CHECKS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	 </xdb:createlibrary>
+	 
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/CHECKS">
+		<include name="*.xml"/>
+		<include name="*.png"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/CHECKS"/>
+	  </xdb:database>
+	</xdb:upload>
+
+	<!-- ================================================================================================================== -->
+
+	<xdb:upload>
+	  <fileset dir="${application.bin.dir}/../data">
+		<include name="xDB-EAS-JDBC.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/APPLICATIONS"/>
+	  </xdb:database>
+	</xdb:upload>  	
+  	
+	<!-- ================================================================================================================== -->
+
+	<xdb:createlibrary name="BASEBALL" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/CollectionMetadata"/>
+	  </xdb:database>
+	</xdb:createlibrary>
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL">
+            <include name="SystemMetaData.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:upload>   
+
+
+        <xdb:createlibrary name="BASEBALL_ALLSTARFULL" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_ALLSTARFULL">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_ALLSTARFULL"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_APPEARANCES" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_APPEARANCES">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_APPEARANCES"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_AWARDSMANAGERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSMANAGERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSMANAGERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_AWARDSPLAYERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSPLAYERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSPLAYERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_AWARDSSHAREMANAGERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSSHAREMANAGERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSSHAREMANAGERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_AWARDSSHAREPLAYERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSSHAREPLAYERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_AWARDSSHAREPLAYERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_BASIC" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_BASIC">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_BASIC"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_BATTING" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_BATTING">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_BATTING"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_BATTINGPOST" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_BATTINGPOST">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_BATTINGPOST"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_FIELDING" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_FIELDING">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_FIELDING"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_FIELDINGOF" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_FIELDINGOF">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_FIELDINGOF"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_FIELDINGPOST" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_FIELDINGPOST">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_FIELDINGPOST"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_HALLOFFAME" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_HALLOFFAME">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_HALLOFFAME"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_MANAGERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_MANAGERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_MANAGERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_MANAGERSHALF" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_MANAGERSHALF">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_MANAGERSHALF"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_MASTER" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_MASTER">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_MASTER"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_PITCHING" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_PITCHING">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_PITCHING"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_PITCHINGPOST" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_PITCHINGPOST">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_PITCHINGPOST"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_SALARIES" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_SALARIES">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_SALARIES"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_SCHOOLS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_SCHOOLS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_SCHOOLS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_SCHOOLSPLAYERS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_SCHOOLSPLAYERS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_SCHOOLSPLAYERS"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_SERIESPOST" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_SERIESPOST">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_SERIESPOST"/>
+          </xdb:database>
+        </xdb:upload>   
+        
+
+        <xdb:createlibrary name="BASEBALL_TEAMS" concurrentlibrary="true">
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL"/>
+          </xdb:database>
+        </xdb:createlibrary> 
+
+        <xdb:upload>
+          <fileset dir="${xmldatadir}/CollectionMetadata/BASEBALL/BASEBALL_TEAMS">
+            <include name="*.xml"/>
+          </fileset>
+          <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/CollectionMetadata/BASEBALL/BASEBALL_TEAMS"/>
+          </xdb:database>
+        </xdb:upload>   
+  	
+  	
+  	<xdb:createlibrary name="BASEBALL" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<xdb:createlibrary name="BASEBALL_ALLSTARFULL" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_ALLSTARFULL">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_ALLSTARFULL"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_APPEARANCES" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_APPEARANCES">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_APPEARANCES"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+
+ 	<xdb:createlibrary name="BASEBALL_AWARDSMANAGERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_AWARDSMANAGERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_AWARDSMANAGERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_AWARDSPLAYERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_AWARDSPLAYERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_AWARDSPLAYERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_AWARDSSHAREMANAGERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_AWARDSSHAREMANAGERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_AWARDSSHAREMANAGERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_AWARDSSHAREPLAYERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_AWARDSSHAREPLAYERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_AWARDSSHAREPLAYERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_BASIC" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_BASIC">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_BASIC"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_BATTING" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_BATTING">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_BATTING"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_BATTINGPOST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_BATTINGPOST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_BATTINGPOST"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_FIELDING" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_FIELDING">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_FIELDING"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_FIELDINGOF" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_FIELDINGOF">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_FIELDINGOF"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_FIELDINGPOST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_FIELDINGPOST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_FIELDINGPOST"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_HALLOFFAME" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_HALLOFFAME">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_HALLOFFAME"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_MANAGERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_MANAGERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_MANAGERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_MANAGERSHALF" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_MANAGERSHALF">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_MANAGERSHALF"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_MASTER" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_MASTER">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_MASTER"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_PITCHING" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_PITCHING">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_PITCHING"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_PITCHINGPOST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_PITCHINGPOST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_PITCHINGPOST"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_SALARIES" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_SALARIES">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_SALARIES"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_SCHOOLS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_SCHOOLS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_SCHOOLS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_SCHOOLSPLAYERS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_SCHOOLSPLAYERS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_SCHOOLSPLAYERS"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_SERIESPOST" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_SERIESPOST">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_SERIESPOST"/>
+	  </xdb:database>
+	</xdb:upload>	
+
+ 	<xdb:createlibrary name="BASEBALL_TEAMS" concurrentlibrary="true">
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL"/>
+	  </xdb:database>
+	 </xdb:createlibrary> 
+
+  	<xdb:upload>
+	  <fileset dir="${xmldatadir}/Collection/BASEBALL/BASEBALL_TEAMS">
+		<include name="*.xml"/>
+	  </fileset>
+	  <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+		<xdb:library path="/DATA/${app}/Collection/BASEBALL/BASEBALL_TEAMS"/>
+	  </xdb:database>
+	</xdb:upload>	
+  	
+
+    <echo>Creating ACME </echo>
+
+    <xdb:createlibrary name="ACME" concurrentlibrary="true">
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection"/>
+        </xdb:database>
+    </xdb:createlibrary>
+
+    <xdb:createlibrary name="SAMPLES" concurrentlibrary="true">
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME"/>
+        </xdb:database>
+    </xdb:createlibrary>
+
+    <xdb:createlibrary name="POLICIES" concurrentlibrary="true">
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME"/>
+        </xdb:database>
+    </xdb:createlibrary>
+
+    <xdb:createlibrary name="RETENTION_EVENTS" concurrentlibrary="true">
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME"/>
+        </xdb:database>
+    </xdb:createlibrary>
+
+    <xdb:createlibrary name="HOLDS" concurrentlibrary="true">
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME"/>
+        </xdb:database>
+    </xdb:createlibrary>
+
+    <xdb:upload>
+        <fileset dir="${xmldatadir}/Collection/ACME">
+            <include name="sampleAccountData.xml"/>
+        </fileset>
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+    </xdb:upload>
+
+    <xdb:upload>
+        <fileset dir="${xmldatadir}/Collection/ACME">
+            <include name="sampleRetentionPolicies.xml"/>
+        </fileset>
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME/POLICIES"/>
+        </xdb:database>
+    </xdb:upload>
+
+    <xdb:upload>
+        <fileset dir="${xmldatadir}/Collection/ACME">
+            <include name="retentionEvents.xml"/>
+        </fileset>
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME/RETENTION_EVENTS"/>
+        </xdb:database>
+    </xdb:upload>
+
+    <xdb:upload>
+        <fileset dir="${xmldatadir}/Collection/ACME">
+            <include name="sampleHold.xml"/>
+        </fileset>
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME/HOLDS"/>
+        </xdb:database>
+    </xdb:upload>
+
+    <xdb:upload>
+        <fileset dir="${xmldatadir}/Collection/ACME">
+            <include name="*.pdf"/>
+        </fileset>
+        <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}"
+            password="${xdb.password}">
+            <xdb:library path="/DATA/${app}/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+    </xdb:upload>
+
+  	  	
+  </target>
+
+  <!-- create indexes or rebuild all indexes -->
+  <target name="create-indexes">
+	<antcall target="-create-indexes">
+	  <param name="action" value="skip"/>
+	</antcall>
+  </target>
+	
+  <target name="rebuild-indexes">
+	<antcall target="-create-indexes">
+	  <param name="action" value="overwrite"/>
+	</antcall>
+  </target>
+
+  <target name="-create-indexes" depends="-init-anttasks" unless="dontLoad">
+	<dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+	<xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+
+	<!-- Each index creation call must include exists="${action}" -->
+	<echo>Create indexes</echo>
+
+	<echo>Creating ACCOUNT indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/ACCOUNT"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="posting_acct_id" elementName="POSTING_ACCT_ID" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="preparer_user_id" elementName="PREPARER_USER_ID" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="department_id" elementName="DEPARTMENT_ID" valuetype="string" exists="${action}" />
+	  <xdb:fulltextindex name="center_description" elementName="CENTER_DESCRIPTION" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating ARS_USERS indexes...</echo>
+	  <xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/ARS_USERS"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="user_id" elementName="USER_ID" valuetype="string" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating DEPARTMENT indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+	   <xdb:library path="/DATA/changeme/Collection/DEPARTMENT"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="department_id" elementName="DEPARTMENT_ID" valuetype="string" exists="${action}" />
+	  <xdb:fulltextindex name="owner_1_user_id" elementName="OWNER_1_USER_ID" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating EMPDETAIL_FEDTAXES indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/EMPDETAIL_FEDTAXES"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating EMPDETAIL_SERVICEHIST indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/EMPDETAIL_SERVICEHIST"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+	
+	<echo>Creating EMPDETAILADDPOSINFO indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/EMPDETAILADDPOSINFO"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating EMPDETAILEMPHIST indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/EMPDETAILEMPHIST"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating EMPDETAILHDR indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/EMPDETAILHDR"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating LEASE_OPTION indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/LEASE_OPTION"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="prop_id" elementName="prop_id" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="p_name" elementName="p_name" valuetype="string" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating PAY_HISTDTL indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/PAY_HISTDTL"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	  <xdb:valueindex name="empno" elementName="EMPNO" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating PAY_HISTHDR indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/PAY_HISTHDR"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	  <xdb:valueindex name="empno" elementName="EMPNO" valuetype="int" exists="${action}" />
+	  <xdb:valueindex name="location_code" elementName="LOCATION_CODE" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="pos_group" elementName="POS_GROUP" valuetype="string" exists="${action}" />
+	  <xdb:fulltextindex name="last_name" elementName="LAST_NAME" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating PERSON indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/PERSON"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="person_id" elementName="PERSON_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating PROPERTY_SEARCH indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/PROPERTY_SEARCH"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="prop_id" elementName="prop_id" valuetype="string" exists="${action}" />
+	  <xdb:fulltextindex name="p_name" elementName="p_name" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating RECONCILIATION indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/RECONCILIATION"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="fyear" elementName="FYEAR" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="fperiod" elementName="FPERIOD" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="rec_id" elementName="REC_ID" valuetype="int" exists="${action}" />
+	  <xdb:valueindex name="department_id" elementName="DEPARTMENT_ID" valuetype="string" exists="${action}" />
+	  <xdb:fulltextindex name="reconciler" elementName="RECONCILER" exists="${action}" />
+	  <xdb:fulltextindex name="status" elementName="STATUS" exists="${action}" />
+	</xdb:batchindexadder>
+
+	<echo>Creating RECONCILIATION_ACCOUNT indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/RECONCILIATION_ACCOUNT"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="rec_id" elementName="REC_ID" valuetype="int" exists="${action}" />
+	  <xdb:valueindex name="posting_acct_id" elementName="POSTING_ACCT_ID" valuetype="string" exists="${action}" />
+	</xdb:batchindexadder>
+		
+	<echo>Creating RECONCILIATION_LOG indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/RECONCILIATION_LOG"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="rec_id" elementName="REC_ID" valuetype="int" exists="${action}" />
+	</xdb:batchindexadder>
+	
+	<echo>Creating RENT_STREAM indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/RENT_STREAM"/> 
+	  </xdb:database>
+	  <xdb:valueindex name="prop_id" elementName="prop_id" valuetype="string" exists="${action}" />
+	  <xdb:valueindex name="p_name" elementName="p_name" valuetype="string" exists="${action}" />
+	</xdb:batchindexadder>	
+	
+	<echo>Creating BASEBALL indexes...</echo>
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/BASEBALL/BASEBALL_MASTER"/> 
+	  </xdb:database>		
+	  	<xdb:pathvalueindex name="HOFID" path="/BASEBALL_MASTER/BASEBALL_MASTER-ROW/HOFID&lt;STRING&gt;"/>
+		<xdb:pathvalueindex name="RETROID" path="/BASEBALL_MASTER/BASEBALL_MASTER-ROW/RETROID&lt;STRING&gt;"/>  
+	  	<xdb:pathvalueindex name="BBREFID" path="/BASEBALL_MASTER/BASEBALL_MASTER-ROW/BBREFID&lt;STRING&gt;"/>
+	  	<xdb:pathvalueindex name="NAMEFIRST" path="/BASEBALL_MASTER/BASEBALL_MASTER-ROW/NAMEFIRST&lt;STRING&gt;"/>
+		<xdb:pathvalueindex name="NAMELAST" path="/BASEBALL_MASTER/BASEBALL_MASTER-ROW/NAMELAST&lt;STRING&gt;"/>		
+ 	</xdb:batchindexadder>
+  
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/BASEBALL/BASEBALL_PITCHING"/> 
+	  </xdb:database>		
+	  	<xdb:pathvalueindex name="PLAYERID" path="/BASEBALL_PITCHING/BASEBALL_PITCHING-ROW/PLAYERID&lt;STRING&gt;"/>
+ 	</xdb:batchindexadder>
+  	
+	<xdb:batchindexadder>
+	  <xdb:database refid="database">
+		<xdb:library path="/DATA/changeme/Collection/BASEBALL/BASEBALL_BATTING"/> 
+	  </xdb:database>		
+	  	<xdb:pathvalueindex name="PLAYERID" path="/BASEBALL_BATTING/BASEBALL_BATTING-ROW/PLAYERID&lt;STRING&gt;"/>
+ 	</xdb:batchindexadder>
+  	  	
+    <echo>Adding multi-path index to ACME account library... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+        <multipathindex name="IX_MP_AcmeRecordRow" concurrent="false" compressed="false"
+            unique="false" path="/AcmeRecord/AcmeRecord-Row" lowercase="true" stopwords="true">
+            <subpath xpath="AccountCTL" scoreboost="1.0" type="int" valuecomparison="true"/>
+            <subpath xpath="RecordType" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="RecordClass" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="RecordID" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="EffectiveDate" scoreboost="1.0" type="date_time" valuecomparison="true"/>
+            <subpath xpath="*" scoreboost="1.0" type="string" fulltextsearch="true"
+                includedescendants="true"/>
+            <subpath xpath="//*" scoreboost="1.0" type="string" fulltextsearch="true"/>
+            <subpath xpath="SystemOfRecord" scoreboost="1.0" type="string" valuecomparison="true"/>
+        </multipathindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding multi-path index to ACME retention policy library... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <multipathindex name="IX_MP_Policies" concurrent="false" compressed="false" unique="false"
+            path="/AcmeRetention/AcmeRetention-Row" lowercase="true" stopwords="true">
+            <subpath xpath="CountryName" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="CategoryCode" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="RecordClassName" scoreboost="1.0" type="string" fulltextsearch="true"
+                includedescendants="true"/>
+            <subpath xpath="RecordCreated" scoreboost="1.0" type="date_time" valuecomparison="true"/>
+            <subpath xpath="//*" scoreboost="1.0" type="string" fulltextsearch="true"/>
+            <subpath xpath="CountryCode" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="TotalRetentionPeriod" scoreboost="1.0" type="int" valuecomparison="true"/>
+            <subpath xpath="CustomerRecordClassCode" scoreboost="1.0" type="string"
+                valuecomparison="true"/>
+        </multipathindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding multi-path index to ACME Hold library... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <multipathindex name="IX_MP_ACMEHold" concurrent="false" compressed="false" unique="false"
+            path="/ACMEHold" lowercase="true" stopwords="true">
+            <subpath xpath="Date_Start" scoreboost="1.0" type="date_time" valuecomparison="true"/>
+            <subpath xpath="Name" scoreboost="1.0" type="string" fulltextsearch="true"/>
+            <subpath xpath="Date_End" scoreboost="1.0" type="date_time" valuecomparison="true"/>
+            <subpath xpath="//*" scoreboost="1.0" type="string" fulltextsearch="true"/>
+        </multipathindex>
+        <pathvalueindex name="RecordID"
+            path="/AcmeHolds/AcmeHold/Records/RecordID&lt;STRING&gt;"/>
+    </xdb:batchindexadder>
+
+
+    <echo>Adding multi-path index to ACME Hold library: Records... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <multipathindex name="IX_MP_ACMEHold_RecordID" concurrent="false" compressed="false"
+            unique="false" path="/ACMEHold/Records" lowercase="true" stopwords="true">
+            <subpath xpath="RecordID" scoreboost="1.0" type="string" valuecomparison="true"/>
+            <subpath xpath="//*" scoreboost="1.0" type="string" fulltextsearch="true"/>
+        </multipathindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding multi-path index to ACME Hold library: Matter... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <multipathindex name="IX_MP_ACMEHold_Matter" concurrent="false" compressed="false"
+            unique="false" path="/ACMEHold/Matters" lowercase="true" stopwords="true">
+            <subpath xpath="matter" scoreboost="1.0" type="string" fulltextsearch="true"/>
+            <subpath xpath="//*" scoreboost="1.0" type="string" fulltextsearch="true"/>
+        </multipathindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Samples for Record Type lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+
+        <pathvalueindex name="IX_PV_RecordType" path="/AcmeRecord/AcmeRecord-Row/RecordType"
+        > </pathvalueindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Samples for System of Record lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+
+        <pathvalueindex name="IX_PV_SystemOfRecord" path="/AcmeRecord/AcmeRecord-Row/SystemOfRecord"> </pathvalueindex>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Samples for Market of Record lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+
+        <pathvalueindex name="IX_PV_Market" path="/AcmeRecord/AcmeRecord-Row/Market"> </pathvalueindex>
+    </xdb:batchindexadder>
+  	
+    <echo>Adding path-value index to ACME Samples for RecordClass of Record lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/SAMPLES"/>
+        </xdb:database>
+
+        <pathvalueindex name="IX_PV_RecordClass" path="/AcmeRecord/AcmeRecord-Row/RecordClass"> </pathvalueindex>
+    </xdb:batchindexadder>  	
+  	
+    <echo>Adding path-value index to ACME Policies for Retention Event Record lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_RetentionEventCode"
+            path="/AcmeRetention/AcmeERetention-Row/RetentionEventCode"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Policies for Record Class Name lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_RecordClassName"
+            path="/AcmeRetention/AcmeRetention-Row/RecordClassName"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Policies for Customer Record Class lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_CustomerRecordClassCode"
+            path="/AcmeRetention/AcmeRetention-Row/CustomerRecordClassCode"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Policies for Category Code lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_CategoryCode"
+            path="/AcmeRetention/AcmeRetention-Row/CategoryCode"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Policies for Country Name lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_CountryName" path="/AcmeRetention/AcmeRetention-Row/CountryName"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Policies for Region Name lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/POLICIES"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_RegionName" path="/AcmeRetention/AcmeRetention-Row/RegionName"/>
+    </xdb:batchindexadder>
+
+
+
+    <echo>Adding path-value index to ACME Holds for Name lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_Name" path="/AcmeHolds/AcmeHold/Name"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Holds for Status lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_Status" path="/AcmeHolds/AcmeHold/Status"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Holds for Matter lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/HOLDS"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_Matter" path="/AcmeHolds/AcmeHold/Matters/Matter"/>
+    </xdb:batchindexadder>
+
+    <echo>Adding path-value index to ACME Retention events for Purge Type lookup... </echo>
+    <xdb:batchindexadder>
+        <xdb:database refid="database">
+            <xdb:library path="/DATA/changeme/Collection/ACME/RETENTION_EVENTS"/>
+        </xdb:database>
+        <pathvalueindex name="IX_PV_Matter"
+            path="/AcmeRetentionEvent/AcmeRetentionEvent-Row/PurgeType"/>
+    </xdb:batchindexadder>
+
+  	
+	<echo>Done creating indexes</echo>
+  </target>
+  
+  
+  <!-- load all application data, except xqueries -->
+  <target name="update-application-data" depends="-init-anttasks" unless="dontLoad">
+    <property name="dontLoad" value="true"/>
+    <property name="application" value="changeme"/>    
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+    
+    <!-- Upload the application data excluding xqueries -->
+    <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <include name="**/*.xpl"/>
+        <include name="**/*.xsl"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.xfm"/>
+        <include name="**/*.xsd"/>
+        <include name="**/xforms"/>
+        <include name="**/xproc"/>
+        <include name="**/xslt"/>
+        <include name="**/xqueries/customers"/>
+        <include name="**/xqueries/employees"/>
+        <include name="**/xqueries/training"/>
+        <exclude name="*/xqueries/**/*.xml"/>
+        <exclude name="**/template/*.xml"/>
+      </dds:xmlfileset>
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <domconfiguration>
+          <parameter name="validate" value="true"/>
+        </domconfiguration>     
+        <include name="**/template/*.xml"/>
+      </dds:xmlfileset>
+      <dds:blobfileset dir="${application.dir}/data/application">
+        <include name="**/*.txt"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.css"/>
+      </dds:blobfileset>
+    </dds:import-application-data>
+              
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+      
+  <target name="delete-xqueries" depends="-init-anttasks" unless="dontLoad">
+    <property name="dontLoad" value="true"/>
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="lib.path" value="/APPLICATIONS/changeme/resources"/>
+    <property name="application" value="changeme"/>        
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+    <xdb:deletelibrary name="xqueries"> 
+      <xdb:database refid="database"> 
+        <xdb:library path="${lib.path}"/> 
+      </xdb:database> 
+    </xdb:deletelibrary>     
+    <xdb:createlibrary name="xqueries"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="${lib.path}"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+    <xdb:createlibrary name="customers"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="${lib.path}/xqueries"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+    <xdb:createlibrary name="employees"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="${lib.path}/xqueries"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+    <xdb:createlibrary name="training"
+      lockwithparent="${xdb.lockwithparent}"
+      concurrentlibrary="${xdb.concurrentlibrary}"
+      quiet="false">
+      <xdb:database refid="database">
+        <xdb:library path="${lib.path}/xqueries"/>
+      </xdb:database>
+    </xdb:createlibrary>       
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+
+  <target name="delete-data" depends="-init-anttasks">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <property name="application" value="changeme"/>        
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+
+    <antcall target="-create-new-datasets"/>
+        
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+  
+  <target name="delete-attachments" depends="-init">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property file="${application.bin.dir}/build.properties"/>
+    <property name="fs.dir" value="${filestorelocation}/DATA/fsdataset/Collection/"/>
+    <delete includeemptydirs="true">
+      <fileset dir="${fs.dir}" includes="**/*"/>
+    </delete>    
+  </target>
+  
+  <target name="delete-all">
+    <antcall target="delete-xqueries"/>  
+    <antcall target="delete-data"/>  
+    <antcall target="delete-attachments"/>  
+  </target>
+
+  <target name="recreate-database" depends="-init-anttasks">
+    <xdb:federation id="federation" bootstrap="${xdb.bootstrap}" password="test"/>
+
+    <xdb:deletedatabase name="${xdb.databasename}" quiet="false">
+      <xdb:federation refid="federation"/>
+    </xdb:deletedatabase>
+
+    <xdb:createdatabase name="${xdb.databasename}" dbapassword="${xdb.password}" quiet="false">
+      <xdb:federation refid="federation"/>
+    </xdb:createdatabase>
+
+  </target>
+
+  <target name="create-database" depends="-init-anttasks">
+    <xdb:federation id="federation" bootstrap="${xdb.bootstrap}" password="test"/>
+
+    <xdb:createdatabase name="${xdb.databasename}" dbapassword="${xdb.password}" quiet="false">
+      <xdb:federation refid="federation"/>
+    </xdb:createdatabase>
+  </target>
+  
+    <!-- load-all application data, including xqueries -->
+  <target name="load-application-data" depends="-init-anttasks" unless="dontLoad" >
+    <property name="dontLoad" value="true"/>
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+  	<!-- Copy custom XForms over -->
+    <echo>Updating XForms with customizations</echo>
+    <copy failonerror="false" todir="${application.dir}/data/application/resources/xforms" overwrite="true">
+        <fileset dir="${application.dir}/data/application/resources/customXForms"
+        includes="*/*.xfm"/>
+    </copy>
+    <!-- Upload the application data -->
+    <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <include name="**/*.xpl"/>
+        <include name="**/*.xsl"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.xfm"/>
+        <include name="**/*.xsd"/>
+        <include name="**/xforms"/>
+        <include name="**/xproc"/>
+        <include name="**/xslt"/>
+        <include name="**/xqueries"/>
+        <exclude name="**/template/*.xml"/>
+      </dds:xmlfileset>
+      <dds:xmlfileset dir="${application.dir}/data/application">
+        <domconfiguration>
+          <parameter name="validate" value="true"/>
+          <parameter name="xhive-ignore-catalog" value="true"/>
+        </domconfiguration>     
+        <include name="**/template/*.xml"/>
+      </dds:xmlfileset>
+
+      <dds:blobfileset dir="${application.dir}/data/application">
+        <include name="**/*.txt"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.css"/>
+		<include name="**/*.xq*"/>
+      </dds:blobfileset>
+    </dds:import-application-data>
+	
+	
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+
+  <target name="drop-resources-data" depends="-init-anttasks" unless="dontLoad">
+  	    <echo>Removing Resources from application data</echo>
+  		<xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+  		<xdb:deletelibrary path="/APPLICATIONS/${application}/resources">
+  		<xdb:database	refid="database" />
+  		</xdb:deletelibrary>
+  </target>
+
+  <!-- load all datasets, including content -->
+  <target name="load-data-sets" depends="-init-anttasks" unless="dontLoad">
+    <!-- Set the name of the dataset. For this template, we use the application name as dataset name -->
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+
+    <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+
+    <antcall target="-create-new-datasets"/>
+        
+    <antcall target="load-data"/>
+
+    <antcall target="create-indexes"/>
+        
+    <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true"/>
+  </target>
+
+  <target name="build" depends="-init">
+    <delete dir="${build.dir}/${application}"/>
+    <echo>${changeme.module}</echo>
+    <antcall target="-build-client" >
+      <param name="module" value="${changeme.module}"/>
+    </antcall>
+    <antcall target="-build-server">
+      <param name="module" value="${changeme.module}"/>
+    </antcall>
+  	<mkdir dir="${applications.dir}/${application}/war/images"/>
+  	<copy todir="${applications.dir}/${application}/war/images" includeEmptyDirs="false">
+  	      <fileset dir="${applications.dir}/${application}/images"/>
+  	</copy>
+	<mkdir dir="${applications.dir}/${application}/war/changeme/css"/>
+  	<copy todir="${applications.dir}/${application}/war/changeme/css" includeEmptyDirs="false">
+  	      <fileset dir="${applications.dir}/${application}/css"/>
+  	</copy>
+	
+  <!--
+  	<copy todir="${applications.dir}/${application}/war/WEB-INF/lib" file="${applications.dir}/${application}/lib/Aspose.Words.lic"/>
+  -->
+
+  </target>
+  
+  <target name="create-war" depends="-init">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <antcall target="-create-war">
+      <param name="module" value="${changeme.module}"/>
+    </antcall>
+  </target>
+
+  <target name="generate-xforms" depends="-init">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <echo>${application.bin.dir}</echo>
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+        <pathelement location="${application.bin.dir}/../../lib/misc/ant-contrib-1.0b3.jar"/>
+      </classpath>
+    </taskdef>
+
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <delete dir="${application.dir}/temp"/>
+    <mkdir dir="${application.dir}/temp"/>
+
+    <!-- generate XForms -->
+    <xslt basedir="${application.dir}/data/application/resources/template" style="${application.bin.dir}/generate-xform-xhtml.xsl" destdir="${application.dir}/temp">
+      <param name="http://apache.org/xalan/features/source_location" expression="true"/>
+      <param name="export-dir" expression="${application.dir}/temp"></param>
+      <param name="configurationId" expression="${id}" if="id"></param>
+      <include name="template-content.xml"/>
+    </xslt>
+
+    <fileset dir="${application.dir}/temp" id="src.files">
+      <include name="**/*.xhtml"/>
+    </fileset>
+
+    <!-- get the paths of the generated xhtml forms -->
+    <pathconvert pathsep="," property="xhtml-files" refid="src.files"/>
+
+    <foreach list="${xhtml-files}" target="-xhtml2xform" param="in" trim="true">
+      <param name="destdir" value="${application.dir}/data/application/resources/xforms"/>
+      <param name="basedir" value="${base.dir}/bin"/>
+      <param name="application.dir" value="${application.dir}"/>
+    </foreach>
+    <delete dir="${application.dir}/temp"/>
+  </target>
+
+  <target name="-xhtml2xform">
+    <propertyregex property="inmatch" input="${in}" regexp="\\" replace="/" defaultValue="${in}"/>
+    <propertyregex property="xformdir" input="${inmatch}" regexp="(/changeme/temp/)([^\.]*)\.xhtml" select="\2"/>
+
+    <fail message="XForm ${destdir}/${xformdir} already exists.">
+      <condition>
+        <and>
+          <isfalse value="${overwrite}"/>
+          <available file="${destdir}/${xformdir}"/>
+        </and>
+      </condition>
+    </fail>
+
+  	<echo>Processing ${in} in -xhtml2xform target in changeme/bin/build.xml </echo>
+    <antcall target="-transform-xhtml-to-xforms">
+      <param name="in" value="${in}"/>
+      <param name="destdir" value="${destdir}/${xformdir}"/>
+      <param name="basedir" value="${basedir}"/>
+    </antcall>
+
+    <!-- now add the attribute xforms:replace="none" to the form -->
+    <property name="xforms.file" value="${destdir}/${xformdir}/form.xfm"/>
+    <fail message="XForm file ${xforms.file} not found">
+      <condition>
+        <not>
+          <available file="${xforms.file}"/>
+        </not>
+      </condition>
+    </fail>
+
+    <replace token="xforms:submission" value="xforms:submission replace='none'" file="${xforms.file}"/>
+  </target>
+  
+  <target name="dist" depends="-init">
+    <dirname property="application.bin.dir" file="${ant.file.changeme}"/>
+    <property name="application.dir" value="${application.bin.dir}/.."/>
+    <property name="application" value="changeme"/>
+        
+    <zip destfile="${build.dir}/${application}-${version.number}.${app.build.number}.zip">
+      <fileset dir="${application.dir}/.." >
+        <include name="${application}/*.*"/>
+        <include name="${application}/bin/*.*"/>
+        <include name="${application}/data/**/*.*"/>
+        <include name="${application}/dtd/*.*"/>
+        <include name="${application}/lib"/>
+        <include name="${application}/src/**/*.*"/>
+        <include name="${application}/war/*.*"/>
+        <include name="${application}/war/WEB-INF/*.*"/>
+		<include name="${application}/war/WEB-INF/classes/*.*"/>
+		<exclude name="${application}/.project"/>
+		<exclude name="${application}/.settings"/>
+		<exclude name="${application}/**/.p4ignore"/>
+	       </fileset> 
+	       <fileset dir="${application.dir}/lib"/>
+	    </zip>
+	  </target>
+		
+</project>

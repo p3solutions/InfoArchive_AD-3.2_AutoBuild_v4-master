@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">	
+	<xs:element name="verticalPanel" type="panelType"/>
+  <xs:element name="horizontalPanel" type="panelType"/>
+ 	<xs:element name="panes">
+		<xs:complexType>
+		  <xs:choice>
+				<xs:sequence>
+					<xs:element ref="verticalPanel"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element ref="horizontalPanel"/>
+				</xs:sequence>
+			</xs:choice>	
+		</xs:complexType>
+	</xs:element>
+  
+	<xs:complexType name="panelType">
+		<xs:all>
+			<xs:element ref="searchResultPane" minOccurs="0"/>
+			<xs:element ref="contentTreePane" minOccurs="0"/>
+			<xs:element ref="headerPane" minOccurs="0"/>
+			<xs:element ref="menuPane" minOccurs="0"/>
+			<xs:element ref="searchPane" minOccurs="0"/>
+			<xs:element ref="footerPane" minOccurs="0"/>
+			<xs:element ref="contentViewPane" minOccurs="0"/>
+			<xs:element ref="dataSetListPane" minOccurs="0"/>
+			<xs:element ref="verticalPanel" minOccurs="0"/>
+			<xs:element ref="horizontalPanel" minOccurs="0"/>
+		</xs:all>
+		<xs:attribute name="defaultFixedWidthPixels" type="xs:short"/>
+		<xs:attribute name="defaultFixedHeightPixels" type="xs:byte"/>
+	</xs:complexType>
+		
+	<xs:element name="searchPane"/>
+	<xs:element name="menuPane"/>
+	<xs:element name="headerPane"/>
+	<xs:element name="footerPane"/>
+	<xs:element name="contentViewPane"/>
+	
+	<xs:element name="contentTreePane">
+		<xs:complexType>
+			<xs:attribute name="width" type="xs:string"/>
+			<xs:attribute name="maxListCount">
+  		  <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="2"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>  
+			<xs:attribute name="height" type="xs:string"/>
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="disclosurePanel"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="searchResultPane">
+		<xs:complexType>
+			<xs:attribute name="width" type="xs:string"/>
+			<xs:attribute name="height" type="xs:string"/>
+			<xs:attribute name="showContentInDialog" type="xs:boolean"/>
+			<xs:attribute name="truncateLabels">
+  	    <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>  
+			<xs:attribute name="maxListCount">
+  		  <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="2"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>  
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="disclosurePanel"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+  <xs:element name="dataSetListPane">
+		<xs:complexType>
+			<xs:attribute name="width" type="xs:string"/>
+			<xs:attribute name="height" type="xs:string"/>
+			<xs:attribute name="showTicketInfo" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

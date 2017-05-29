@@ -1,0 +1,13 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+        declare variable $path :='/DATA/changeme/Collection/AuditTrail';
+        declare variable $dateTime external;
+        declare variable $user external;
+
+        let $results :=
+            <results> {
+                for $elem in doc($path)/auditEntries/auditEntry[time = $dateTime and user = $user] return $elem
+            } </results>
+        return $results
+    ]]></expression>
+</xquery>

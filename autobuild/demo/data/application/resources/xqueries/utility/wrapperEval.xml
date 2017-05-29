@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression>
+        <![CDATA[
+        declare variable $xquery as xs:string external;
+        let $query := xquery
+        return xhive:evaluate($xquery)
+        ]]>
+    </expression>
+</xquery>

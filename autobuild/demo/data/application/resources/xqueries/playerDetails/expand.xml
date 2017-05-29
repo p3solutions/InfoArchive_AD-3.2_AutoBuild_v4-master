@@ -1,0 +1,43 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $hofId external;
+declare variable $nameGiven external;
+declare variable $nameLast external;
+declare variable $birthYear external;
+declare variable $birthMonth external;
+declare variable $birthDay external;
+declare variable $throws external;
+declare variable $bats external;
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+(: unit test setup 
+:)
+
+    let $battingResults := for $elem in doc(concat($path,'/BASEBALL/BASEBALL_BATTING'))/BASEBALL_BATTING/BASEBALL_BATTING-ROW[./PLAYERID=$hofId][exists(./HR)]
+        return $elem
+
+    let $salaryResults := for $elem in doc(concat($path,'/BASEBALL/BASEBALL_SALARIES'))/BASEBALL_SALARIES/BASEBALL_SALARIES-ROW[./PLAYERID=$hofId][exists(./SALARY)]
+        return $elem
+
+    return 
+        (
+        <results>
+            <player_summary hofId='{ $hofId }' nameGiven='{ $nameGiven }' nameLast='{ $nameLast }' birthYear='{ $birthYear }'
+                birthMonth='{ $birthMonth }' birthDay = '{ $birthDay }' throws='{ $throws }' bats='{ $bats }' /> 
+            <batting_results>
+            { $battingResults }
+            </batting_results>
+            <salary_results>
+            { $salaryResults }
+            </salary_results>
+        </results>		
+        )
+]]></expression>
+</xquery>

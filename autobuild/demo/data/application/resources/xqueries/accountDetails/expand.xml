@@ -1,0 +1,43 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare variable $path := '/DATA/changeme/Collection';
+declare variable $postID external;
+declare variable $fyear external;
+declare variable $fperiod external;
+declare variable $desc external;
+declare variable $preparer external;
+declare variable $rec_dept_risk external;
+declare variable $horisk external;
+declare variable $status external;
+declare variable $pftc external;
+declare variable $centerDesc external;
+declare variable $freq external;
+
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+<results>
+  {
+  (: unit test setup  
+  let $postID := ''
+  :)
+  (: do a nested query for speed purposes :)
+  let $acct_recons := doc(fn:concat($path, '/RECONCILIATION_ACCOUNT/RECONCILIATION_ACCOUNT.xml'))/RECONCILIATION_ACCOUNT/
+                      RECONCILIATION_ACCOUNT-ROW[POSTING_ACCT_ID = $postID]
+  let $accts :=
+    for $acct_recons in $acct_recons
+  return
+    (
+    <account_info>
+      <account_summary postid='{ $postID }' fyear='{$fyear}' fperiod='{$fperiod}' desc='{$desc}' preparer='{$preparer}' rec_dept_risk='{$rec_dept_risk}' status='{$status}' center='{$centerDesc}' pftc='{$pftc}' horisk='{$horisk}' freq='{$freq}' />
+      { doc(fn:concat($path, '/RECONCILIATION/RECONCILIATION.xml'))/RECONCILIATION/RECONCILIATION-ROW[REC_ID = xs:integer($acct_recons/REC_ID)] }
+    </account_info>
+    )
+  return $accts
+  }
+</results>
+]]></expression>
+</xquery>
+

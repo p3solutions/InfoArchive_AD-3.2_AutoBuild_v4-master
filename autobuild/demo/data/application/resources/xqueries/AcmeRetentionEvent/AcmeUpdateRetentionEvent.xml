@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+    <name>AcmeUpdateRetentionEvent</name>
+    <dataset>changeme</dataset>
+    <type>AcmeRetentionEvent</type>
+    <expression><![CDATA[
+declare variable $input external;
+declare variable $date := $input/date/text();
+declare variable $path := '/DATA/changeme/Collection/ACME/RETENTION_EVENTS/';
+
+for $event2 in fn:doc($path)/AcmeRetentionEvent/AcmeRetentionEvent-Row[GUID/@RetentionPolicyGUID = $
+                     input/selection/result/@RetentionPolicyGUID]
+			return      (xhive:replace-value-of($event2/IsActive, 'false'), 
+						xhive:replace-value-of($event2/PurgeType, 'Purge Complete'))
+
+]]></expression>
+</xquery>

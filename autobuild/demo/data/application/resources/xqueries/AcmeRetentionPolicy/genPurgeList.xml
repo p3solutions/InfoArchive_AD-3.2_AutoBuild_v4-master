@@ -1,0 +1,53 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>genPurgeList</name>
+  <dataset>changeme</dataset>
+  <type>AcmeRetention</type>
+  <expression><![CDATA[
+  	declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    declare namespace purgeEvents = 'purgeEvents';
+    declare variable $input external;
+    declare variable $path :='/DATA/changeme/Collection/ACME/RETENTION_EVENTS/retentionEvents.xml';
+    declare variable $accountPath :='/DATA/changeme/Collection/ACME/SAMPLES/';
+    
+   	(: unit test:)
+	(:let $input :=  <data><selection>
+                 <result CustomerRecordClassCode="Class 1" RecordClassName="Accounting and Financial Internal Reporting" RecordActive="Y" CategoryCode="Category 1" CountryName="United States" RegionName="Americas" RetentionEventCode="" RetentionEventDesc="Retain these records only as long as they are needed, up to a maximum of three years. The retention period begins when the record is created." 
+                 TotalRetentionPeriod="3" RetentionPolicyGUID="00000004-73ff-4f49-8000-000c29f00105" title="Retain these records only as long as they are needed, up to a maximum of three years. The retention period begins when the record is created." type="AcmeRetentionPolicy"/>
+                 </selection>
+                 <description>USA</description></data>:)
+                  
+                 
+	let $runDate := current-dateTime()
+	let $retentionPeriod := ($input/selection/result/@TotalRetentionPeriod * 365)
+
+	let $records := for $record in doc('/DATA/changeme/Collection/ACME/SAMPLES')/AcmeRecord/AcmeRecord-Row 
+		where $record/Market = $input/selection/result/@CountryName
+		and (xs:dateTime($record/EffectiveDate) lt ($runDate - xs:dayTimeDuration(concat('P',$retentionPeriod, 'D'))))
+		return $record
+     
+	let $purgedAccounts := for $record in $records
+							let $event :=  
+								<PurgeAccountCandidate>
+									<AcmeRecordGUID>{$record/RecordID/text()}</AcmeRecordGUID>
+								</PurgeAccountCandidate>
+							return $event
+    let $purgeEvent :=	
+    	<AcmeRetentionEvent-Row>
+			<EventRunDate>{$runDate}</EventRunDate>
+			<Description>{$input/description/text()}</Description>
+			<IsActive>true</IsActive>
+			<PurgeType>Preview</PurgeType>
+			<GUID>{$input/selection/result/@RetentionPolicyGUID}</GUID>
+			<RecordsAffected>{fn:count($purgedAccounts)}</RecordsAffected>
+			<PurgeAccountList>
+				{
+	    			for $purgedAccount in $purgedAccounts
+	    				return $purgedAccount
+	    		}
+	    	</PurgeAccountList>
+    	</AcmeRetentionEvent-Row>
+			
+ 	return 	insert node $purgeEvent
+		 as last into fn:doc($path)/AcmeRetentionEvent
+  ]]></expression>
+  </xquery>

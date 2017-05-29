@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+  <name>Property Management</name>
+  <table name="PROPERTY_SEARCH" validation="100%" />
+  <table name="RENT_STREAM" validation="100%" />
+  <table name="LEASE_OPTION" validation="100%" />
+</dataset>

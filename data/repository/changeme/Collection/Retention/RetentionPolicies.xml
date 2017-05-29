@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Retention>
+	<Retention-ROW>
+		<Description>SAMPLE</Description>
+		<CategoryCode>SAMPLE</CategoryCode>
+		<CountryCode>SAMPLE</CountryCode>
+		<CountryName>SAMPLE</CountryName>
+		<RegionName>SAMPLE</RegionName>
+		<TotalRetentionPeriod>1000</TotalRetentionPeriod>
+		<RetentionUnit>Years</RetentionUnit>
+	</Retention-ROW>
+</Retention>

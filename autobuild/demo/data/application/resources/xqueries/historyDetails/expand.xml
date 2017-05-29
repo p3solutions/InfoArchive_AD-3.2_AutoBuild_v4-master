@@ -1,0 +1,43 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare variable $path := '/DATA/changeme/Collection';
+declare variable $recID external;
+declare variable $reconciler external;
+declare variable $recDescription external;
+declare variable $status external;
+declare variable $reconcilerDept external;
+declare variable $gaapCheckTotal external;
+declare variable $fyear external;
+declare variable $fperiod external;
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+  (: unit test setup  
+  let $recID := xs:int('1')
+  let $reconciler := "george"
+  let $recDescription := "a description"
+  let $status := "completed"
+  let $reconcilerDept := "HO CD Assurance Audit"
+  let $gaapCheckTotal := "0.0"
+  :)
+  let $recons_logs := doc(fn:concat($path, '/RECONCILIATION_LOG'))/RECONCILIATION_LOG/
+                      RECONCILIATION_LOG-ROW[REC_ID = xs:integer($recID)]
+  let $recons_accts := doc(fn:concat($path, '/RECONCILIATION_ACCOUNT'))/RECONCILIATION_ACCOUNT/
+                      RECONCILIATION_ACCOUNT-ROW[REC_ID = xs:integer($recID)]
+  return
+    (
+    <results>
+      <reconciler_summary recid='{ xs:integer($recID) }' reconciler='{ $reconciler }' description='{$recDescription }' status='{ $status }' reconcilerDept='{$reconcilerDept}' gaapCheckTotal='{$gaapCheckTotal}' fyear='{$fyear}' fperiod='{$fperiod}'/>
+      <reconciliation_history>
+        { $recons_logs }
+      </reconciliation_history>
+      <reconciliation_accounts>
+        { $recons_accts }
+      </reconciliation_accounts>
+    </results>
+    )
+]]></expression>
+</xquery>

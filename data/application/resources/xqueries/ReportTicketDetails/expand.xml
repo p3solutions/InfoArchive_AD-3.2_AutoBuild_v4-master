@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xquery xmlns="http://www.emc.com/documentum/xml/dds"><expression><![CDATA[
+       
+      
+           declare variable $id external;
+           declare variable $username external;
+           declare variable $datetime external; 
+		   declare variable $status external;
+		   declare variable $searchField external; 
+		   declare variable $process-message external;
+		   declare variable $name external;	
+		   
+		   
+		   let $results 	:= <results> 
+					           {
+					                ( 
+						                <result   
+									            id='{$id}'
+									            name='{$name}' 
+									            username='{$username}'
+									            datetime='{$datetime}'
+										  		status='{$status}'
+						                />,
+						                <status status='{if($status = "Completed" or $status = "Errored") then 1 else 0}'/>,
+						                for $i in tokenize($searchField,";")
+						                return
+						                	let $split := tokenize($i,"=")
+						                	return
+								                <searchFileds
+								                	key = '{$split[1]}'
+								                	value = '{$split[2]}'
+								                />,
+								        if($status = "Completed" or $status = "Errored")
+								        then 
+									        for $i in tokenize($process-message,";")
+									        return
+							                	if(contains($i,"Report Start Time") or contains($i,"Report End Time"))
+							                	then
+							                		<runStatus
+							                			key = '{substring-before($i," = ")}'
+							                			value = '{substring-after($i,"= ")}'
+							                		/>
+							                	else 
+							                		if($i != "" and (contains(lower-case($i),".xls") or contains(lower-case($i),".xlxs") or contains(lower-case($i),".pdf") or contains(lower-case($i),".html") or contains(lower-case($i),".xml")))
+							                		then <file file='{$i}'/>
+							                		else <message message='{$i}' />
+							            else ()
+									)
+								}
+								</results>
+        	return $results
+         
+    ]]></expression></xquery>

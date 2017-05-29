@@ -1,0 +1,26 @@
+<project name="changeme-indexes" xmlns:xdb="http://www.emc.com/documentum/xml/xdb" xmlns:dds="http://www.emc.com/documentum/xml/dds">
+
+    <!-- caller must have called -init-anttasks to setup environment -->
+    <target name="create-application-indexes" unless="dontLoad">
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <property name="libraryPath" value="/DATA/changeme/Collection"/>
+
+        <!-- Each index creation call must include exists="${action}" -->
+        <echo>Create changeme indexes</echo>
+
+        <echo>Done creating Audit indexes</echo>
+        <xdb:batchindexadder>
+            <xdb:database refid="database">
+                <xdb:library path="${libraryPath}/AuditTrail" />
+            </xdb:database>
+            <xdb:valueindex name="userId" elementName="userId" valuetype="string" concurrent="true" exists="${action}" />
+            <xdb:valueindex name="time" elementName="time" valuetype="string" concurrent="true" exists="${action}" />
+        </xdb:batchindexadder>
+        <echo>Create Audit indexes</echo>
+
+
+        <echo>Done creating changeme indexes</echo>
+    </target>
+
+</project>

@@ -1,0 +1,563 @@
+<project name="changeme" default="run" xmlns:xdb="http://www.emc.com/documentum/xml/xdb" xmlns:dds="http://www.emc.com/documentum/xml/dds">
+
+    <property environment="env"/>
+    <property file="build.properties" />
+    <import file="${dds.dir}/bin/build.xml" />
+    <import file="indexes.xml" />
+
+    <property file="${dds.dir}/bin/build.number" />
+    <property file="build.number" />
+
+    <property name="retentionDate" value="2020-03-13" />
+
+    <!-- Makes sure the environment is properly set -->
+    <target name="-init" depends="DDS-dist.-init">
+        <dirname property="application.bin.dir" file="${ant.file}" />
+        <echo>application.bin.dir: ${application.bin.dir}</echo>
+        <property name="application.dir" value="${application.bin.dir}/.." />
+        <echo>application.dir: ${application.dir}</echo>
+        <property name="application" value="${ant.project.name}" />
+        <echo>application: ${application}</echo>
+    </target>
+
+    <!-- loads all data required before the demo can run -->
+    <!-- create datasets -->
+    <!-- load all application data, except xqueries -->
+    <target name="load-initial-data" depends="-init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <!-- create datasets -->
+        <antcall target="-create-new-datasets" />
+
+        <!-- Upload the application data excluding xqueries -->
+        <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <include name="**/*.xpl" />
+                <include name="**/*.xsl" />
+                <include name="**/*.xml" />
+                <include name="**/*.xfm" />
+                <include name="**/*.xsd" />
+                <include name="**/xforms" />
+                <include name="**/xproc" />
+                <include name="**/xslt" />
+                <exclude name="*/xqueries/**/*.xml" />
+                <exclude name="**/template/*.xml" />
+            </dds:xmlfileset>
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <domconfiguration>
+                    <parameter name="validate" value="true" />
+                </domconfiguration>
+                <include name="**/template/*.xml" />
+            </dds:xmlfileset>
+            <dds:blobfileset dir="${application.dir}/data/application">
+                <include name="**/*.txt" />
+                <include name="**/*.properties" />
+                <include name="**/*.css" />
+            </dds:blobfileset>
+        </dds:import-application-data>
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <!-- Create default datasets for the project (e.g. "${application}/root-library/DATA/${application}") -->
+    <target name="-create-new-datasets" depends="-init-anttasks">
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}"/>
+        <for list="${application};metadata" delimiter=";" param="dataset">
+            <sequential>
+                <dds:create-dataset dataset="@{dataset}" localeaware="false" databaseref="database" overwrite="true" force="${force}" quiet="false">
+                    <libraryoptions>
+                        <option name='concurrent-library' value='true'/>
+                    </libraryoptions>
+                </dds:create-dataset>
+            </sequential>
+        </for>
+    </target>
+
+    <!-- Create data node (library) of the specified name -->
+    <!-- param library - name of library to create (required) -->
+    <!-- param parents - list of library parent nodes (required) -->
+    <target name="-create-library" depends="-init-anttasks">
+        <for list="${parents}" delimiter=";" param="parent">
+            <sequential>
+                <xdb:createlibrary name="${library}" lockwithparent="${xdb.lockwithparent}" concurrentlibrary="true">
+                    <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+                        <xdb:library path="@{parent}"/>
+                    </xdb:database>
+                </xdb:createlibrary>
+            </sequential>
+        </for>
+    </target>
+
+    <!-- Create data nodes (libraries) of the names specified in the properties collection.node.names and metadata.node.names -->
+    <target name="-create-data-libraries">
+        <!-- create Views and Reports libraries -->
+		<for list="${parentLibs}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-create-library">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="/DATA/${application}" />
+                </antcall>
+            </sequential>
+        </for>
+		
+		<!-- create Reports sub libraries -->
+		<for list="${report.node.name}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-create-library">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="/DATA/${application}/Reports" />
+                </antcall>
+            </sequential>
+        </for>
+		
+		<!-- create Collection and CollectionMedatadata libraries -->
+        <for list="${metadata.node.names}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-create-library">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="/DATA/${application}/Collection;/DATA/${application}/CollectionMetadata" />
+                </antcall>
+            </sequential>
+        </for>
+
+        <!-- create only Collection libraries -->
+        <for list="${collection.node.names}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-create-library">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="/DATA/${application}/Collection" />
+                </antcall>
+            </sequential>
+        </for>
+    </target>
+
+    <!-- Upload data to library of the specified name -->
+    <!-- param library - name of library to populate (required) - also used as source folder -->
+    <!-- param parents - list of library parent nodes (required) -->
+    <target name="-upload-data" depends="-init-anttasks">
+        <for list="${parents}" delimiter=";" param="parent">
+            <sequential>
+                <xdb:upload>
+                    <fileset dir="${xmldatadir}/@{parent}/${library}" />
+                    <xdb:database bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}">
+                        <xdb:library path="/DATA/${app}/@{parent}/${library}" />
+                    </xdb:database>
+                </xdb:upload>
+            </sequential>
+        </for>
+    </target>
+
+    <!-- Upload collection data -->
+    <target name="-upload-collection-data">
+        <!-- upload Collection and CollectionMedatadata data -->
+        <for list="${metadata.node.names}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-upload-data">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="Collection;CollectionMetadata" />
+                </antcall>
+            </sequential>
+        </for>
+
+        <!-- upload only Collection data -->
+        <for list="${collection.node.names}" delimiter=";" param="library">
+            <sequential>
+                <antcall target="-upload-data">
+                    <param name="library" value="@{library}"/>
+                    <param name="parents" value="Collection" />
+                </antcall>
+            </sequential>
+        </for>
+    </target>
+
+    <!-- required parameters: name -->
+    <target name="create-entity" depends="-init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+        <!-- create the entity xqueries location -->
+        <antcall target="-create-library">
+            <param name="library" value="${name}"/>
+            <param name="parents" value="/APPLICATIONS/${application}/resources/xqueries" />
+        </antcall>
+
+        <!-- create the chainofcustody location -->
+        <antcall target="-create-library">
+            <param name="library" value="${name}"/>
+            <param name="parents" value="/DATA/metadata/Collection" />
+        </antcall>
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="load-xqueries" depends="-init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+        <!-- Upload the application data -->
+        <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <include name="*/xqueries/**/*.xml" />
+            </dds:xmlfileset>
+        </dds:import-application-data>
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+
+
+    <!-- load all repository data -->
+    <!-- pass in a value for xmldatadir if you want to use a non-standard location as the source for xml data files -->
+    <target name="load-data" depends="-init-anttasks" unless="dontLoad">
+        <property name="xmldatadir" value="${application.bin.dir}/../data/repository/${application}" />
+        <!-- if not passed in -->
+
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <antcall target="-create-data-libraries" />
+
+        <antcall target="-upload-collection-data" />
+
+    </target>
+
+    <!-- create indexes or rebuild all indexes -->
+    <target name="create-indexes">
+        <antcall target="-create-indexes">
+            <param name="action" value="skip" />
+        </antcall>
+    </target>
+
+    <target name="rebuild-indexes">
+        <antcall target="-create-indexes">
+            <param name="action" value="overwrite" />
+        </antcall>
+    </target>
+
+    <target name="-create-indexes" depends="-init-anttasks" unless="dontLoad">
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <!-- Each index creation call must include exists="${action}" -->
+        <echo>Create indexes</echo>
+
+        <antcall target="create-application-indexes">
+            <param name="action" value="${action}" />
+        </antcall>
+
+        <echo>Done creating indexes</echo>
+    </target>
+
+    <!-- load all application data, except xqueries -->
+    <target name="update-application-data" depends="-init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <!-- Upload the application data excluding xqueries -->
+        <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <include name="**/*.xpl" />
+                <include name="**/*.xsl" />
+                <include name="**/*.xml" />
+                <include name="**/*.xfm" />
+                <include name="**/*.xsd" />
+                <include name="**/xforms" />
+                <include name="**/xproc" />
+                <include name="**/xslt" />
+                <exclude name="*/xqueries/**/*.xml" />
+                <exclude name="**/template/*.xml" />
+            </dds:xmlfileset>
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <domconfiguration>
+                    <parameter name="validate" value="true" />
+                </domconfiguration>
+                <include name="**/template/*.xml" />
+            </dds:xmlfileset>
+            <dds:blobfileset dir="${application.dir}/data/application">
+                <include name="**/*.txt" />
+                <include name="**/*.properties" />
+                <include name="**/*.css" />
+            </dds:blobfileset>
+        </dds:import-application-data>
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="delete-xqueries" depends="-init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <property name="lib.path" value="/APPLICATIONS/${application}/resources" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+        <xdb:deletelibrary name="xqueries">
+            <xdb:database refid="database">
+                <xdb:library path="${lib.path}" />
+            </xdb:database>
+        </xdb:deletelibrary>
+        <antcall target="-create-library">
+            <param name="library" value="xqueries"/>
+            <param name="parents" value="${lib.path}" />
+        </antcall>
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="delete-data" depends="-init-anttasks">
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <antcall target="-create-new-datasets" />
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="delete-attachments" depends="-init">
+        <property file="${application.bin.dir}/build.properties" />
+        <property name="fs.dir" value="${filestorelocation}/DATA/fsdataset/Collection/" />
+        <delete includeemptydirs="true">
+            <fileset dir="${fs.dir}" includes="**/*" />
+        </delete>
+    </target>
+
+    <target name="delete-all">
+        <antcall target="delete-xqueries" />
+        <antcall target="delete-data" />
+        <antcall target="delete-attachments" />
+    </target>
+
+    <!-- Re-Create application database -->
+    <target name="recreate-database" depends="-init-anttasks">
+        <xdb:federation id="federation" bootstrap="${xdb.bootstrap}" password="${xdb.password}" />
+
+        <xdb:deletedatabase name="${xdb.databasename}" quiet="false">
+            <xdb:federation refid="federation" />
+        </xdb:deletedatabase>
+
+        <xdb:createdatabase name="${xdb.databasename}" dbapassword="${xdb.password}" quiet="false">
+            <xdb:federation refid="federation" />
+        </xdb:createdatabase>
+
+    </target>
+
+    <!-- Create application database -->
+    <target name="create-database" depends="-init-anttasks">
+        <xdb:federation id="federation" bootstrap="${xdb.bootstrap}" password="${xdb.password}" />
+
+        <xdb:createdatabase name="${xdb.databasename}" dbapassword="${xdb.password}" quiet="false">
+            <xdb:federation refid="federation" />
+        </xdb:createdatabase>
+    </target>
+
+    <!-- load-all application data, including xqueries -->
+    <target name="load-application-data" depends="-rename-initial-app, -init-anttasks" unless="dontLoad">
+        <property name="dontLoad" value="true" />
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+        <!-- Copy custom XForms over -->
+        <echo>Updating XForms with customizations</echo>
+        <copy failonerror="false" todir="${application.dir}/data/application/resources/xforms" overwrite="true">
+            <fileset dir="${application.dir}/data/application/resources/customXForms" includes="*/*.xfm" />
+        </copy>
+        <!-- Upload the application data -->
+        <dds:import-application-data application="${application}" databaseref="database" overwrite="true" force="${force}" quiet="false">
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <include name="**/*.xpl" />
+                <include name="**/*.xsl" />
+                <include name="**/*.xml" />
+                <include name="**/*.xfm" />
+                <include name="**/*.xsd" />
+                <include name="**/xforms" />
+                <include name="**/xproc" />
+                <include name="**/xslt" />
+                <include name="**/xqueries" />
+                <exclude name="**/template/*.xml" />
+            </dds:xmlfileset>
+            <dds:xmlfileset dir="${application.dir}/data/application">
+                <domconfiguration>
+                    <parameter name="validate" value="true" />
+                    <parameter name="xhive-ignore-catalog" value="true" />
+                </domconfiguration>
+                <include name="**/template/*.xml" />
+            </dds:xmlfileset>
+
+            <dds:blobfileset dir="${application.dir}/data/application">
+                <include name="**/*.txt" />
+                <include name="**/*.properties" />
+                <include name="**/*.css" />
+                <include name="**/*.xq*" />
+            </dds:blobfileset>
+        </dds:import-application-data>
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="drop-resources-data" depends="-init-anttasks" unless="dontLoad">
+        <echo>Removing Resources from application data</echo>
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+        <xdb:deletelibrary path="/APPLICATIONS/${application}/resources">
+            <xdb:database refid="database" />
+        </xdb:deletelibrary>
+    </target>
+
+    <!-- load all datasets, including content -->
+    <target name="load-data-sets" depends="-init-anttasks" unless="dontLoad">
+        <xdb:database id="database" bootstrap="${xdb.bootstrap}" name="${xdb.databasename}" user="${xdb.username}" password="${xdb.password}" />
+
+        <antcall target="-create-new-datasets" />
+
+        <antcall target="load-data" />
+
+        <antcall target="create-indexes" />
+
+        <xdb:closedriver bootstrap="${xdb.bootstrap}" quiet="true" />
+    </target>
+
+    <target name="build" depends="-init">
+        <delete dir="${build.dir}/${application}" />
+        <echo>${application}</echo>
+        <echo>${application.module}</echo>
+        <antcall target="-build-client">
+            <param name="module" value="${application.module}" />
+        </antcall>
+        <antcall target="-build-server">
+            <param name="module" value="${application.module}" />
+        </antcall>
+        <mkdir dir="${applications.dir}/${application}/war/images" />
+        <copy todir="${applications.dir}/${application}/war/images" includeEmptyDirs="false">
+            <fileset dir="${applications.dir}/${application}/images" />
+        </copy>
+        <mkdir dir="${applications.dir}/${application}/war/${application}/css" />
+        <copy todir="${applications.dir}/${application}/war/${application}/css" includeEmptyDirs="false">
+            <fileset dir="${applications.dir}/${application}/css" />
+        </copy>
+
+    </target>
+
+    <target name="create-war" depends="-init">
+        <antcall target="-create-war">
+            <param name="module" value="${application.module}" />
+        </antcall>
+    </target>
+
+    <target name="generate-xforms" depends="-init">
+        <taskdef resource="net/sf/antcontrib/antlib.xml">
+            <classpath>
+                <pathelement location="${application.bin.dir}/../../../lib/misc/ant-contrib-1.0b3.jar" />
+            </classpath>
+        </taskdef>
+
+        <property name="application.dir" value="${application.bin.dir}/.." />
+        <delete dir="${application.dir}/temp" />
+        <mkdir dir="${application.dir}/temp" />
+
+        <!-- generate XForms -->
+        <xslt basedir="${application.dir}/data/application/resources/template" style="${application.bin.dir}/generate-xform-xhtml.xsl" destdir="${application.dir}/temp">
+            <param name="http://apache.org/xalan/features/source_location" expression="true" />
+            <param name="export-dir" expression="${application.dir}/temp">
+            </param>
+            <param name="configurationId" expression="${id}" if="id">
+            </param>
+            <include name="template-content.xml" />
+        </xslt>
+
+        <fileset dir="${application.dir}/temp" id="src.files">
+            <include name="**/*.xhtml" />
+        </fileset>
+
+        <!-- get the paths of the generated xhtml forms -->
+        <pathconvert pathsep="," property="xhtml-files" refid="src.files" />
+
+        <foreach list="${xhtml-files}" target="-xhtml2xform" param="in" trim="true">
+            <param name="destdir" value="${application.dir}/data/application/resources/xforms" />
+            <param name="basedir" value="${base.dir}/bin" />
+            <param name="application.dir" value="${application.dir}" />
+        </foreach>
+        <delete dir="${application.dir}/temp" />
+    </target>
+
+    <target name="-xhtml2xform">
+        <propertyregex property="inmatch" input="${in}" regexp="\\" replace="/" defaultValue="${in}" />
+        <propertyregex property="xformdir" input="${inmatch}" regexp="(/${application}/temp/)([^\.]*)\.xhtml" select="\2" />
+
+        <fail message="XForm ${destdir}/${xformdir} already exists.">
+            <condition>
+                <and>
+                    <isfalse value="${overwrite}" />
+                    <available file="${destdir}/${xformdir}" />
+                </and>
+            </condition>
+        </fail>
+
+        <echo>Processing ${in} in -xhtml2xform target in ${application}/bin/build.xml </echo>
+        <antcall target="-transform-xhtml-to-xforms">
+            <param name="in" value="${in}" />
+            <param name="destdir" value="${destdir}/${xformdir}" />
+            <param name="basedir" value="${basedir}" />
+        </antcall>
+
+        <!-- now add the attribute xforms:replace="none" to the form -->
+        <property name="xforms.file" value="${destdir}/${xformdir}/form.xfm" />
+        <fail message="XForm file ${xforms.file} not found">
+            <condition>
+                <not>
+                    <available file="${xforms.file}" />
+                </not>
+            </condition>
+        </fail>
+
+        <replace token="xforms:submission" value="xforms:submission replace='none'" file="${xforms.file}" />
+    </target>
+
+    <target name="dist" depends="-init">
+        <zip destfile="${build.dir}/${application}-${version.number}.${app.build.number}.zip">
+            <fileset dir="${application.dir}/..">
+                <include name="${application}/*.*" />
+                <include name="${application}/bin/*.*" />
+                <include name="${application}/data/**/*.*" />
+                <include name="${application}/dtd/*.*" />
+                <include name="${application}/lib" />
+                <include name="${application}/src/**/*.*" />
+                <include name="${application}/war/*.*" />
+                <include name="${application}/war/WEB-INF/*.*" />
+                <include name="${application}/war/WEB-INF/classes/*.*" />
+                <exclude name="${application}/.project" />
+                <exclude name="${application}/.settings" />
+                <exclude name="${application}/**/.p4ignore" />
+            </fileset>
+            <fileset dir="${application.dir}/lib" />
+        </zip>
+    </target>
+
+	<!--
+	Renaming recources app name function - Malik
+	-->
+	<target name="init-renaming">
+		<if>
+			<equals arg1="${rename}" arg2="true"/>
+			<then>
+				<!--
+				<property name="appsearch.key" value="/Eurydice/"/>
+				<property name="apprep.key" value="/${application}/"/>
+				-->
+				<input message="Please enter search Key:" addproperty="appsearch.key" defaultvalue="/Eurydice/"/>
+				<input message="Please enter replacement Key:" addproperty="apprep.key" defaultValue="/${application}/"/>
+			</then>
+		</if>
+	</target>
+	
+	<target name="-rename-initial-app" depends="-init, init-renaming">
+		<if>
+			<equals arg1="${rename}" arg2="true"/>
+			<then>
+				<echo>Starting Replacment of ${appsearch.key} to ${apprep.key}</echo>
+				<rename-app-files />
+				<echo>Replacement Completed</echo>
+			</then>
+			<else>
+				<echo>Skipping Renaming application command</echo>
+			</else>
+		</if>
+	</target>
+
+	
+	<macrodef name="rename-app-files">
+		<attribute name="id" default="${appsearch.key}" />
+		<sequential>
+			<replace dir="../data/application/resources/" includes="**/*">
+				<replacefilter token="@{id}" value="${apprep.key}" />
+			</replace>
+		</sequential>
+	</macrodef>
+</project>

@@ -1,0 +1,34 @@
+<module rename-to='changeme'>
+    <!-- xmlarchiving Application -->
+	<inherits name='com.emc.documentum.xml.dds.gwt.DDS' />
+	<inherits name='com.emc.documentum.xml.dds.gwt.theme.standard.Standard' />
+    
+  <!-- Specify the app entry point class. -->
+	<entry-point class='com.emc.dds.xmlarchiving.client.Main' />  
+
+  <set-configuration-property name="CssResource.enableGss" value="true" />
+  <set-configuration-property name="CssResource.legacy" value="true" />
+ 
+  <!-- Temporary replace for missing property in the XForms engine. -->	
+  <replace-with
+      class="com.emc.documentum.xml.gwt.client.xml.impl.XMLUtilsImplIE6">
+    <when-type-is class="com.emc.documentum.xml.gwt.client.xml.impl.XMLUtilsImpl" />
+    <any>
+      <when-property-is name="user.agent" value="ie6"/>
+      <when-property-is name="user.agent" value="ie8"/>
+    </any>
+  </replace-with>
+
+  <!-- Temporary replace for missing property in the XForms engine. -->	  
+  <replace-with
+      class="com.emc.documentum.xml.gwt.client.ui.impl.GlassPaneImplIE6">
+    <when-type-is class="com.emc.documentum.xml.gwt.client.ui.impl.GlassPaneImpl" />
+    <any>
+      <when-property-is name="user.agent" value="ie6"/>
+      <when-property-is name="user.agent" value="ie8"/>
+    </any>
+  </replace-with>
+        
+  <!-- Specify the application specific style sheet. -->
+	<stylesheet src='xmlarchiving.css' />
+</module>

@@ -1,0 +1,47 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>update-record</name>
+  <dataset>changeme</dataset>
+  <type>employee</type>
+  <expression><![CDATA[
+	declare option xhive:index-debug 'true';
+    declare option xhive:queryplan-debug 'true';
+    declare option xhive:pathexpr-debug 'true';
+    declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    
+    (: JMM - function to determine if an element is empty or has just whitespace in it :)
+    declare namespace functx = "http://www.functx.com";
+    declare function functx:all-whitespace 
+  	( $arg as xs:string? )  as xs:boolean {
+   		normalize-space($arg) = '' 
+ 	} ;
+ 	
+ 	(: JMM - This is the data that represents the form inputs and the list of results - it is structured as follows:
+ 	 	Note there can be multiple result records if the user did a multiple select
+	 	<data>
+		    <selection>
+		        <result personID="33" empNumber="000004546" lastName="GRIFFIN" type="employeeDetail" firstName="STEVE" middleName="X" ssNumber="234-56-7891" location="00000804" birthDate="" maritalStatus="" gender="M" title="RECEIVING CLERK" payRate="" position="R0000010" lastCheckDate=""/>
+		    </selection>
+		    <lastname>MONACO</lastname>
+		    <firstname>JAMES</firstname>
+		    <middlename>YYY</middlename>
+		    <ssn/>
+		</data> 
+ 	:) 
+    declare variable $input external;
+    
+    (: JMM - Use only the first result record if multiple were selected :)
+	let $resultRec := $input/selection/result[1]
+	
+	(: JMM - Get the specific record we need to change :)
+	let $elem := doc('/DATA/changeme/Collection')/PAY_HISTHDR/PAY_HISTHDR-ROW[EMPNO = $resultRec/@empNumber]      
+			return 
+		      (
+		      	(: JMM - Update the fields only if the input form field contained non-whitespace :)
+		      	replace node $elem/FIRST_NAME with <FIRST_NAME>{data($resultRec/@firstName)}</FIRST_NAME>,
+		       	replace node $elem/LAST_NAME with <LAST_NAME>{data($resultRec/@lastName)}</LAST_NAME> ,
+		       	replace node $elem/MIDDLE_NAME with <MIDDLE_NAME>{data($resultRec/@middleName)}</MIDDLE_NAME>,
+		       	replace node $elem/SOC_SEC_NUM with <SOC_SEC_NUM>{data($resultRec/@ssNumber)}</SOC_SEC_NUM> 
+		      )
+ 
+  ]]></expression>
+  </xquery>

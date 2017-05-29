@@ -1,0 +1,23 @@
+<services>
+ <service>
+    <type class="DDSServiceType">USER</type>
+    <name>UserService</name>
+    <className>com.emc.dds.xmlarchiving.server.auth.XMLArchivingUserServiceDelegate</className>
+  </service>
+  <service>
+    <dependency>UserService</dependency>
+    <type class="DDSServiceType">TOKEN</type>
+    <name>TokenService</name>
+    <className>com.emc.documentum.xml.dds.user.impl.TokenServiceImpl</className>
+  </service>
+  <xprocservice>
+    <type class="DDSServiceType">XPROC</type>
+    <name>XProcService</name>
+    <className>com.emc.documentum.xml.dds.xproc.impl.XProcServiceImpl</className>
+  </xprocservice>
+  <service>
+    <type class="DDSServiceType">SCHEDULE</type>
+    <name>SchedulingService</name>
+    <className>com.emc.documentum.xml.dds.scheduling.internal.SchedulingServiceImpl</className>
+  </service>  
+</services>

@@ -1,0 +1,5 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+		<results/>	
+]]></expression>
+</xquery>

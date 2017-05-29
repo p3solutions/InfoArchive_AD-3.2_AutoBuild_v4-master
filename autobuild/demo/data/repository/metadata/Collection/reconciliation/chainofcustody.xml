@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+  <name>Reconciliation/Account Management</name>
+  <table name="RECONCILIATION" validation="100%" />
+  <table name="RECONCILIATION_ACCOUNT" validation="100%" />
+  <table name="RECONCILIATION_LOG" validation="100%" />
+  <table name="ACCOUNT" validation="100%" />
+  <table name="ARS_USERS" validation="100%" />
+  <table name="DEPARTMENT" validation="100%" />
+</dataset>

@@ -1,0 +1,108 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $personID external;
+declare variable $empNumber external;
+declare variable $lastName external;
+declare variable $firstName external;
+declare variable $checkDate external;
+declare variable $checkNbr external;
+declare variable $payPeriodEnd external;
+declare variable $code external;
+declare variable $descr external;
+declare variable $hours external;
+declare variable $amount external;
+declare variable $date external;
+declare variable $rate external;
+declare variable $locCode external;
+declare variable $posGroup external;
+declare variable $floorLoc external;
+declare variable $city external;
+declare variable $state external;
+declare variable $groupTitle external;
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+	(: unit test setup 
+    let $personID := xs:int('32')
+    let $empNumber := "000004545"
+    let $lastName := "DECICCO"
+    let $firstName := "VINCENT"
+    let $locCode := "00000876"
+    let $checkDate := "";
+    let $checkNbr := "";
+    let $payPeriodEnd := "";
+    let $code := "";
+    let $descr := "";
+    let $hours := "";
+    let $amount := "";
+    let $date := "";
+    let $rate := "";
+    let $locCode := "";
+    let $posGroup := "";
+    let $floorLoc := "";
+    let $city := "";
+    let $state := "";
+    let $groupTitle := "";    
+     :)
+     
+	let $addposresults := for $elem in doc(concat($path,'/EMPDETAILADDPOSINFO'))/EMPDETAILADDPOSINFO/EMPDETAILADDPOSINFO-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empservicehist := for $elem in doc(concat($path,'/EMPDETAIL_SERVICEHIST'))/EMPDETAIL_SERVICEHIST/EMPDETAIL_SERVICEHIST-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empfedtaxes := for $elem in doc(concat($path,'/EMPDETAIL_FEDTAXES'))/EMPDETAIL_FEDTAXES/EMPDETAIL_FEDTAXES-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $emphist := for $elem in doc(concat($path,'/EMPDETAILEMPHIST'))/EMPDETAILEMPHIST/EMPDETAILEMPHIST-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $empheader := for $elem in doc(concat($path,'/EMPDETAILHDR'))/EMPDETAILHDR/EMPDETAILHDR-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $payhist_header := for $elem in doc(concat($path,'/PAY_HISTHDR'))/PAY_HISTHDR/PAY_HISTHDR-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	let $person := for $elem in doc(concat($path,'/PERSON'))/PERSON/PERSON-ROW[./PERSON_ID=xs:integer($personID)]
+	                      return $elem
+	return
+		(
+		<results>
+			<employee_summary personID='{ xs:integer($personID) }' empNumber='{ $empNumber }' lastName='{ $lastName }'
+				firstName='{ $firstName }' location='{ $locCode }' 
+				checkDate='{ $checkDate }' checkNbr='{$checkNbr}'
+				payPeriodEnd='{$payPeriodEnd}' code='{$code}'
+				descr='{$descr}' hours='{$hours}'
+				amount='{$amount}' date='{$date}'
+				rate='{$rate}' posGroup='{$posGroup}'
+				floorLoc='{$floorLoc}' city='{$city}'
+				state='{$state}' groupTitle='{$groupTitle}' />
+      		<additional_position_information>
+      		{ $addposresults }
+      		</additional_position_information>
+      		<service_history>
+      		{ $empservicehist }
+      		</service_history>
+      		<employment_history>
+      		{ $emphist }
+      		</employment_history>
+      		<federal_taxes>
+      		{ $empfedtaxes }
+      		</federal_taxes>
+      		<state_taxes>
+      		</state_taxes>
+      		<local_taxes>
+      		</local_taxes>
+      		<employee_header>
+      		{ $empheader }
+      		</employee_header>
+      		<payhist_header>
+      		{ $payhist_header }
+      		</payhist_header>
+      		<person_data>
+      		{ $person }
+      		</person_data>
+		</results>
+		)
+]]></expression>
+</xquery>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="scheduledTasks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="scheduledTask" minOccurs="0" maxOccurs="unbounded">
+    		  <xs:complexType>
+     			  <xs:sequence>
+              <xs:element name="type">
+                <xs:simpleType>
+                  <xs:restriction base="xs:NCName">
+                    <xs:enumeration value="executeUpdateXQueries"/>
+                    <xs:enumeration value="handleIncoming"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="activated" type="xs:boolean"/>
+              <xs:element name="interval">
+                <xs:simpleType>
+                  <xs:restriction base="xs:NCName">
+                    <xs:enumeration value="minute"/>
+                    <xs:enumeration value="hour"/>
+                    <xs:enumeration value="day"/>
+                    <xs:enumeration value="week"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="name" type="non-empty-string"/>
+              <xs:choice>
+                <xs:group ref="updateXQueriesGroup"/>
+                <xs:group ref="handleIncomingGroup"/>
+              </xs:choice>
+     			  </xs:sequence>
+    		  </xs:complexType>
+        </xs:element>
+      </xs:sequence>    
+		</xs:complexType>		
+  </xs:element>
+
+  <xs:group name="updateXQueriesGroup">
+  	<xs:sequence>
+      <xs:element name="xqueries" minOccurs="0">
+    		<xs:complexType>
+		      <xs:sequence>
+			      <xs:element name="xquery" type="xqueryType" minOccurs="0" maxOccurs="unbounded"/>
+		      </xs:sequence>
+	      </xs:complexType>
+      </xs:element>
+		</xs:sequence>
+  </xs:group>
+
+	<xs:complexType name="xqueryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="readonly" use="required" type="xs:boolean"/>
+      </xs:extension>
+    </xs:simpleContent>
+	</xs:complexType>
+
+  <xs:group name="handleIncomingGroup">
+  	<xs:sequence>
+      <xs:element name="sharedlocation" type="non-empty-string"/>
+      <xs:element name="xmlextensions" type="non-empty-string"/>
+      <xs:element name="maxthreads" type="xs:unsignedShort"/>
+		</xs:sequence>
+  </xs:group>
+
+	<xs:simpleType name="non-empty-string">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

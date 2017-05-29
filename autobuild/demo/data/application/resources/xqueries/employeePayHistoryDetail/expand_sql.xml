@@ -1,0 +1,56 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $personID external;
+declare variable $empNumber external;
+declare variable $last_name external;
+declare variable $first_name external;
+declare variable $charge_date external;
+declare variable $check_no external;
+declare variable $payPeriodEnd external;
+declare variable $code external;
+declare variable $hours external;
+declare variable $amount external;
+declare variable $rate external;
+declare variable $pos_group external;
+declare variable $city external;
+declare variable $state external;
+
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+	 
+    let $personID := xs:int('32')
+    (: unit test setupv 
+    let $empNumber := "000004545" 
+    let $last_name := "DECICCO"
+    let $first_name := "VINCENT"
+    let $locCode := "00000876"
+    let $charge_date := ""
+    let $check_no := ""
+    let $payPeriodEnd := ""
+    let $code := ""
+    let $hours := ""
+    let $amount := ""
+    let $date := ""
+    let $rate := ""
+    let $posGroup := ""
+    let $city := ""
+    let $state := ""    
+    :)
+   		
+	(: just return the parameters and we'll let the custom step following us access the HAWQ db to get more info on this person's check info :)
+	return
+		<result personID='{$personID}' amount='{$amount}' charge_date='{$charge_date}' first_name='{$first_name}'
+		checkNbr='{$check_no}' code='{$code}'  hours='{$hours}' last_name='{$last_name}'
+		 rate='{$rate}'   posGroup='{$pos_group}'  
+		  city='{$city}'  state='{$state}' 
+		 />     
+     
+]]></expression>
+</xquery>

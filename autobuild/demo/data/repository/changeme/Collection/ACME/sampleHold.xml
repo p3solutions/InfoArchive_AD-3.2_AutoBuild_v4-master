@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<AcmeHolds>
+    <AcmeHold>
+        <Name>Test Hold</Name>
+        <Authority>HoldAuthority</Authority>
+        <Description>A test Hold</Description>
+        <Matters>
+            <Matter>Awkward Horse Lawsuit</Matter>
+            <Matter>Bob vs. Acme</Matter>
+        </Matters>
+        <Date_Created>2014-07-14T08:24:32</Date_Created>
+        <Date_Start>2014-07-20T16:08:52</Date_Start>
+        <Date_End>2014-08-20T00:00:00</Date_End>
+        <Date_Cancelled/>
+        <Status>Active</Status>
+        <XQuery>blah</XQuery>
+        <RecordCount>5</RecordCount>
+        <Records>
+            <RecordID>00000002-30d0-4ec9-8000-000c29f00003</RecordID>
+            <RecordID>00000023-30d0-4ec9-8001-000c29f00136</RecordID>
+            <RecordID>00000041-30d0-4ec9-800a-000c29f00266</RecordID>
+            <RecordID>00000042-30d0-4ec9-8001-000c29f00167</RecordID>
+            <RecordID>00000039-30d0-4ec9-8001-000c29f00158</RecordID>
+        </Records>
+    </AcmeHold>
+</AcmeHolds>

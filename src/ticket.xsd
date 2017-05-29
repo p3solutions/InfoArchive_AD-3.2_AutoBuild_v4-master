@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://www.emc.com/documentum/xml/dds"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           xmlns:dds="http://www.emc.com/documentum/xml/dds">
+  <xs:element name="ticket">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="uploadtime" type="xs:string"/>
+        <xs:element name="task">
+    		  <xs:complexType>
+     			  <xs:sequence>
+              <xs:element name="import">
+          		  <xs:complexType>
+     	      		  <xs:sequence>
+                    <xs:element name="location" type="dds:non-empty-string"/>
+                    <xs:element name="unzip" type="xs:boolean" minOccurs="0"/>
+                    <xs:element name="systemid" type="dds:non-empty-string"/>
+                    <xs:element name="detachablelibraries" minOccurs="0">
+                		  <xs:complexType>
+     			              <xs:sequence>
+                          <xs:element name="detachablelibrary" minOccurs="0">
+                      		  <xs:complexType>
+     	      		              <xs:sequence>
+                                <xs:element name="location" type="dds:non-empty-string"/>
+                                <xs:element name="createindexes" type="xs:boolean"/>
+                              </xs:sequence>    
+		                        </xs:complexType>		
+                          </xs:element>
+                        </xs:sequence>    
+		                  </xs:complexType>		
+                    </xs:element>
+                  </xs:sequence>    
+		            </xs:complexType>		
+              </xs:element>
+            </xs:sequence>    
+		      </xs:complexType>		
+        </xs:element>
+      </xs:sequence>    
+    </xs:complexType>		
+  </xs:element>
+
+	<xs:simpleType name="non-empty-string">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

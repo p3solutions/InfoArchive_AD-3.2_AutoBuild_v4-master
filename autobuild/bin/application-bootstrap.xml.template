@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bootstrap>
+  <name>{app.id}</name>
+  <mainStore class="XDBStore">
+    <alias>main</alias>
+    <defaultStoreUser class="XDBStoreUser">
+      <id>{xdb.username}</id>
+      <encryptedPassword>{app.database.password.encrypted}</encryptedPassword>
+    </defaultStoreUser>
+    <bootstrap>{app.bootstrap.url}</bootstrap>
+    <databaseName>{app.database.name}</databaseName>
+    <cachePages>{xdb.cache.pages}</cachePages>
+  </mainStore>
+  <defaultURIResolver class="DDSURIResolver" />
+  <publicKeyPath>./{public.key.file}</publicKeyPath>
+  <privateKeyPath>./{private.key.file}</privateKeyPath>
+  <jceSettings>
+    <crypto>
+      <transformation>{dds.crypto.transform}</transformation>
+      <provider>{dds.crypto.provider}</provider>
+    </crypto>
+    <secureRandom>
+      <algorithm>{dds.securerandom.algorithm}</algorithm>
+      <provider>{dds.securerandom.provider}</provider>
+    </secureRandom>
+  </jceSettings>
+</bootstrap>

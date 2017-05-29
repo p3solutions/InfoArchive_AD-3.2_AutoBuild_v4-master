@@ -1,0 +1,30 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $recID external;
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+	(: unit test setup 
+    let $recID := '270892'
+    :)
+    let $result := doc(fn:concat($path, '/RECONCILIATION'))/RECONCILIATION/
+                      RECONCILIATION-ROW[REC_ID = xs:integer($recID)]
+    let $recons_accts := doc(fn:concat($path, '/RECONCILIATION_ACCOUNT'))/RECONCILIATION_ACCOUNT/
+                      RECONCILIATION_ACCOUNT-ROW[REC_ID = xs:integer($recID)]
+	return 
+	    <results>
+	      <reconciliations>
+	        { $result }
+	      </reconciliations>
+	      <reconciliation_accounts>
+            { $recons_accts }
+          </reconciliation_accounts>    
+	    </results>		
+]]></expression>
+</xquery>

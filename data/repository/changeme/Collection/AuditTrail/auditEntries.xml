@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<auditEntries>
+	<auditEntry>
+		<time>2013-08-27T08:54:49</time>
+		<app>TEST MESSAGE</app>
+		<user>admin</user>
+		<searchConfiguration>login</searchConfiguration>
+		<data>
+			<successfulLogin>true</successfulLogin>
+		</data>
+	</auditEntry>
+</auditEntries>

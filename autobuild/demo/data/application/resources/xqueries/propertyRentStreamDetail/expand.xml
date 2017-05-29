@@ -1,0 +1,22 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+
+declare variable $path :='/DATA/changeme/Collection';
+declare variable $id external;
+
+declare option xhive:index-debug 'true';
+declare option xhive:queryplan-debug 'true';
+declare option xhive:pathexpr-debug 'true';
+(: declare option xhive:optimizer-debug 'true'; :)
+declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+
+	(: unit test setup 
+		let $id := '001'
+    :)
+
+	let $result := doc(concat($path, '/RENT_STREAM'))/RENT_STREAM/RENT_STREAM-ROW[p_id = $id]
+	return 
+	    <results>{$result}</results>		
+
+]]></expression>
+</xquery>

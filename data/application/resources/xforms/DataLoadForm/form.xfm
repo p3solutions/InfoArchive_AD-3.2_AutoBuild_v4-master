@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<xhtml:html xmlns:xsd="http://www.w3.org/2001/XMLSchema"  xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+	<xhtml:head>
+		<xforms:model id="DataloadInquiryModel">
+			<xforms:instance id = "fields">
+				<data>
+					<tableName/>
+					<fromDate xsi:type="xforms:date"/>
+					<toDate xsi:type="xforms:date"/>
+				</data>
+			</xforms:instance>
+			<xforms:bind id = "TablenameBind" nodeset = "tableName"/>
+			<xforms:bind id = "FromdateBind" nodeset = "fromDate" />
+			<xforms:bind id = "TodateBind" nodeset = "toDate" />
+			<xforms:submission replace = "none" id = "DataloadInquiryModelSubmission" action = "" method = "post"/>
+			<xforms:reset ev:event="DOMActivate"/>
+		</xforms:model>
+	</xhtml:head>
+	<xhtml:body>
+		<xforms:group model="DataloadInquiryModel" id="DataloadInquiry">
+			<table xmlns="http://www.w3.org/1999/xhtml">
+				<tr>
+					<td rowspan="1" colspan="1">Table Name</td>
+					<td>:</td>
+					<td rowspan="1" colspan="1">
+						<xforms:input id="tableName" bind="TablenameBind">
+							<xforms:label/>
+						</xforms:input>
+					</td>
+					<td rowspan="1" colspan="1">From date</td>
+					<td>:</td>
+					<td rowspan="1" colspan="1">
+						<xforms:input id="fromDate" bind="FromdateBind">
+							<xforms:label/>
+						</xforms:input>
+					</td>
+					<td rowspan="1" colspan="1">To Date</td>
+					<td>:</td>
+					<td rowspan="1" colspan="1">
+						<xforms:input id="toDate" bind="TodateBind">
+							<xforms:label/>
+						</xforms:input>
+					</td>
+				</tr>
+			</table>
+			<table xmlns="http://www.w3.org/1999/xhtml">
+				<tr>
+					<td rowspan="1" colspan="1">
+						
+						<td rowspan="1" colspan="1">
+						<xforms:trigger id="input1-0">
+							<xforms:label>Submit</xforms:label>
+							<xforms:send submission="DataloadInquiryModelSubmission" if="(count-non-empty(instance('fields')/*) &gt; 0)"/>
+							<xforms:message if="(count-non-empty(instance('fields')/*) = 0)">Please provide inputs</xforms:message>
+						</xforms:trigger>
+					</td>
+					<td rowspan="1" colspan="1">
+						<xforms:trigger>
+							<xforms:label>Clear</xforms:label>
+							<xforms:reset ev:event="DOMActivate"/>
+						</xforms:trigger>
+					</td>
+					</td>
+				</tr>
+			</table>
+		</xforms:group>
+	</xhtml:body>
+</xhtml:html>

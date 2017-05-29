@@ -1,0 +1,24 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>add-hold-acme</name>
+  <dataset>changeme</dataset>
+  <type>srchAcmeHoldRecords</type>
+  <expression><![CDATA[
+    declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    declare variable $input external;
+    declare variable $currentuser  external;
+    declare variable $id  := fn:current-dateTime();
+    declare variable $path :='/DATA/changeme/Collection/ACME/HOLDS';
+    
+	(: Unit tests
+	  let $name='Test Hold 1'
+      let $input := <data><selection><result RecordID="00000041-30d0-4ec9-800a-000c29f00266" RecordClass="CUS1020" RecordType="Type 10" SystemOfRecord="System 2" AccountCTL="36527" EffectiveDate="4/21/1962" Market="Germany" docCount="1" Holds="" type="AcmeRecordsTwo"/></selection><Name>Test Hold 1</Name></data>
+	:)
+
+
+	for $nodes in fn:doc('/DATA/changeme/Collection/ACME/HOLDS')/AcmeHolds/AcmeHold[Name=$input/Name]/RecordCount
+		return replace node $nodes with <RecordCount>{count(fn:doc('/DATA/changeme/Collection/ACME/HOLDS')/AcmeHolds/AcmeHold[Name=$input/Name]/Records/RecordID)}</RecordCount>
+
+
+    
+  ]]></expression>
+  </xquery>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bootstrap>
+  <name>Hello</name>
+  <mainStore class="XDBStore">
+    <alias>main</alias>
+    <defaultStoreUser class="XDBStoreUser">
+      <id>Administrator</id>
+      <encryptedPassword>${app.database.password.encrypted}</encryptedPassword>
+    </defaultStoreUser>
+    <bootstrap>xhive://localhost:1235#Hello</bootstrap>
+    <databaseName>Hello</databaseName>
+    <cachePages>10000</cachePages>
+  </mainStore>
+  <defaultURIResolver class="DDSURIResolver" />
+  <publicKeyPath>./DDSPublicKey.dat</publicKeyPath>
+  <privateKeyPath>./DDSPrivateKey.dat</privateKeyPath>
+  <jceSettings>
+    <crypto>
+      <transformation>${super.dds.crypto.transform}</transformation>
+      <provider>${super.dds.crypto.provider}</provider>
+    </crypto>
+    <secureRandom>
+      <algorithm>${super.dds.securerandom.algorithm}</algorithm>
+      <provider>${super.dds.securerandom.provider}</provider>
+    </secureRandom>
+  </jceSettings>
+</bootstrap>

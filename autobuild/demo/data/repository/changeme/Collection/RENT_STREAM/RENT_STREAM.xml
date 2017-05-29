@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<RENT_STREAM>
+<RENT_STREAM-ROW>
+    <prop_id>00000001</prop_id>
+    <p_id>1011-01</p_id>
+    <p_name>SHAW'S SOUTHERN REGION OFFICE</p_name>
+    <LeaseStartDt>1990-02-09</LeaseStartDt>
+    <LeaseEndDt>2005-01-31</LeaseEndDt>
+    <lr_adjby/>
+    <lr_man_adj/>
+    <lr_adjdate>1899-12-30</lr_adjdate>
+    <lr_date>2045-03-01</lr_date>
+    <lr_end>2050-02-28</lr_end>
+    <lr_future>0</lr_future>
+    <lr_hold>0</lr_hold>
+    <lr_mod_rnt>0</lr_mod_rnt>
+    <lr_payold>0</lr_payold>
+    <lr_trueend>0</lr_trueend>
+    <lr_memo>MINIMUM RENT FOR EXTENSION TERMS IS INCREASED BY 10% ACCORDING TO SECTION 3.1(B) OF THE LEASE.</lr_memo>
+    <cumavgrnt>0.00</cumavgrnt>
+    <cumrntamt>0.00</cumrntamt>
+    <lr_adjpct>0.00</lr_adjpct>
+    <lr_amount>106659.24</lr_amount>
+    <lr_avgrnt>60149.20</lr_avgrnt>
+    <lr_freq>1</lr_freq>
+    <lr_mktrent>0.00</lr_mktrent>
+    <periods>0</periods>
+</RENT_STREAM-ROW>
+</RENT_STREAM>

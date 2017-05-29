@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================================
+      build.xml
+     ====================================================================== -->
+<project name="core_decomm_app"
+         default="help"
+         xmlns:xdb="http://www.emc.com/documentum/xml/xdb"
+         xmlns:dds="http://www.emc.com/documentum/xml/dds"
+         xmlns:props="antlib:org.apache.ant.props">
+    <property environment="env" />
+    <property name="dds.dir" value="${basedir}/../../../../" />
+
+    <description>
+        CORE DECOMM APP INSTALLATION
+        
+  See the README file for more information.
+    </description>
+
+    <!-- =================================
+          target: help
+         ================================= -->
+    <target name="help" description="Print help message.">
+        <java classname="org.apache.tools.ant.Main">
+            <arg value="-projecthelp" />
+            <arg value="-buildfile" />
+            <arg value="${ant.file}" />
+        </java>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init"
+            depends="-check-env, -init-base-properties, -init-tasks">
+        <condition property="use.autoconfig">
+            <equals arg1="true" arg2="${build.autoconfig}" />
+        </condition>
+
+        <!-- * means xDB accepts connections from all servers; in this case,
+             default to localhost to test the connection. -->
+        <if>
+            <equals arg1="*" arg2="${XHIVE_SERVER_ADDRESS}" />
+            <then>
+                <property name="xdb.server.address" value="localhost" />
+            </then>
+            <else>
+                <property name="xdb.server.address"
+                          value="${XHIVE_SERVER_ADDRESS}" />
+            </else>
+        </if>
+
+        <condition property="xdb.running">
+            <socket server="${xdb.server.address}"
+                    port="${XHIVE_SERVER_PORT}" />
+        </condition>
+
+
+        <if>
+            <not>
+                <antversion atleast="1.8.2" />
+            </not>
+            <then>
+                <!-- Ant 1.8.2 adds the following default excludes: -->
+                <defaultexcludes add="**/.git" />
+                <defaultexcludes add="**/.git/**" />
+                <defaultexcludes add="**/.gitattributes" />
+                <defaultexcludes add="**/.gitignore" />
+                <defaultexcludes add="**/.gitmodules" />
+                <defaultexcludes add="**/.hg" />
+                <defaultexcludes add="**/.hg/**" />
+                <defaultexcludes add="**/.hgignore" />
+                <defaultexcludes add="**/.hgsub" />
+                <defaultexcludes add="**/.hgsubstate" />
+                <defaultexcludes add="**/.hgtags" />
+                <defaultexcludes add="**/.bzr" />
+                <defaultexcludes add="**/.bzr/**" />
+                <defaultexcludes add="**/.bzrignore" />
+            </then>
+        </if>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init-admin
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init-admin" depends="-init">
+        <property name="admin.dir" value="${applications.dir}/admin" />
+        <property name="admin.bin.dir" value="${admin.dir}/bin" />
+        <property name="admin.classes.dir"
+                  value="${admin.dir}/war/WEB-INF/classes" />
+        <init-federation-properties prefix="admin" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init-app
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init-app" depends="-init">
+        <property name="data.application.dir" value="${data.dir}/application" />
+        <property name="data.application.users.dir"
+                  value="${data.application.dir}/users" />
+        <property name="application-bootstrap.xml.template"
+                  value="application-bootstrap.xml.template" />
+        <property name="application-bootstrap.xml"
+                  value="application-bootstrap.xml" />
+        <property name="keys.zip" value="keys.zip" />
+        <property name="public.key.file" value="DDSPublicKey.dat" />
+        <property name="private.key.file" value="DDSPrivateKey.dat" />
+        <property name="app.dir" value="${applications.dir}/${app.id}" />
+        <property name="app.src.dir" value="${app.dir}/src" />
+        <property name="app.classes.dir"
+                  value="${app.dir}/war/WEB-INF/classes" />
+        <property name="app.data.dir" value="${app.dir}/data" />
+        <property name="app.bin.dir" value="${app.dir}/bin" />
+        <property name="demo.dir" value="../demo" />
+        <property name="demo.data.dir" value="${demo.dir}/data" />
+        <property name="demo.bin.dir" value="${demo.dir}/bin" />
+        <init-federation-properties prefix="app" />
+        <condition property="use.demo">
+            <istrue value="${build.demo}" />
+        </condition>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-env
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-env">
+        <fail unless="env.XDB_HOME" message="XDB_HOME not set." />
+        <fail unless="env.GWT_HOME" message="GWT_HOME not set." />
+    	<fail unless="env.DDS_DIR" message="DDS_DIR not set." />
+        <fail unless="env.CATALINA_HOME" message="CATALINA_HOME not set." />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init-base-properties
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init-base-properties"
+            depends="-init-default-federation-properties">
+        <property name="core_decomm_app.lib.dir" value="../../lib" />
+        <property name="config.dir" value="../config" />
+        <property name="src.dir" value="../src" />
+        <property name="test.dir" value="../test" />
+        <property name="lib.dir" value="../lib" />
+        <property name="data.dir" value="../data" />
+        <property name="classes.dir" value="classes" />
+        <property name="applications.dir" value="${dds.dir}/applications" />
+
+        <property name="build.dir" value="${dds.dir}/build" />
+        <property name="webapps.dir" value="${env.CATALINA_HOME}/webapps" />
+
+        <property name="xdb.username" value="Administrator" />
+        <property name="user.admin.role" value="Admin" />
+
+        <property name="app.changeme" value="changeme" />
+
+        <property file="${dds.dir}/bin/build.properties" prefix="super" />
+        <property file="build.properties" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init-default-federation-properties
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init-default-federation-properties"
+            depends="-check-federation-properties"
+            unless="use.federations">
+        <property name="app.bootstrap.url" value="${XHIVE_BOOTSTRAP}" />
+        <property name="app.federation.password" value="${pre.xdb.password}" />
+        <property name="admin.bootstrap.url" value="${XHIVE_BOOTSTRAP}" />
+        <property name="admin.federation.password"
+                  value="${pre.xdb.password}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-federation-properties
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-federation-properties">
+        <property file="${env.XDB_HOME}/conf/xdb.properties" />
+        <property file="build.properties" prefix="pre" />
+        <condition property="use.federations">
+            <and>
+                <equals arg1="true" arg2="${pre.build.federations}" />
+            </and>
+        </condition>
+        <fail message="Missing federation properties">
+            <condition>
+                <and>
+                    <isset property="use.federations" />
+                    <not>
+                        <and>
+                            <isset property="pre.xdb.federationset.file" />
+                            <isset property="pre.xdb.federations.dir" />
+                            <isset property="pre.app.federation.name" />
+                            <isset property="pre.app.federation.password" />
+                            <isset property="pre.admin.federation.name" />
+                            <isset property="pre.admin.federation.password" />
+                        </and>
+                    </not>
+                </and>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -init-tasks
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-init-tasks">
+        <path id="custom.classpath">
+            <fileset dir="${env.XDB_HOME}/lib" includes="**/*.jar" />
+            <fileset dir="${dds.dir}" includes="**/*.jar" />
+            <fileset dir="${core_decomm_app.lib.dir}" includes="**/*.jar" />
+            <fileset dir="${lib.dir}" includes="**/*.jar" />
+            <dirset dir="${dds.dir}" includes="build/anttasks" />
+        </path>
+
+        <taskdef loaderref="classpath.loader"
+                 resource="net/sf/antcontrib/antcontrib.properties"
+                 classpathref="custom.classpath" />
+
+        <typedef resource="org/apache/ant/props/antlib.xml"
+                 classpathref="custom.classpath"
+                 uri="antlib:org.apache.ant.props" />
+        <propertyhelper>
+            <props:nested />
+        </propertyhelper>
+
+        <taskdef loaderref="classpath.loader"
+                 resource="com/emc/documentum/xml/dds/ant/dds_anttasks.properties"
+                 classpathref="custom.classpath"
+                 uri="http://www.emc.com/documentum/xml/dds" />
+
+        <taskdef loaderref="classpath.loader"
+                 resource="com/xhive/anttasks/tasks.properties"
+                 classpathref="custom.classpath"
+                 uri="http://www.emc.com/documentum/xml/xdb" />
+        <typedef loaderref="classpath.loader"
+                 resource="com/xhive/anttasks/type.properties"
+                 classpathref="custom.classpath"
+                 uri="http://www.emc.com/documentum/xml/xdb" />
+
+        <typedef loaderref="classpath.loader"
+                 resource="com/emc/documentum/xml/xmlarchiving/anttasks/type.properties"
+                 classpathref="custom.classpath" />
+        <taskdef loaderref="classpath.loader"
+                 resource="com/emc/documentum/xml/xmlarchiving/anttasks/xdb-tasks.properties"
+                 classpathref="custom.classpath"
+                 uri="http://www.emc.com/documentum/xml/xdb" />
+        <taskdef loaderref="classpath.loader"
+                 resource="com/emc/documentum/xml/xmlarchiving/anttasks/dds-tasks.properties"
+                 classpathref="custom.classpath"
+                 uri="http://www.emc.com/documentum/xml/dds" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: init-federation-properties
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="init-federation-properties">
+        <attribute name="prefix" />
+        <sequential>
+            <check-federation prefix="@{prefix}" />
+            <if>
+                <isset property="use.federations" />
+                <then>
+                    <dirname property="xdb.federationsets.dir"
+                             file="${xdb.federationset.file}" />
+                    <basename property="xdb.federationset.name"
+                              file="${xdb.federationset.file}" />
+                    <property name="bootstrap.file"
+                              value="XhiveDatabase.bootstrap" />
+                    <property name="@{prefix}.federation.dir"
+                              value="${xdb.federations.dir}/${@{prefix}.federation.name}" />
+                    <property name="@{prefix}.bootstrap.file"
+                              value="${@{prefix}.federation.dir}/${bootstrap.file}" />
+                    <property name="@{prefix}.bootstrap.url"
+                              value="${XHIVE_BOOTSTRAP}#${@{prefix}.federation.name}" />
+                </then>
+                <else>
+                    <property name="@{prefix}.bootstrap.url"
+                              value="${XHIVE_BOOTSTRAP}" />
+                    <property name="@{prefix}.federation.password"
+                              value="${xdb.password}" />
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: check-federation
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="check-federation">
+        <attribute name="prefix" />
+        <sequential>
+            <if>
+                <and>
+                    <isset property="use.federations" />
+                    <not>
+                        <isdef property="@{prefix}.federation.name" />
+                    </not>
+                </and>
+                <then>
+                    <fail message="Missing required @{prefix}.federation" />
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <!-- =================================
+          target: create-federations
+         ================================= -->
+    <target name="create-federations"
+            depends="-init, -check-xdb-stopped, -init-admin, -create-admin-federation, -init-app, -create-app-federation"
+            description="Create all federations.">
+        <echo-create-federation-message />
+    </target>
+
+    <!-- =================================
+          target: create-admin-federation
+         ================================= -->
+    <target name="create-admin-federation"
+            depends="-init-admin, -check-xdb-stopped, -create-admin-federation"
+            description="Create admin federation.">
+        <echo-create-federation-message />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -create-admin-federation
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-create-admin-federation" if="use.federations">
+        <create-federation prefix="admin" />
+        <add-federation prefix="admin" />
+    </target>
+
+    <!-- =================================
+          target: create-app-federation
+         ================================= -->
+    <target name="create-app-federation"
+            depends="-init-app, -check-xdb-stopped, -create-app-federation"
+            description="Create application federation.">
+        <echo-create-federation-message />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -create-app-federation
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-create-app-federation" if="use.federations">
+        <create-federation prefix="app" />
+        <add-federation prefix="app" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: create-federation
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="create-federation">
+        <attribute name="prefix" />
+        <sequential>
+            <mkdir dir="${@{prefix}.federation.dir}" />
+            <xdb:createfederation bootstrap="${@{prefix}.bootstrap.file}"
+                                  licensekey="${xdb.license}"
+                                  password="${@{prefix}.federation.password}" />
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: add-federation
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="add-federation">
+        <attribute name="prefix" />
+        <sequential>
+            <mkdir dir="${xdb.federationsets.dir}" />
+            <xdb:createfederationset file="${xdb.federationset.file}">
+                <xdb:federation name="${@{prefix}.federation.name}"
+                                bootstrap="${@{prefix}.bootstrap.file}" />
+            </xdb:createfederationset>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: echo-create-federation-message
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="echo-create-federation-message">
+        <sequential>
+            <echo>The xDB server is ready to be restarted.</echo>
+            <if>
+                <and>
+                    <isset property="use.federations" />
+                    <os family="windows" />
+                </and>
+                <then>
+                    <property file="${env.XDB_HOME}/bin/xDB Server.lax" />
+                    <echo>Note: the server must be started in --federationset mode.
+    To do this automatically, edit 
+      ${env.XDB_HOME}/bin/xDB Server.lax
+    Add --federationset ${xdb.federationset.file} to lax.command.line.args.</echo>
+                </then>
+                <elseif>
+                    <isset property="use.federations" />
+                    <then>
+                        <echo>Note: the server must be started in --federationset mode.
+    To do this automatically, edit the startup script (for example)
+      /etc/init.d/xdb
+    Add --federationset ${xdb.federationset.file} to the run-server command.</echo>
+                    </then>
+                </elseif>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <!-- =================================
+          target: delete-federations
+         ================================= -->
+    <target name="delete-federations"
+            depends="delete-admin-federation, delete-app-federation"
+            description="Delete all federations."
+            if="use.federations" />
+
+    <!-- =================================
+          target: delete-admin-federation
+         ================================= -->
+    <target name="delete-admin-federation"
+            depends="-init-admin, -check-xdb-stopped"
+            description="Delete admin federation."
+            if="use.federations">
+        <delete-federation prefix="admin" />
+        <remove-federation prefix="admin" />
+    </target>
+
+    <!-- =================================
+          target: delete-app-federation
+         ================================= -->
+    <target name="delete-app-federation"
+            depends="-init-app, -check-xdb-stopped"
+            description="Delete application federation."
+            if="use.federations">
+        <delete-federation prefix="app" />
+        <remove-federation prefix="app" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: delete-federation          
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="delete-federation">
+        <attribute name="prefix" />
+        <sequential>
+            <delete includeemptydirs="true" failonerror="false">
+                <fileset dir="${@{prefix}.federation.dir}" />
+            </delete>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: remove-federation          
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="remove-federation">
+        <attribute name="prefix" />
+        <sequential>
+            <mkdir dir="${xdb.federationsets.dir}" />
+            <xdb:createfederationset file="${xdb.federationset.file}">
+                <xdb:federation name="${@{prefix}.federation.name}"
+                                remove="true" />
+            </xdb:createfederationset>
+        </sequential>
+    </macrodef>
+
+    <!-- =================================
+          target: create-databases
+         ================================= -->
+    <target name="create-databases"
+            depends="create-admin-database, create-app-database"
+            description="Create all databases." />
+
+    <!-- =================================
+          target: create-admin-database
+         ================================= -->
+    <target name="create-admin-database"
+            depends="-init-admin, -check-xdb-running"
+            description="Create admin database.">
+        <create-database prefix="admin" failonerror="false" />
+    </target>
+
+    <!-- =================================
+          target: create-app-database
+         ================================= -->
+    <target name="create-app-database"
+            depends="-init-app, -check-xdb-running"
+            description="Create application database.">
+        <create-database prefix="app" failonerror="false" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: create-database
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="create-database">
+        <attribute name="prefix" />
+        <attribute name="failonerror" default="true" />
+        <sequential>
+            <xdb:createdatabase name="${@{prefix}.database.name}"
+                                dbapassword="${@{prefix}.database.password}"
+                                failonerror="@{failonerror}">
+                <xdb:federation bootstrap="${@{prefix}.bootstrap.url}"
+                                password="${@{prefix}.federation.password}" />
+            </xdb:createdatabase>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: check-database          
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="check-database">
+        <attribute name="prefix" />
+        <sequential>
+            <trycatch>
+                <try>
+                    <xdb:database id="check.database"
+                                  bootstrap="${@{prefix}.bootstrap.url}"
+                                  name="${@{prefix}.database.name}"
+                                  user="${xdb.username}"
+                                  password="${@{prefix}.database.password}" />
+                    <xdb:session databaseref="check.database" />
+                </try>
+                <catch>
+                    <create-database prefix="@{prefix}" failonerror="false" />
+                </catch>
+            </trycatch>
+        </sequential>
+    </macrodef>
+
+    <!-- =================================
+          target: delete-databases
+         ================================= -->
+    <target name="delete-databases"
+            depends="delete-admin-database, delete-app-database"
+            description="Delete all databases." />
+
+    <!-- ================================= 
+          target: delete-admin-database
+         ================================= -->
+    <target name="delete-admin-database"
+            depends="-init-admin, -check-xdb-running"
+            description="Delete admin database.">
+        <delete-database prefix="admin" />
+    </target>
+
+    <!-- ================================= 
+          target: delete-app-database
+         ================================= -->
+    <target name="delete-app-database"
+            depends="-init-app, -check-xdb-running"
+            description="Delete application database.">
+        <delete-database prefix="app" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: delete-database
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="delete-database">
+        <attribute name="prefix" />
+        <sequential>
+            <xdb:deletedatabase name="${@{prefix}.database.name}"
+                                failonerror="false">
+                <xdb:federation bootstrap="${@{prefix}.bootstrap.url}"
+                                password="${@{prefix}.federation.password}" />
+            </xdb:deletedatabase>
+        </sequential>
+    </macrodef>
+
+    <!-- ================================= 
+          target: build              
+         ================================= -->
+    <target name="build"
+            depends="create-databases, -build-admin, -build-app"
+            description="Build admin and decomm applications." />
+
+    <!-- =================================
+          target: build-admin
+         ================================= -->
+    <target name="build-admin"
+            depends="-init-admin, -check-xdb-running, -build-admin"
+            description="Build admin application." />
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -build-admin
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-build-admin">
+        <check-database prefix="admin" />
+        <delete file="${admin.classes.dir}/${public.key.dat}" />
+        <delete file="${admin.classes.dir}/${private.key.dat}" />
+        <copy file="${dds.dir}/bin/ant-xdb.properties"
+              todir="${admin.dir}/bin"
+              overwrite="true" />
+        <update-ant-xdb-properties prefix="admin" />
+        <dds:ant target="build" app="admin" />
+        <dds:ant target="war" app="admin" />
+    </target>
+
+    <!-- =================================
+          target: build-app
+         ================================= -->
+    <target name="build-app"
+            depends="-init-app, -check-xdb-running, -build-app"
+            description="Build decomm application." />
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -build-app
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-build-app">
+        <check-database prefix="app" />
+        <if>
+            <isset property="use.autoconfig" />
+            <then>
+                <antcall target="-build-app-auto-config" />
+            </then>
+            <else>
+                <antcall target="-build-app-manual-config" />
+            </else>
+        </if>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -build-app-manual-config
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-build-app-manual-config"
+            depends="-check-config-download, -copy-and-rename"
+            unless="use.autoconfig">
+        <unzip src="${config.dir}/${keys.zip}" dest="${config.dir}" />
+        <fileset id="app.bootstrap-keys" dir="${config.dir}">
+            <include name="keys/${public.key.file}" />
+            <include name="keys/${private.key.file}" />
+            <include name="${application-bootstrap.xml}" />
+        </fileset>
+        <copy todir="${app.src.dir}" flatten="true">
+            <fileset refid="app.bootstrap-keys" />
+        </copy>
+        <copy todir="${app.classes.dir}" flatten="true">
+            <fileset refid="app.bootstrap-keys" />
+        </copy>
+        <update-ant-xdb-properties prefix="app" />
+        <dds:ant target="load-data-sets" app="${app.id}" force="true" />
+        <dds:ant target="load-application-data" app="${app.id}" force="true" />
+        <dds:ant target="build" app="${app.id}" />
+        <dds:ant target="war" app="${app.id}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-config-download
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-config-download">
+        <fail message="Missing ${config.dir}/${application-bootstrap.xml}">
+            <condition>
+                <not>
+                    <available file="${config.dir}/${application-bootstrap.xml}" />
+                </not>
+            </condition>
+        </fail>
+        <fail message="Missing ${config.dir}/${keys.zip}">
+            <condition>
+                <not>
+                    <available file="${config.dir}/${keys.zip}" />
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -build-app-auto-config
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-build-app-auto-config"
+            depends="-copy-and-rename, -generate-app-bootstrap, clean-app-database"
+            if="use.autoconfig">
+        <fileset id="app.bootstrap-keys" dir="${config.dir}">
+            <include name="${public.key.file}" />
+            <include name="${private.key.file}" />
+            <include name="${application-bootstrap.xml}" />
+        </fileset>
+        <copy todir="${app.src.dir}">
+            <fileset refid="app.bootstrap-keys" />
+        </copy>
+        <copy todir="${app.classes.dir}">
+            <fileset refid="app.bootstrap-keys" />
+        </copy>
+
+        <update-ant-xdb-properties prefix="app" />
+        <dds:ant target="create-application" app="${app.id}" force="true" />
+
+        <delete dir="${data.application.users.dir}" />
+        <mkdir dir="${data.application.users.dir}" />
+        <xdb:upload>
+            <fileset dir="${data.application.dir}" />
+            <xdb:database bootstrap="${app.bootstrap.url}"
+                          name="${app.database.name}"
+                          user="${xdb.username}"
+                          password="${app.database.password}">
+                <xdb:library path="/APPLICATIONS/${app.id}" />
+            </xdb:database>
+        </xdb:upload>
+        <propertyselector property="users.list"
+                          delimiter=","
+                          match="^user\.([^\.]*)\.password$"
+                          select="\1"
+                          casesensitive="false" />
+        <foreach list="${users.list}"
+                 delimiter=","
+                 target="-add-app-user"
+                 param="user.id"
+                 inheritall="true" />
+        <xdb:upload>
+            <fileset dir="${data.application.users.dir}" />
+            <xdb:database bootstrap="${app.bootstrap.url}"
+                          name="${app.database.name}"
+                          user="${xdb.username}"
+                          password="${app.database.password}">
+                <xdb:library path="/APPLICATIONS/${app.id}/users" />
+            </xdb:database>
+        </xdb:upload>
+        <delete dir="${data.application.users.dir}" />
+
+        <dds:ant target="load-data-sets" app="${app.id}" force="true" />
+        <dds:ant target="load-application-data" app="${app.id}" force="true" />
+        <dds:ant target="build" app="${app.id}" />
+        <dds:ant target="war" app="${app.id}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -add-app-user
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-add-app-user">
+        <propertycopy name="user.password" from="user.${user.id}.password" />
+        <propertycopy name="user.role"
+                      from="user.${user.id}.role"
+                      silent="true" />
+        <dds:encrypt privateKeyPath="${app.classes.dir}/${private.key.file}"
+                     publicKeyPath="${app.classes.dir}/${public.key.file}"
+                     password="user.password" />
+        <dds:adduser app="${app.id}"
+                     id="${user.id}"
+                     password="${user.password.encrypted}" />
+        <if>
+            <isdef property="user.role" />
+            <then>
+                <mkdir dir="${data.application.users.dir}/${user.id}" />
+                <echoxml file="${data.application.users.dir}/${user.id}/ldmuser.xml">
+                    <com.emc.dds.xmlarchiving.client.rpc.LDMUser>
+                        <roleId>${user.role}</roleId>
+                    </com.emc.dds.xmlarchiving.client.rpc.LDMUser>
+                </echoxml>
+            </then>
+        </if>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -generate-app-bootstrap
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-generate-app-bootstrap" depends="-generate-app-keys">
+        <dds:encrypt privateKeyPath="${config.dir}/${private.key.file}"
+                     publicKeyPath="${config.dir}/${public.key.file}"
+                     password="app.database.password" />
+        <copy tofile="${config.dir}/${application-bootstrap.xml}"
+              file="${application-bootstrap.xml.template}"
+              overwrite="true">
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="{app.id}" to="${app.id}" />
+                    <replacestring from="{xdb.username}" to="${xdb.username}" />
+                    <replacestring from="{app.database.password.encrypted}"
+                                   to="${app.database.password.encrypted}" />
+                    <replacestring from="{xdb.cache.pages}"
+                                   to="${xdb.cache.pages}" />
+                    <replacestring from="{app.bootstrap.url}"
+                                   to="${app.bootstrap.url}" />
+                    <replacestring from="{app.database.name}"
+                                   to="${app.database.name}" />
+                    <replacestring from="{public.key.file}"
+                                   to="${public.key.file}" />
+                    <replacestring from="{private.key.file}"
+                                   to="${private.key.file}" />
+                    <replacestring from="{dds.crypto.transform}"
+                                   to="${super.dds.crypto.transform}" />
+                    <replacestring from="{dds.crypto.provider}"
+                                   to="${super.dds.crypto.provider}" />
+                    <replacestring from="{dds.securerandom.algorithm}"
+                                   to="${super.dds.securerandom.algorithm}" />
+                    <replacestring from="{dds.securerandom.provider}"
+                                   to="${super.dds.securerandom.provider}" />
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -generate-app-keys
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-generate-app-keys" depends="-init-tasks">
+    	<mkdir dir="${config.dir}" />
+        <dds:security-tool overwrite="false"
+                           command="generate"
+                           privateKeyPath="${config.dir}/${private.key.file}"
+                           publicKeyPath="${config.dir}/${public.key.file}"
+                           cryptoTransformation="${super.dds.crypto.transform}"
+                           cryptoProvider="${super.dds.crypto.provider}"
+                           secureRandomAlgorithm="${super.dds.securerandom.algorithm}"
+                           secureRandomProvider="${super.dds.securerandom.provider}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -copy-and-rename
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-copy-and-rename">
+        <delete dir="${app.dir}" includeemptydirs="true" failonerror="false" />
+        <copy todir="${app.dir}" includeemptydirs="true" overwrite="true">
+            <fileset dir="../.."
+                     excludes="README,INSTALL,autobuild/**,.checkstyle,.pmd,.settings/**" />
+            <filtermapper>
+                <replacestring from="${app.changeme}" to="${app.id}" />
+            </filtermapper>
+        </copy>
+        <rename-app-files />
+
+        <!-- Stage Demo Data -->
+        <if>
+            <isset property="use.demo" />
+            <then>
+                <echo>Staging Demo Data</echo>
+                <copy todir="${app.data.dir}"
+                      includeemptydirs="true"
+                      overwrite="true">
+                    <fileset dir="${demo.data.dir}" />
+                    <filtermapper>
+                        <replacestring from="${app.changeme}" to="${app.id}" />
+                    </filtermapper>
+                </copy>
+                <copy todir="${app.bin.dir}" overwrite="true">
+                    <fileset dir="${demo.bin.dir}" />
+                </copy>
+                <rename-app-files />
+            </then>
+            <else>
+                <echo>Skipping Demo Data</echo>
+            </else>
+        </if>
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: rename-app-files
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="rename-app-files">
+        <attribute name="id" default="${app.changeme}" />
+        <attribute name="name" default="DECOMM APPLICATION TITLE" />
+        <attribute name="dataset" default="application_dataset_name" />
+        <attribute name="parentId" default="parent_node_id" />
+        <attribute name="parentName" default="PARENT NODE LABEL" />
+        <sequential>
+            <replace dir="${app.dir}" includes="**/*">
+                <replacefilter token="@{id}" value="${app.id}" />
+                <replacefilter token="@{name}" value="${app.name}" />
+                <replacefilter token="@{dataset}" value="${app.id}" />
+                <replacefilter token="@{parentId}" value="${app.parent.id}" />
+                <replacefilter token="@{parentName}"
+                               value="${app.parent.name}" />
+            </replace>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: update-ant-xdb-properties
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="update-ant-xdb-properties">
+        <attribute name="prefix" />
+        <sequential>
+            <propertyfile file="${@{prefix}.dir}/bin/ant-xdb.properties">
+                <entry key="xdb.bootstrap" value="${@{prefix}.bootstrap.url}" />
+                <entry key="xdb.databasename"
+                       value="${@{prefix}.database.name}" />
+                <entry key="xdb.password"
+                       value="${@{prefix}.database.password}" />
+                <entry key="xdb.username" value="${xdb.username}" />
+                <entry key="xdb.cache.pages" value="${xdb.cache.pages}" />
+            </propertyfile>
+        </sequential>
+    </macrodef>
+
+    <!-- =================================
+          target: deploy
+         ================================= -->
+    <target name="deploy"
+            depends="deploy-admin, deploy-app"
+            description="Deploy admin and decomm applications." />
+
+    <!-- =================================
+          target: deploy-admin
+         ================================= -->
+    <target name="deploy-admin"
+            depends="-init-admin, -check-admin-war"
+            description="Deploy admin application.">
+        <copy todir="${webapps.dir}" file="${build.dir}/admin.war" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-admin-war
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-admin-war">
+        <fail message="${build.dir}/admin.war not built">
+            <condition>
+                <not>
+                    <available file="${build.dir}/admin.war" />
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- =================================
+          target: deploy-app
+         ================================= -->
+    <target name="deploy-app"
+            depends="-init-app, -check-app-war"
+            description="Deploy decomm application.">
+        <copy todir="${webapps.dir}" file="${build.dir}/${app.id}.war" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-app-war
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-app-war">
+        <fail message="${app.id}.war not built">
+            <condition>
+                <not>
+                    <available file="${build.dir}/${app.id}.war" />
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- =================================
+          target: clean
+         ================================= -->
+    <target name="clean"
+            depends="clean-admin, clean-app"
+            description="Clean all build files.">
+        <delete dir="${classes.dir}" />
+    </target>
+
+    <!-- ================================= 
+          target: clean-admin
+         ================================= -->
+    <target name="clean-admin"
+            depends="-init-admin"
+            description="Clean admin build files.">
+        <dds:ant target="clean" app="admin" />
+        <delete file="${admin.bin.dir}/ant-xdb.properties" />
+        <delete file="${admin.classes.dir}/${application-bootstrap.xml}" />
+        <delete file="${admin.classes.dir}/${public.key.file}" />
+        <delete file="${admin.classes.dir}/${private.key.file}" />
+    </target>
+
+    <!-- ================================= 
+          target: clean-app
+         ================================= -->
+    <target name="clean-app"
+            depends="-init-app"
+            description="Clean application build files.">
+        <dds:ant target="clean" app="${app.id}" />
+    </target>
+
+    <!-- =================================
+          target: clean-app-database
+         ================================= -->
+    <target name="clean-app-database"
+            depends="-init-app, -check-xdb-running"
+            description="Remove application from the database.">
+        <xdb:database id="app.db"
+                      bootstrap="${app.bootstrap.url}"
+                      name="${app.database.name}"
+                      user="${xdb.username}"
+                      password="${app.database.password}" />
+        <xdb:deletelibrary path="/APPLICATIONS/${app.id}" failonerror="false">
+            <xdb:database refid="app.db" />
+        </xdb:deletelibrary>
+        <xdb:deletelibrary path="/DATA/${app.id}" failonerror="false">
+            <xdb:database refid="app.db" />
+        </xdb:deletelibrary>
+        <xdb:deletelibrary path="/DATA/${app.id}.xml" failonerror="false">
+            <xdb:database refid="app.db" />
+        </xdb:deletelibrary>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-xdb-running
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-xdb-running">
+        <fail message="xDB server not running" unless="xdb.running" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -check-xdb-stopped
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-check-xdb-stopped">
+        <fail message="xDB server not stopped" if="xdb.running" />
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: dds:ant
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="ant" uri="http://www.emc.com/documentum/xml/dds">
+        <attribute name="target" />
+        <attribute name="app" />
+        <attribute name="force" default="false" />
+        <sequential>
+            <subant target="@{target}" failonerror="true">
+                <fileset dir="${dds.dir}/bin" includes="build.xml" />
+                <property name="app" value="@{app}" />
+                <property name="force" value="@{force}" />
+            </subant>
+        </sequential>
+    </macrodef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: dds:encrypt
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="encrypt" uri="http://www.emc.com/documentum/xml/dds">
+        <attribute name="privateKeyPath" />
+        <attribute name="publicKeyPath" />
+        <attribute name="password" />
+        <attribute name="suffix" default="encrypted" />
+        <sequential>
+            <dds:security-tool command="encrypt"
+                               privateKeyPath="@{privateKeyPath}"
+                               publicKeyPath="@{publicKeyPath}"
+                               password="${@{password}}"
+                               cryptoTransformation="${super.dds.crypto.transform}"
+                               cryptoProvider="${super.dds.crypto.provider}"
+                               secureRandomAlgorithm="${super.dds.securerandom.algorithm}"
+                               secureRandomProvider="${super.dds.securerandom.provider}"
+                               var="@{password}.@{suffix}" />
+        </sequential>
+    </macrodef>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -compile-tests
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-compile-tests">
+        <copy includeemptydirs="false" todir="${classes.dir}" overwrite="true">
+            <fileset dir="${test.dir}" excludes="**/*.java" />
+        </copy>
+        <path id="test.classpath">
+            <fileset dir="${env.XDB_HOME}/lib" includes="**/*.jar" />
+            <fileset dir="${dds.dir}/lib" includes="**/*.jar" />
+            <fileset dir="${lib.dir}" includes="**/*.jar" />
+        </path>
+        <mkdir dir="${classes.dir}" />
+        <javac classpathref="test.classpath"
+               srcdir="${test.dir}"
+               destdir="${classes.dir}"
+               includeantruntime="false" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: -jar-tests
+         - - - - - - - - - - - - - - - - - -->
+    <target name="-jar-tests" depends="-compile-tests">
+        <jar destfile="${lib.dir}/ant-autobuild-test.jar"
+             basedir="${classes.dir}" />
+    </target>
+
+    <!-- =================================
+          target: test
+         ================================= -->
+    <target name="test" depends="-init, -jar-tests">
+        <property name="all" value="false" />
+        <property name="app" value="garage" />
+        <fail message="xDB must be running and not in --federationset mode to run all tests">
+            <condition>
+                <and>
+                    <istrue value="${all}" />
+                    <not>
+                        <isset property="xdb.running" />
+                    </not>
+                </and>
+            </condition>
+        </fail>
+        <condition property="test.excludes" value="" else="**/AddUserTest.java">
+            <istrue value="${all}" />
+        </condition>
+        <if>
+            <istrue value="${all}" />
+            <then>
+                <init-test-app app="${app}" />
+            </then>
+        </if>
+
+        <path id="test.classpath">
+            <fileset dir="${env.XDB_HOME}/lib" includes="xhive.jar" />
+            <fileset dir="${dds.dir}/lib"
+                     includes="**/*.jar"
+                     excludes="misc/ant.jar" />
+            <fileset dir="${lib.dir}" includes="**/*.jar" />
+        </path>
+        <property name="report.dir" value="report" />
+        <property name="junit.out.dir.xml" value="${report.dir}/junit/xml" />
+        <delete dir="${junit.out.dir.xml}" />
+        <mkdir dir="${junit.out.dir.xml}" />
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath refid="test.classpath" />
+            <formatter type="xml" />
+            <batchtest fork="yes" todir="${junit.out.dir.xml}">
+                <fileset dir="${test.dir}"
+                         includes="**/*Test.java"
+                         excludes="${test.excludes}" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: init-test-app
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="init-test-app">
+        <attribute name="app" default="garage" />
+        <sequential>
+            <property file="${dds.dir}/bin/ant-xdb.properties"
+                      prefix="@{app}" />
+            <xdb:createdatabase name="${@{app}.xdb.databasename}"
+                                dbapassword="${@{app}.xdb.password}"
+                                failonerror="false">
+                <xdb:federation bootstrap="${@{app}.xdb.bootstrap}"
+                                password="${@{app}.xdb.password}" />
+            </xdb:createdatabase>
+            <xdb:deletelibrary path="/APPLICATIONS/@{app}" failonerror="false">
+                <xdb:database bootstrap="${@{app}.xdb.bootstrap}"
+                              name="${@{app}.xdb.databasename}"
+                              user="${@{app}.xdb.username}"
+                              password="${@{app}.xdb.password}" />
+            </xdb:deletelibrary>
+            <dds:ant target="create-application" app="@{app}" force="true" />
+            <dds:ant target="load-application-data" app="@{app}" />
+        </sequential>
+    </macrodef>
+</project>

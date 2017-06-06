@@ -1,0 +1,22 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+		declare variable $Name external;
+        
+		let $path := doc('/DATA/changeme/Collection/Holds/')/Holds/Hold[Name=$Name]    
+        return
+			<results> 
+			{
+                <result                     
+					Name		= '{$path/Name}'
+					Authority	= '{$path/Authority}'
+					Description	= '{$path/Description}'
+					DateCreated	= '{$path/Date_Created}'
+					DateStart	= '{$path/Date_Start}'
+					DateEnd		= '{$path/Date_End}'
+					Status		= '{$path/Status}'
+					RecordCount	= '{$path/RecordCount}'
+				/>
+            } 
+			</results> 
+    ]]></expression>
+</xquery>

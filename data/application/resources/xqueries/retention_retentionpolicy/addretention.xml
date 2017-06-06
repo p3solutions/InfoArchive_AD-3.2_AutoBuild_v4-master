@@ -1,0 +1,31 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+	<name>add-retention</name>
+	<dataset>changeme</dataset>
+	<type>retentionpolicy</type>
+	<expression>
+		<![CDATA[
+		declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+		declare variable $path := '/DATA/changeme/Collection/Retention';
+		declare variable $input external;
+		
+		let $check := doc($path)/Retention/Retention-ROW[Description=data($input/Description)][CategoryCode=data($input/Category_Code)][CountryCode=data($input/Country_Code)][CountryName=data($input/Country_Name)][RegionName=data($input/Region_Name)][TotalRetentionPeriod=data($input/Period)]
+		return
+			if(count($check) = 0)
+			then
+				(
+					insert node 
+						<Retention-ROW>
+							<Description>{data($input/Description)}</Description>
+							<CategoryCode>{data($input/Category_Code)}</CategoryCode>
+							<CountryCode>{data($input/Country_Code)}</CountryCode>
+							<CountryName>{data($input/Country_Name)}</CountryName>
+							<RegionName>{data($input/Region_Name)}</RegionName>
+							<TotalRetentionPeriod>{data($input/Period)}</TotalRetentionPeriod>
+							<RetentionUnit>Years</RetentionUnit>
+						</Retention-ROW>
+					as last into fn:doc($path)/Retention
+				)
+			else <bar>{data($input/Category_Code)}</bar>
+	]]>
+	</expression>
+</xquery>

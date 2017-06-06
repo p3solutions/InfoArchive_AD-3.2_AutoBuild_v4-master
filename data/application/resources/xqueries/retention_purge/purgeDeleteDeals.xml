@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+	<name>purgeDeleteDeals</name>
+	<dataset>changeme</dataset>
+	<type>retention_purge</type>
+	<expression>
+		<![CDATA[
+			declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+			declare variable $path := '/DATA/changeme/Collection';
+			declare variable $input external;
+			
+			for $result in $input/selection/result
+			return
+				if(count(doc('/DATA/changeme/Collection/Retention')/retention-records/retention-record[record-id=$result/@record-id]) = 0)
+				then 
+					for $i in doc('/DATA/changeme/Collection/DEALS')/DEALS/DEALS-ROW[DEALS_ID=$result/@record-id]
+					return delete node $i
+				else <bar>{$result/@record-id}</bar>
+]]>
+	</expression>
+</xquery>
+

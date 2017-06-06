@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+	<name>purge</name>
+	<dataset>changeme</dataset>
+	<type>retention_purge</type>
+	<expression>
+		<![CDATA[
+			declare namespace dds = 'http://www.emc.com/documentum/xml/dds';
+			declare variable $path := '/DATA/changeme/Collection';
+			declare variable $input external;
+			
+			let $runDate := current-dateTime()
+			return
+				for $result in $input/selection/result
+				return
+					for $record in doc('/DATA/changeme/Collection/Retention')/retention-records/retention-record
+					where (xs:dateTime($record/retain-until) lt ($runDate))
+					and $record/on-hold != 'Y'
+					and $record/retention-policy-id = $result/@retention-policy-id
+					and $record/record-id = $result/@record-id
+					return 
+						(
+							for $todelete in doc('/DATA/changeme/Collection/Retention')/retention-records/retention-record[record-id=$result/@record-id]
+							[retention-policy-id = $result/@retention-policy-id][record-code=$result/@record-code]
+							return delete node $todelete
+						)
+]]>
+	</expression>
+</xquery>

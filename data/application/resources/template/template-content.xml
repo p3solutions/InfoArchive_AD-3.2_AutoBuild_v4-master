@@ -20,9 +20,11 @@
 				<chainOfCustody>false</chainOfCustody>
 				<contentViewSettings>
 					<contentViewSetting refid="ReportTicketDetails"/>
+					<contentViewSetting refid="emptyScreen" />
 				</contentViewSettings>
 				<searchSettings>
 					<searchSetting name="Report Status" refid="searchReportStatus"/>
+					 
 				</searchSettings>
 			</node>
 			<node>
@@ -32,7 +34,6 @@
 				<chainOfCustody>false</chainOfCustody>
 				<contentViewSettings>
 					<contentViewSetting refid="auditLogDetails" />
-					 <contentViewSetting refid="emptyScreen" />
 				</contentViewSettings>
 				<searchSettings>
 					<searchSetting name="Audit Logs" refid="searchAuditLogs" />
@@ -52,6 +53,22 @@
 					<searchSetting name="Dataload Inquiry" refid="dataLoadInquiry"/>
 				</searchSettings>
 			</node>
+			<node>
+				<id>retention</id>
+				<label>Retention Management</label> 
+				<icon>businessobject16</icon>
+				<chainOfCustody>false</chainOfCustody>
+				<contentViewSettings> 
+					<contentViewSetting refid="retention_retentionpolicy" />
+					<contentViewSetting refid="retention_hold" />
+					<contentViewSetting refid="retention_purge" />
+				</contentViewSettings>
+				<searchSettings>
+					<searchSetting name="Retention Policies" refid="search_retention_policies" />
+					<searchSetting name="Legal Holds" refid="search_legal_hold" />
+					<searchSetting name="Purge Records" refid="search_records_for_purge" />
+				</searchSettings>
+			</node>
 		</node>
 	</hierarchy>
 
@@ -63,18 +80,18 @@
 			<xquery>expand.xml</xquery>
 			<pdf>false</pdf>
 		</transformationConfiguration>
+		<transformationConfiguration id="ReportTicketDetails">
+			<schemaIDs>ReportTicketDetails</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/ReportTicketDetails.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
 		<transformationConfiguration id="displayURIDefault">
 			<schemaIDs/>
 			<styleURI>dds://DOMAIN=resource/xslt/xml-verbatim.xsl</styleURI>
 			<pipelineURI>dds://DOMAIN=resource/xproc/display.xpl</pipelineURI>
 			<xquery />
-			<pdf>false</pdf>
-		</transformationConfiguration>
-		<transformationConfiguration id="emptyScreen">
-			<schemaIDs>emptyScreen</schemaIDs>
-			<styleURI>dds://DOMAIN=resource/xslt/emptyScreen.xsl</styleURI>
-			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
-			<xquery>expand.xml</xquery>
 			<pdf>false</pdf>
 		</transformationConfiguration>
 		<transformationConfiguration id="empty">
@@ -98,14 +115,14 @@
 			<xquery>expand.xml</xquery>
 			<pdf>false</pdf>
 		</transformationConfiguration>
-		<transformationConfiguration id="ReportTicketDetails">
-			<schemaIDs>ReportTicketDetails</schemaIDs>
-			<styleURI>dds://DOMAIN=resource/xslt/ReportTicketDetails.xsl</styleURI>
+		<!-- Audit Log -->
+		<transformationConfiguration id="emptyScreen">
+			<schemaIDs>emptyScreen</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/emptyScreen.xsl</styleURI>
 			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
 			<xquery>expand.xml</xquery>
 			<pdf>false</pdf>
 		</transformationConfiguration>
-		<!-- Audit Log -->
 		<transformationConfiguration id="auditLogDetails">
 			<schemaIDs>auditLogDetails</schemaIDs>
 			<styleURI>dds://DOMAIN=resource/xslt/auditLogDetails.xsl</styleURI>
@@ -128,6 +145,29 @@
 			<xquery>expand.xml</xquery>
 			<pdf>false</pdf>
 		</transformationConfiguration>
+		<!-- Retention Management -->
+		<transformationConfiguration id="retention_retentionpolicy">
+			<schemaIDs>retention_retentionpolicy</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/retention/retentionpolicy.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="retention_hold">
+			<schemaIDs>retention_hold</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/retention/hold.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		<transformationConfiguration id="retention_purge">
+			<schemaIDs>retention_purge</schemaIDs>
+			<styleURI>dds://DOMAIN=resource/xslt/retention/retentionpurge.xsl</styleURI>
+			<pipelineURI>dds://DOMAIN=resource/xproc/displayxqueryresult.xpl</pipelineURI>
+			<xquery>expand.xml</xquery>
+			<pdf>false</pdf>
+		</transformationConfiguration>
+		
 	</transformationConfigurations>
 
 	<searchConfigurations>
@@ -302,7 +342,6 @@ return
 			<crpWidth>800</crpWidth>
 		</searchConfiguration>
 
-
 		<!-- Data Load -->
 		<searchConfiguration id="dataLoadInquiry">
 			<xformName>DataLoadForm</xformName>
@@ -433,53 +472,353 @@ return
 				</nestedSearch>
 			</nestedSearches>
 		</searchConfiguration>
+	
+		<!-- Retention Management -->
+		<searchConfiguration id="search_retention_policies">
+			<xformName>SearchRetentionPolicies</xformName>
+			<xquery>
+				<![CDATA[
+					import module namespace retentionPolicies = 'retentionPolicies' at '/APPLICATIONS/changeme/resources/xqueries/templateContentSearches/retentionPolicies.xqy';
+	              	
+					declare variable $restrictions as xs:string external;
+					declare variable $first as xs:string external;
+					declare variable $last as xs:string external;
+					declare variable $currentuser as xs:string external;
+
+					let $CategoryCode 			:= '(: CategoryCode :)'
+					let $CountryName 			:= '(: CountryName :)'
+					let $RegionName 			:= '(: RegionName :)'
+					let $TotalRetentionPeriod 	:= '(: TotalRetentionPeriod :)'
+					return
+						retentionPolicies:mainQuery($CategoryCode,$CountryName,$RegionName,$TotalRetentionPeriod,$restrictions,$first,$last,$currentuser)
+				]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>CategoryCode</name>
+						<label>Category Code</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>CountryName</name>
+						<label>Country</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>RegionName</name>
+						<label>Region</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>TotalRetentionPeriod</name>
+						<label>Retention Period</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>CategoryCode</name>
+					<label>Category Code</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>TotalRetentionPeriod</name>
+					<label>Retention</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>RetentionUnit</name>
+					<label>Period</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>CountryCode</name>
+					<label>Country</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>CountryName</name>
+					<label>Country Name</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>RegionName</name>
+					<label>Region</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Description</name>
+					<label>Description</label>
+				</searchResultItem>
+			</searchResultItems>
+			<operations>
+				<operation refid="add-retention" />
+			</operations>
+			<crpWidth>700</crpWidth>
+		</searchConfiguration>
+
+		<searchConfiguration id="search_legal_hold">
+			<xformName>SearchLegalHold</xformName>
+			<xquery>
+				<![CDATA[
+					import module namespace common = 'common' at '/APPLICATIONS/changeme/resources/xqueries/commonModules/common.xqy';
+					
+					declare variable $restrictions as xs:string external;
+					declare variable $first as xs:string external;
+					declare variable $last as xs:string external;
+					declare variable $currentuser as xs:string external;
+					
+					let $main-query := for $elem in doc('/DATA/changeme/Collection/Holds')/Holds/Hold (: xmlarchiving-insert-where-clause-parameter-values :)
+									   return
+								   		 <result
+    									      Name			= '{$elem/Name }'
+										      Authority		= '{$elem/Authority }'
+										      Description	= '{$elem/Description }'
+										      Date_Created	= '{$elem/Date_Created}'
+										      Date_Start	= '{$elem/Date_Start}'
+										      Date_End		= '{$elem/Date_End}'
+										      Status		= '{$elem/Status }'
+										      type			= 'retention_hold'
+											  title			= 'Hold'
+									      />
+  					return 
+  						common:getQuerySubsequence($main-query, $first, $last)
+				]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>Name</name>
+						<label>Hold Name</label>
+						<whereclauseparameter>$elem/Name</whereclauseparameter>
+						<fullText>false</fullText>
+						<operator>=</operator>
+					</searchField>
+					<searchField>
+						<name>Status</name>
+						<label>Status</label>
+						<whereclauseparameter>$elem/Status</whereclauseparameter>
+						<options type="radio">
+							<option>
+								<name>Active</name>
+								<label>Active</label>
+							</option>
+							<option>
+								<name>Inactive</name>
+								<label>Inactive</label>
+							</option>
+						</options>
+					</searchField>
+				</searchFieldRow>
+				<searchFieldRow>
+					<searchField>
+						<name>Date_Created_Start</name>
+						<label>Date Created</label>
+						<type>date</type>
+						<whereclauseparameter>$elem/Date_Created</whereclauseparameter>
+						<operator>&gt;=</operator>
+					</searchField>
+					<searchField>
+						<name>Date_Start_Begin</name>
+						<label>Start Date (Begin)</label>
+						<type>date</type>
+						<whereclauseparameter>$elem/Date_Start</whereclauseparameter>
+						<operator>&gt;=</operator>
+					</searchField>
+					<searchField>
+						<name>Date_End_Begin</name>
+						<label>End Date (Begin)</label>
+						<type>date</type>
+						<whereclauseparameter>$elem/Date_End</whereclauseparameter>
+						<operator>&gt;=</operator>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>Name</name>
+					<label>Name</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>RecordCount</name>
+					<label>Records</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Authority</name>
+					<label>Authority</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Description</name>
+					<label>Description</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Date_Created</name>
+					<label>Created</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Date_Start</name>
+					<label>Starts</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Date_End</name>
+					<label>Ends</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>Status</name>
+					<label>Status</label>
+				</searchResultItem>
+			</searchResultItems>
+			<operations>
+				<operation refid="create-hold" />
+				<operation refid="remove-hold" />
+			</operations>
+			<crpWidth>500</crpWidth>
+		</searchConfiguration>
+
+		<searchConfiguration id="search_records_for_purge">
+			<xformName>SearchPurgeRecords</xformName>
+			<xquery>
+				<![CDATA[
+                	import module namespace recUnderPurge = 'recUnderPurge' at '/APPLICATIONS/changeme/resources/xqueries/templateContentSearches/recUnderPurge.xqy';
+	              	
+					declare variable $restrictions as xs:string external;
+					declare variable $first as xs:string external;
+					declare variable $last as xs:string external;
+					declare variable $currentuser as xs:string external;
+					
+					let $retentionPolicyCode 	:= '(: retentionPolicyCode :)'
+					let $recordType				:= '(: recordType :)'
+					let $retainUntil			:= '(: retainUntil :)'
+					let $recordCode				:= '(: recordCode :)'
+					return
+						recUnderPurge:mainQuery($retentionPolicyCode,$recordType,$retainUntil,$recordCode,$restrictions,$first,$last,$currentuser)
+				]]>
+			</xquery>
+			<searchFields>
+				<searchFieldRow>
+					<searchField>
+						<name>retentionPolicyCode</name>
+						<label>Retention Code</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>recordType</name>
+						<label>Record Type</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>retainUntil</name>
+						<label>Retain Until</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+					<searchField>
+						<name>recordCode</name>
+						<label>Record Code</label>
+						<flexiblecode>%ARG%</flexiblecode>
+						<fullText>false</fullText>
+					</searchField>
+				</searchFieldRow>
+			</searchFields>
+			<searchResultItems>
+				<searchResultItem>
+					<name>retention-policy-code</name>
+					<label>Record Code</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>record-name</name>
+					<label>Name</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>record-type</name>
+					<label>Type</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>base-date</name>
+					<label>Base Date</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>retain-until</name>
+					<label>Retain Until</label>
+				</searchResultItem>
+				<searchResultItem>
+					<name>retention-policy-period</name>
+					<label>Period</label>
+				</searchResultItem>
+			</searchResultItems>
+			<operations>
+				<operation refid="purge" />
+			</operations>
+			<crpWidth>600</crpWidth>
+		</searchConfiguration>
+
 	</searchConfigurations>
 
 	<operationConfigurations>
-		<operationConfiguration id="add-hold">
+		<operationConfiguration id="add-retention">
 			<xqueries>
-				<xquery>add-hold.xml</xquery>
+				<xquery>addretention.xml</xquery>
 			</xqueries>
-			<buttonLabel>Hold</buttonLabel>
-			<dialogTitle>Add hold to $count item(s)</dialogTitle>
-			<xformName>AddHoldsForm</xformName>
+			<buttonLabel>Create New Retention Policy</buttonLabel>
+			<dialogTitle>New Retention Policy</dialogTitle>
+			<xformName>AddRetentionForm</xformName>
 			<operationFields>
 				<operationField>
-					<name>name</name>
-					<label>Name</label>
-				</operationField>
-				<operationField>
-					<name>description</name>
+					<name>Description</name>
 					<label>Description</label>
 				</operationField>
 				<operationField>
-					<name>date</name>
-					<label>Date</label>
-					<type>date</type>
-					<required>true</required>
+					<name>Category_Code</name>
+					<label>Category Code</label>
+				</operationField>
+				<operationField>
+					<name>Country_Code</name>
+					<label>Country Code</label>
+				</operationField>
+				<operationField>
+					<name>Country_Name</name>
+					<label>Country Name</label>
+				</operationField>
+				<operationField>
+					<name>Region_Name</name>
+					<label>Region Name</label>
+				</operationField>
+				<operationField>
+					<name>Period</name>
+					<label>Period</label>
 				</operationField>
 			</operationFields>
 		</operationConfiguration>
-		<operationConfiguration id="set-retention">
+		
+		<operationConfiguration id="create-hold">
 			<xqueries>
-				<xquery>set-retention.xml</xquery>
+				<xquery>createhold.xml</xquery>
 			</xqueries>
-			<buttonLabel>Retention</buttonLabel>
-			<dialogTitle>Set retention on $count item(s)</dialogTitle>
-			<xformName>SetRetentionForm</xformName>
+			<buttonLabel>Create Hold</buttonLabel>
+			<dialogTitle>Create New Hold</dialogTitle>
+			<xformName>CreateHoldsForm</xformName>
 			<operationFields>
 				<operationField>
-					<name>date</name>
-					<label>Date</label>
-					<type>date</type>
-					<required>true</required>
+					<name>Name</name>
+					<label>Name</label>
 				</operationField>
 				<operationField>
-					<name>XQuery</name>
-					<label>XQUERYNAME</label>
+					<name>Description</name>
+					<label>Description</label>
+				</operationField>
+				<operationField>
+					<name>Authority</name>
+					<label>Authority</label>
+				</operationField>
+				<operationField>
+					<name>Status</name>
+					<label>Status</label>
 				</operationField>
 			</operationFields>
 		</operationConfiguration>
+		
 		<operationConfiguration id="remove-hold">
 			<xqueries>
 				<xquery>remove-hold.xml</xquery>
@@ -488,5 +827,15 @@ return
 			<dialogTitle>Remove holds</dialogTitle>
 			<message>Are you sure you want to remove the selected $count hold(s)?</message>
 		</operationConfiguration>
+		
+		<operationConfiguration id="purge">
+			<xqueries>
+				<xquery>purge.xml</xquery>
+				<xquery>purgeDeleteDeals.xml</xquery>
+			</xqueries>
+			<buttonLabel>Purge Data</buttonLabel>
+			<dialogTitle>Purge Records</dialogTitle>
+			<message>Are you sure you want to purge the selected records?</message>
+		</operationConfiguration>	
 	</operationConfigurations>
 </content>

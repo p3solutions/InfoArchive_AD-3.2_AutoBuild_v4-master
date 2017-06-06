@@ -1,0 +1,29 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+       
+		declare variable $CategoryCode external;
+		declare variable $TotalRetentionPeriod external;
+		declare variable $Description external;
+		declare variable $CountryCode external;
+		declare variable $CountryName external;
+		declare variable $RegionName external;
+		declare variable $RetentionUnit external;
+
+		let $path := doc('/DATA/changeme/Collection/Retention')/Retention/Retention-ROW[CategoryCode=$CategoryCode][TotalRetentionPeriod=$TotalRetentionPeriod][Description=$Description][CountryCode=$CountryCode][CountryName=$CountryName][RetentionUnit=$RetentionUnit][RegionName=$RegionName]
+		return
+			<results> {
+				<result                     
+					Description			= '{$path/Description}' 
+					CategoryCode		= '{$path/CategoryCode}' 
+					CountryCode			= '{$path/CountryCode}' 
+					CountryName			= '{$path/CountryName}' 
+					RegionName			= '{$path/RegionName}' 
+					TotalRetentionPeriod= '{$path/TotalRetentionPeriod}' 
+					RetentionUnit		= '{$path/RetentionUnit}' 
+					title				= '{$path/Description }'
+					type				= 'retention_retentionpolicy'
+				/>
+			} 
+			</results>
+    ]]></expression>
+</xquery>

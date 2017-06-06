@@ -1,0 +1,26 @@
+<xquery xmlns="http://www.emc.com/documentum/xml/dds">
+    <expression><![CDATA[
+		declare variable $retention-policy-code external;
+        declare variable $record-name external;
+        declare variable $retention-policy-id external;
+		
+		let $path := doc('/DATA/changeme/Collection/Retention')/retention-records/retention-record[retention-policy-id=$retention-policy-id][retention-policy-code= $retention-policy-code][record-name=$record-name]
+		return
+            <results> {
+                <result                     
+                    retention-policy-id		= '{$path/retention-policy-id}'
+    				retention-policy-code 	= '{$path/retention-policy-code}'
+   					retention-policy-period = '{$path/retention-policy-period}'
+   					record-id 				= '{$path/record-id}'
+   					record-code 			= '{$path/record-code}'
+   					record-name				= '{$path/record-name}'
+   					record-type				= '{$path/record-type}'
+    				base-date				= '{$path/base-date}'
+		 	  	 	retain-until			= '{$path/retain-until}'
+ 			 		on-hold					= '{$path/on-hold}'
+			 	   	purge-date				= '{$path/purge-date}'
+                />
+            } 
+			</results>
+    ]]></expression>
+</xquery>

@@ -1,8 +1,8 @@
 <panes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../xsd/template-panes.xsd">
   <verticalPanel>
     <headerPane/>
-    <!-- <dataSetListPane/> -->
     <menuPane/>
+	<dataSetListPane/>
     <searchPane/>
     <searchResultPane maxListCount="14" truncateLabels="100" width="100px" height="300px"/>
     <footerPane/>

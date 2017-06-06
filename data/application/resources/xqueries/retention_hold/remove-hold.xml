@@ -1,0 +1,30 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+	<name>remove-hold</name>
+	<dataset>changeme</dataset>
+	<type>retention_hold</type>
+	<expression><![CDATA[
+	declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+    declare variable $input external;
+    declare variable $currentuser  external;
+    declare variable $now  := fn:current-dateTime();
+    declare variable $path :='/DATA/changeme/Collection/Holds';
+	declare variable $retpath :='/DATA/changeme/Collection/Retention';
+
+	declare function local:value-except( $arg1 as xs:anyAtomicType* , $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+		distinct-values($arg1[not(.=$arg2)])
+	} ;
+	
+    for $holdsToDelete in $input/selection/result/@Name
+	return
+		let $recordIDs 			:= fn:doc($path)/Holds/Hold[Name = $holdsToDelete]/Records/RecordID
+		let $AllrecordIDS 		:= fn:doc($path)/Holds/Hold[Name != $holdsToDelete]/Records/RecordID
+		let $recordToremveHold 	:= local:value-except($recordIDs,$AllrecordIDS)
+		return 
+			(delete node fn:doc($path)/Holds/Hold[Name = $holdsToDelete], 
+			 for $i in $recordToremveHold
+			 return 
+				for $j in fn:doc($retpath)/retention-records/retention-record[record-id=$i]/on-hold
+				return
+					replace node $j with <on-hold/>)
+	]]></expression>
+</xquery>

@@ -1,0 +1,31 @@
+<xquery  xmlns="http://www.emc.com/documentum/xml/dds">
+  <name>create-hold</name>
+  <dataset>changeme</dataset>
+  <type>hold</type>
+  <expression><![CDATA[
+        declare namespace dds = "http://www.emc.com/documentum/xml/dds";
+		declare variable $input external;
+		declare variable $currentuser  external;
+		declare variable $now  := fn:current-dateTime();
+		declare variable $path :='/DATA/changeme/Collection/Holds';
+    
+		if (count(doc($path)/Holds/Hold[Name=$input/Name/text()]) > 0) 
+		then <bar>{data ($input/Name)}</bar>
+		else (insert node <Hold>
+				<Name>{$input/Name/text()}</Name>
+				<Authority>{$input/Authority/text()}</Authority>
+				<Description>{$input/Description/text()}</Description>
+				<Matters><Matter>{$input/Matter/text()}</Matter></Matters>
+				<Date_Created>{$now}</Date_Created>
+				<Date_Start>{$now}</Date_Start>
+				<Date_End>{$now}</Date_End>
+				<Date_Cancelled/>
+				<Status>Active</Status>
+				<Reason>{$input/Reason/text()}</Reason>
+				<XQuery/>
+				<RecordCount>0</RecordCount>
+				<Records/>
+				</Hold>
+      		as last into doc($path)/Holds)        
+  ]]></expression>
+  </xquery>
